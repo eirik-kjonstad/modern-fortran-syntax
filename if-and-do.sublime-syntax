@@ -1,0 +1,49 @@
+%YAML 1.2
+---
+name: Fortran
+file_extensions: [F90]
+scope: source.fortran
+
+contexts:
+  main:
+    # Booleans
+    - match: (\.true\.|\.false\.)
+      scope: constant.language.fortran
+
+    # if ()
+    - match: '^\s*(if)\s*(\()'
+      captures:
+        1: keyword.control
+
+    # elseif ()
+    - match: '^\s*(else)\s*(if)\s(\()'
+      captures:
+        1: keyword.control
+        2: keyword.control
+
+    # then
+    - match: '([^(then)]+)\b(then)\b'
+      scope: keyword.control 
+
+    # else
+    - match: '^\s*(else)\b'
+      scope: keyword.control
+
+    # endif
+    - match: '^\s*(end)\s*(if)\b'
+      captures:
+        1: keyword.control
+        2: keyword.control
+
+    # do while ()
+    - match: ^\s*(do\s+while)\s*(\()
+      captures:
+        1: keyword.control 
+
+    # do
+    - match: ^\s*(do)\s+(\w*)\s*(\=)
+      captures:
+        1: keyword.control
+        2: variable.other
+        3: keyword.operator
+
