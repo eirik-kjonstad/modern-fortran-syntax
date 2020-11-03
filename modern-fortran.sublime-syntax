@@ -17,4 +17,7 @@ contexts:
           pop: true
 
   functions:
-    - match: (function)\s*
+    - match: (function)\s*(\w*)
+      captures:
+        1: keyword.declaration.function
+        2: entity.name.function
