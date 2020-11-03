@@ -1,11 +1,18 @@
 %YAML 1.2
 ---
-name: Fortran
-file_extensions: [F90]
+name: BeautifulFortran
+file_extensions: [F90,F08,F18,f90,f08,f18]
 scope: source.fortran
 
 contexts:
   main:
+    # Comments
+    - match: "!"
+      push:
+        - meta_scope: comment.line
+        - match: \n
+          pop: true
+
     # Booleans
     - match: (\.true\.|\.false\.)
       scope: constant.language.fortran
