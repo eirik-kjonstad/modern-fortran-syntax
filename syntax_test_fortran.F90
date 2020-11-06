@@ -16,3 +16,8 @@
 !   ^^^^ storage.type
 !             ^^^^^^ storage.modifier
 !                    ^^ keyword.other
+
+    class(myClass), allocatable :: myClassInstance
+!   ^^^^^ storage.type.class
+!         ^^^^^^^ entity.name.class
+!                   ^^^^^^^^^^^ storage.modifier
