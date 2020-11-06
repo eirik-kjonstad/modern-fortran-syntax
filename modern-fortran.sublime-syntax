@@ -24,6 +24,8 @@ contexts:
     - include: continuation
     - include: procedures
     - include: modules
+    - include: classdefinitions
+    - include: separators
 
   comments:
     - match: "!"
@@ -42,8 +44,6 @@ contexts:
         1: storage.type.class
         2: entity.name.class
       push: declaration
-    - match: '\b(type|class)\b'
-      scope: storage.type.class
 
   attribute:
     - match: '\b{{intrinsicAttribute}}\b'
@@ -58,6 +58,10 @@ contexts:
       scope: keyword.operator
     - match: (\*|\+|-|/)
       scope: keyword.operator.arithmetic
+
+  separators:
+    - match: '(::)'
+      scope: keyword.separator
 
   control:
     # if ()
@@ -114,6 +118,7 @@ contexts:
   declaration:
     - include: attribute
     - include: operators
+    - include: separators
     - match: '\b(in|out|inout)\b'
       scope: keyword.other
     - match: '\n'
@@ -204,3 +209,30 @@ contexts:
       captures:
         1: keyword.declaration.interface
         2: entity.name.interface
+
+  classdefinitions:
+    - match: '\b(type)(?!{{parenthesisStart}})'
+      scope: storage.type.class
+      push: class.name
+    - match: '(end)\s+(type)\s(\w*)'
+      captures:
+        1: storage.type.class
+        2: storage.type.class
+        3: entity.name.class
+    - match: (procedure)
+      scope: keyword.declaration.interface
+    - match: (contains)
+      scope: keyword.declaration.interface
+
+  class.name:
+    - include: newline-pop
+    - match: '\b(extends)\b{{parenthesisStart}}(\w*){{parenthesisEnd}}'
+      captures:
+        1: keyword.operator
+        2: entity.other.inherited-class
+    - match: '\b(abstract)\b'
+      scope: storage.modifier
+    - match: '(::)\s*(\w*)'
+      captures:
+        1: keyword.separator
+        2: entity.name.class
