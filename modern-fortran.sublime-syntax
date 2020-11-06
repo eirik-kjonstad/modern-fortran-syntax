@@ -227,5 +227,5 @@ contexts:
       captures:
         1: keyword.separator
         2: entity.name.class
-    - match: '(\w*)'
+    - match: '(?<=[end\s*type])(\w*)'
       scope: entity.name.class
