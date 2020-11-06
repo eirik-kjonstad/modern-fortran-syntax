@@ -22,6 +22,8 @@ contexts:
     - include: control
     - include: strings
     - include: continuation
+    - include: procedures
+    - include: modules
 
   comments:
     - match: "!"
@@ -151,3 +153,54 @@ contexts:
         - match: "&" 
           scope: punctuation.separator.continuation 
           pop: true 
+
+  procedures:
+    - match: \s*(result) 
+      scope: keyword.control
+
+    - match: \b(pure)\b
+      scope: storage.modifier
+
+    - match: (implicit none)
+      scope: keyword.control
+
+    - match: (end)
+      scope: keyword.control
+
+    - match: (module|)\s*\b(function|subroutine)\b\s*(\w*)(\(|)
+      captures:
+        1: storage.modifier
+        2: keyword.declaration.function
+        3: entity.name.function 
+      push: argument.parser   
+
+  argument.parser:
+    - include: arithmetics
+    - include: comments
+    - match: (\w*)
+      captures: 
+        1: variable.other
+    - match: ","
+      scope: punctuation.separator
+    - match: "&"
+      scope: punctuation.separator.continuation
+      push: argument.parser
+    - match: \n
+      pop: true
+    - match: \)
+      pop: true
+
+  modules:
+    - match: '\b(module)\b\s*(\w*)$'
+      captures: 
+        1: keyword.declaration.interface
+        2: entity.name.interface
+    - match: \b(submodule)\b\s*\((\w*)\)\s*(\w*)
+      captures:
+        1: keyword.declaration.interface
+        2: entity.name.interface
+        3: entity.name.interface
+    - match: \b(submodule)\b\s*(\w*)
+      captures:
+        1: keyword.declaration.interface
+        2: entity.name.interface

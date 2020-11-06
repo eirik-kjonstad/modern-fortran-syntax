@@ -51,3 +51,55 @@
 !
    'string' // ' contatenation!'
 !           ^^ keyword.operator.arithmetic 
+!
+   function theFunction()
+!  ^^^^^^^^ keyword.declaration.function
+!           ^^^^^^^^^^^ entity.name.function
+   pure function theFunction()
+!  ^^^^ storage.modifier
+!       ^^^^^^^^ keyword.declaration.function
+!                ^^^^^^^^^^^ entity.name.function 
+   function theFunction(a)
+!                       ^ variable.other
+   function theFunction(a, bee, cesium) 
+!                       ^ variable.other
+!                          ^^^ variable.other
+!                               ^^^^^^ variable.other
+!                        ^ punctuation.separator
+!
+   pure function getStuff(a) result(theStuff)
+!                            ^^^^^^ keyword.control
+!
+   end function getStuff
+!  ^^^ keyword.control
+!      ^^^^^^^^ keyword.declaration.function
+!               ^^^^^^^^ entity.name.function
+!
+   module subroutine doStuff(a, b, c)
+!  ^^^^^^ storage.modifier
+!         ^^^^^^^^^^ keyword.declaration.function
+!                    ^^^^^^^ entity.name.function 
+!
+      implicit none
+!     ^^^^^^^^^^^^^ keyword.control
+!
+   end subroutine doStuff
+!
+   module subroutine doStuff(ace, bees, cees, & ! a comment
+!                                             ^ punctuation.separator.continuation
+                             dees, ees, fsss)
+!                            ^^^^ variable.other
+!
+   module myModule
+!  ^^^^^^ keyword.declaration.interface
+!         ^^^^^^^^ entity.name.interface
+!
+   submodule (moduleName) submoduleName
+!  ^^^^^^^^^ keyword.declaration.interface
+!             ^^^^^^^^^^ entity.name.interface
+!                         ^^^^^^^^^^^^^ entity.name.interface
+!
+   end submodule submoduleName
+!      ^^^^^^^^^ keyword.declaration.interface
+!                ^^^^^^^^^^^^^ entity.name.interface
+!
