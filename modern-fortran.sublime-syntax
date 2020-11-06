@@ -22,6 +22,7 @@ contexts:
     - include: control
     - include: strings
     - include: continuation
+    - include: class-definitions
 
   comments:
     - match: "!"
@@ -151,3 +152,26 @@ contexts:
         - match: "&" 
           scope: punctuation.separator.continuation 
           pop: true 
+
+  class-definitions:
+    - match: '\b(type)\s*(::)\s*(\w*)'
+      captures:
+        1: storage.type.class
+        2: punctuation.accessor
+        3: entity.name.class
+      push: class
+    - match: '\b(type)\s*,\s*(extends){{parenthesisStart}}\s*(\w*){{parenthesisEnd}}\s*(::)\s*(\w*)'
+      captures:
+        1: storage.type.class
+        2: keyword.operator
+        3: entity.other.inherited-class
+        4: punctuation.accessor
+        5: entity.name.class
+      push: class
+    - match: '\b(type)\s*,\s*(abstract)\s*(::)\s*(\w*)'
+      captures:
+        1: storage.type.class
+        2: keyword.operator
+        3: punctuation.accessor
+        4: entity.name.class
+      push: class
