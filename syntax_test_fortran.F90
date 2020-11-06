@@ -11,3 +11,14 @@
 !   ^^^^^^^ storage.type
 !                    ^^^^^^^^^ storage.modifier
 !                                    ^^^^^^^^^^^ storage.modifier
+   if (a == b) then
+!  ^^ keyword.control.conditional
+!              ^^^^ keyword.control.conditional
+   endif
+!  ^^^^ keyword.control.conditional
+!
+   do while (a .ne. c)
+!  ^^ keyword.control
+!     ^^^^^ keyword.control
+!
+   enddo

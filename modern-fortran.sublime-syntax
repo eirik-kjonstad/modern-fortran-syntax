@@ -11,6 +11,7 @@ variables:
                         public|save|static|target|value|volatile)'
   parenthesisStart: '\s*\('
   parenthesisEnd: '\s*\)'
+  firstOnLine: '^\s*'
 
 
 contexts:
@@ -19,6 +20,7 @@ contexts:
     - include: types
     - include: attribute
     - include: operators
+    - include: control
 
   comments:
     - match: "!"
@@ -42,3 +44,55 @@ contexts:
       scope: keyword.operator.word
     - match: (=>)
       scope: keyword.operator
+
+  control:
+    # if ()
+    - match: '{{firstOnLine}}(if){{parenthesisStart}}'
+      captures:
+        1: keyword.control.conditional
+      push: condition-parser
+    # then
+    - match: '\b(then)\b'
+      scope: keyword.control.conditional
+    # elseif ()
+    - match: '{{firstOnLine}}(else)\s*(if)'
+      captures:
+        1: keyword.control.conditional
+        2: keyword.control.conditional
+    # else
+    - match: '{{firstOnLine}}*(else)\b'
+      scope: keyword.control.conditional
+    # endif
+    - match: '{{firstOnLine}}(end\s*if)\b'
+      captures:
+        1: keyword.control.conditional
+    # do 
+    - match: '{{firstOnLine}}(do)'
+      captures:
+        1: keyword.control.conditional
+      push: do-loop
+    # enddo
+    - match: '{{firstOnLine}}(end\s*do)\b'
+      captures:
+        1: keyword.control
+
+  do-loop:
+    - match: '\b(while)({{parenthesisStart}})'
+      captures:
+        1: keyword.control
+      push: condition-parser
+    - match: '\s+(\w*)\s*(\=)'
+      captures:
+        1: variable.other
+        2: keyword.operator
+      pop: true
+    - include: newline-pop
+
+  condition-parser:
+    - include: main
+    - match: '{{parenthesisEnd}}'
+      pop: true
+
+  newline-pop:
+    - match: '\n'
+      pop: true     
