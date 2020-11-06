@@ -9,8 +9,8 @@ variables:
   intrinsicAttribute: '(allocatable|asynchronous|automatic|bind|codimension|contiguous|dimension|
                         external|intent|intrinsic|optional|parameter|pointer|private|protected|
                         public|save|static|target|value|volatile)'
-  parenthesisStart: '\s*\('
-  parenthesisEnd: '\s*\)'
+  parenthesisStart: '\s*\(\s*'
+  parenthesisEnd: '\s*\)\s*'
 
 
 contexts:
@@ -30,6 +30,7 @@ contexts:
   types:
     - match: '\b{{intrinsicType}}\b'
       scope: storage.type
+      push: declaration
 
   attribute:
     - match: '\b{{intrinsicAttribute}}\b'
@@ -42,3 +43,11 @@ contexts:
       scope: keyword.operator.word
     - match: (=>)
       scope: keyword.operator
+
+  declaration:
+    - include: attribute
+    - include: operators
+    - match: '(in|out|inout)'
+      scope: keyword.other
+    - match: '\n'
+      pop: true

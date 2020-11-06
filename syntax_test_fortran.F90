@@ -11,3 +11,8 @@
 !   ^^^^^^^ storage.type
 !                    ^^^^^^^^^ storage.modifier
 !                                    ^^^^^^^^^^^ storage.modifier
+
+    real(dp), intent(in) :: myReal
+!   ^^^^ storage.type
+!             ^^^^^^ storage.modifier
+!                    ^^ keyword.other
