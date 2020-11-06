@@ -23,10 +23,11 @@ contexts:
 
   comments:
     - match: "!"
+      scope: punctuation.definition.comment
       push:
-        - meta_scope: comment.line
-        - match: \n
-          pop: true
+      - meta_scope: comment.line
+      - match: \n 
+        pop: true
 
   types:
     - match: '\b{{intrinsicType}}\b'
