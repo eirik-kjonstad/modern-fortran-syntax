@@ -95,19 +95,14 @@ contexts:
         1: keyword.control
 
   do-loop:
-    - match: '\b(while)({{parenthesisStart}})'
+    - match: '(while)\s*{{parenthesisStart}}'
       captures:
         1: keyword.control
       push: condition-parser
-    - match: '\s+(\w*)\s*(\=)'
-      captures:
-        1: variable.other
-        2: keyword.operator
-      pop: true
     - include: newline-pop
 
   condition-parser:
-    - include: main
+    - include: operators
     - match: '{{parenthesisEnd}}'
       pop: true
 

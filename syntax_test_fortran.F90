@@ -17,7 +17,7 @@
    endif
 !  ^^^^ keyword.control.conditional
 !
-   do while (a .ne. c)
+   do while (a .ne. b) 
 !  ^^ keyword.control
 !     ^^^^^ keyword.control
 !
