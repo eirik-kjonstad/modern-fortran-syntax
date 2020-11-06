@@ -32,3 +32,22 @@
 !   ^^^^^ storage.type.class
 !         ^^^^^^^ entity.name.class
 !                   ^^^^^^^^^^^ storage.modifier
+!
+   "This is a simple string"
+!
+   "This is a simple string,  & 
+   & but 'with' continuation, &
+   & and more continuation!" 
+!
+   'This is a simple string'
+!  ^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.single
+   &
+!  ^ punctuation.separator.continuation
+!
+   'This is a simple string,  & 
+   & but "with" continuation, &
+   & and more continuation!' 
+!  ^ punctuation.separator.continuation
+!
+   'string' // ' contatenation!'
+!           ^^ keyword.operator.arithmetic 
