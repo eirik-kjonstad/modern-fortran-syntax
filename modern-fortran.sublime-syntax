@@ -9,10 +9,9 @@ variables:
   intrinsicAttribute: '(allocatable|asynchronous|automatic|bind|codimension|contiguous|dimension|
                         external|intent|intrinsic|optional|parameter|pointer|private|protected|
                         public|save|static|target|value|volatile)'
-  parenthesisStart: '\s*\('
-  parenthesisEnd: '\s*\)'
   firstOnLine: '^\s*'
-
+  parenthesisStart: '\s*\(\s*'
+  parenthesisEnd: '\s*\)\s*'
 
 contexts:
   main:
@@ -32,6 +31,14 @@ contexts:
   types:
     - match: '\b{{intrinsicType}}\b'
       scope: storage.type
+      push: declaration
+    - match: '\b(type|class){{parenthesisStart}}\s*(\w*){{parenthesisEnd}}'
+      captures:
+        1: storage.type.class
+        2: entity.name.class
+      push: declaration
+    - match: '\b(type|class)\b'
+      scope: storage.type.class
 
   attribute:
     - match: '\b{{intrinsicAttribute}}\b'
@@ -96,3 +103,11 @@ contexts:
   newline-pop:
     - match: '\n'
       pop: true     
+
+  declaration:
+    - include: attribute
+    - include: operators
+    - match: '\b(in|out|inout)\b'
+      scope: keyword.other
+    - match: '\n'
+      pop: true
