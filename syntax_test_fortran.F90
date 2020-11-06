@@ -33,6 +33,13 @@
 !         ^^^^^^^ entity.name.class
 !                   ^^^^^^^^^^^ storage.modifier
 !
+    type :: myClass
+!   ^^^^ storage.type.class
+!        ^^ keyword.separator
+!           ^^^^^^^ entity.name.class
+    end type myClass
+
+!
    "This is a simple string"
 !
    "This is a simple string,  & 
@@ -51,3 +58,4 @@
 !
    'string' // ' contatenation!'
 !           ^^ keyword.operator.arithmetic 
+

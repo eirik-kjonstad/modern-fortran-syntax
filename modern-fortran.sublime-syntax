@@ -22,7 +22,7 @@ contexts:
     - include: control
     - include: strings
     - include: continuation
-    - include: class-definitions
+    - include: classdefinitions
 
   comments:
     - match: "!"
@@ -41,8 +41,6 @@ contexts:
         1: storage.type.class
         2: entity.name.class
       push: declaration
-    - match: '\b(type|class)\b'
-      scope: storage.type.class
 
   attribute:
     - match: '\b{{intrinsicAttribute}}\b'
@@ -153,25 +151,35 @@ contexts:
           scope: punctuation.separator.continuation 
           pop: true 
 
-  class-definitions:
-    - match: '\b(type)\s*(::)\s*(\w*)'
+  classdefinitions:
+    - match: '\b(type)(?!{{parenthesisStart}})'
+      scope: storage.type.class
+      push: class.name
+
+  class.name:
+    - match: '\b(extends)\b{{parenthesisStart}}(\w*){{parenthesisEnd}}'
+      captures:
+        1: keyword.operator
+        2: entity.other.inherited-class
+    - match: '\b(abstract)\b'
+      scope: storage.modifier
+    - match: '(::)\s*(\w*)'
+      captures:
+        1: keyword.separator
+        2: entity.name.class
+      push: class.content
+    - match: '\n'
+      pop: true
+
+  class.content:
+    - include: main
+    - match: '\b(contains)\b'
+      scope: keyword.operator
+    - match: '\b(procedure)\b'
+      scope: storage.type 
+    - match: '(end)\s+(type)\s(\w*)'
       captures:
         1: storage.type.class
-        2: punctuation.accessor
+        2: storage.type.class
         3: entity.name.class
-      push: class
-    - match: '\b(type)\s*,\s*(extends){{parenthesisStart}}\s*(\w*){{parenthesisEnd}}\s*(::)\s*(\w*)'
-      captures:
-        1: storage.type.class
-        2: keyword.operator
-        3: entity.other.inherited-class
-        4: punctuation.accessor
-        5: entity.name.class
-      push: class
-    - match: '\b(type)\s*,\s*(abstract)\s*(::)\s*(\w*)'
-      captures:
-        1: storage.type.class
-        2: keyword.operator
-        3: punctuation.accessor
-        4: entity.name.class
-      push: class
+      pop: true
