@@ -20,6 +20,8 @@ contexts:
     - include: attribute
     - include: operators
     - include: control
+    - include: strings
+    - include: continuation
 
   comments:
     - match: "!"
@@ -112,3 +114,38 @@ contexts:
       scope: keyword.other
     - match: '\n'
       pop: true
+
+  continuation:
+    - match: "&"
+      scope: punctuation.separator.continuation
+
+  strings:
+    - match: "//"
+      scope: keyword.operator.arithmetic
+    - match: "'"
+      push: string.single 
+    - match: '"'
+      push: string.double
+
+  string.single:
+    - meta_scope: string.quoted.single
+    - include: string.continuation
+    - include: newline-pop
+    - match: "'"
+      pop: true
+
+  string.double:
+    - meta_scope: string.quoted.single
+    - include: string.continuation
+    - include: newline-pop 
+    - match: '"'
+      pop: true
+
+  string.continuation:
+    - match: "&"
+      scope: punctuation.separator.continuation
+      push: 
+        # locate continuation on next line and pop
+        - match: "&" 
+          scope: punctuation.separator.continuation 
+          pop: true 
