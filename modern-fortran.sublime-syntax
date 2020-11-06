@@ -6,6 +6,9 @@ scope: source.fortran
 
 variables:
   intrinsicType: '(real|integer|complex|character|logical|byte|double precision|double complex)'
+  intrinsicAttribute: '(allocatable|asynchronous|automatic|bind|codimension|contiguous|dimension|
+                        external|intent|intrinsic|optional|parameter|pointer|private|protected|
+                        public|save|static|target|value|volatile)'
   parenthesisStart: '\s*\('
   parenthesisEnd: '\s*\)'
 
@@ -14,6 +17,8 @@ contexts:
   main:
     - include: comments 
     - include: types
+    - include: attribute
+    - include: operators
 
   comments:
     - match: "!"
@@ -21,16 +26,19 @@ contexts:
         - meta_scope: comment.line
         - match: \n
           pop: true
+
   types:
     - match: '\b{{intrinsicType}}\b'
-      scope: storage.type.intrinsic-type
-    - match: '\b{{intrinsicType}}{{parenthesisStart}}'
-      scope: storage.type.intrinsic-type
-      push: type-kind
+      scope: storage.type
 
-  type-kind:
-    - include: main
-    - match: '\b(len)\b'
+  attribute:
+    - match: '\b{{intrinsicAttribute}}\b'
+      scope: storage.modifier
+
+  operators:
+    - match: (==|/=|>=|<=|<|>)
+      scope: keyword.operator.logical
+    - match: (\.and\.|\.or\.|\.ne\.|\.lt\.|\.leq\.|\.gt\.|\.geq\.|\.eq\.)
+      scope: keyword.operator.word
+    - match: (=>)
       scope: keyword.operator
-    - match: parenthesisEnd
-      pop: true
