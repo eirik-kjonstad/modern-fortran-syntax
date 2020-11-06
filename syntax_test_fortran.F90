@@ -7,3 +7,7 @@
    a => b
 !    ^^ keyword.operator
 !
+    integer(kind=8), dimension(:,:), allocatable :: myInt
+!   ^^^^^^^ storage.type
+!                    ^^^^^^^^^ storage.modifier
+!                                    ^^^^^^^^^^^ storage.modifier
