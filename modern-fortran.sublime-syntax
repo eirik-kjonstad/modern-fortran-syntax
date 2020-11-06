@@ -52,6 +52,8 @@ contexts:
       scope: keyword.operator.word
     - match: (=>)
       scope: keyword.operator
+    - match: (\*|\+|-|/)
+      scope: keyword.operator.arithmetic
 
   control:
     # if ()
