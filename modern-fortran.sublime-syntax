@@ -7,7 +7,6 @@ scope: source.fortran
 contexts:
   main:
     - include: comments 
-    - include: functions
 
   comments:
     - match: "!"
@@ -15,9 +14,3 @@ contexts:
         - meta_scope: comment.line
         - match: \n
           pop: true
-
-  functions:
-    - match: (function)\s*(\w*)
-      captures:
-        1: keyword.declaration.function
-        2: entity.name.function
