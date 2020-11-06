@@ -23,6 +23,7 @@ contexts:
     - include: strings
     - include: continuation
     - include: classdefinitions
+    - include: separators
 
   comments:
     - match: "!"
@@ -55,6 +56,10 @@ contexts:
       scope: keyword.operator
     - match: (\*|\+|-|/)
       scope: keyword.operator.arithmetic
+
+  separators:
+    - match: '(::)'
+      scope: keyword.separator
 
   control:
     # if ()
@@ -111,6 +116,7 @@ contexts:
   declaration:
     - include: attribute
     - include: operators
+    - include: separators
     - match: '\b(in|out|inout)\b'
       scope: keyword.other
     - match: '\n'
@@ -155,8 +161,18 @@ contexts:
     - match: '\b(type)(?!{{parenthesisStart}})'
       scope: storage.type.class
       push: class.name
+    - match: '(end)\s+(type)\s(\w*)'
+      captures:
+        1: storage.type.class
+        2: storage.type.class
+        3: entity.name.class
+    - match: (procedure)
+      scope: keyword.declaration.interface
+    - match: (contains)
+      scope: keyword.declaration.interface
 
   class.name:
+    - include: newline-pop
     - match: '\b(extends)\b{{parenthesisStart}}(\w*){{parenthesisEnd}}'
       captures:
         1: keyword.operator
@@ -167,19 +183,3 @@ contexts:
       captures:
         1: keyword.separator
         2: entity.name.class
-      push: class.content
-    - match: '\n'
-      pop: true
-
-  class.content:
-    - include: main
-    - match: '\b(contains)\b'
-      scope: keyword.operator
-    - match: '\b(procedure)\b'
-      scope: storage.type 
-    - match: '(end)\s+(type)\s(\w*)'
-      captures:
-        1: storage.type.class
-        2: storage.type.class
-        3: entity.name.class
-      pop: true

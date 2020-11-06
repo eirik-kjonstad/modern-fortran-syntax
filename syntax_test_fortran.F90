@@ -33,13 +33,17 @@
 !         ^^^^^^^ entity.name.class
 !                   ^^^^^^^^^^^ storage.modifier
 !
-    type :: myClass
+    type :: myClass1
 !   ^^^^ storage.type.class
 !        ^^ keyword.separator
-!           ^^^^^^^ entity.name.class
-    end type myClass
+!           ^^^^^^^^ entity.name.class
 
-!
+    type, abstract :: myClass2
+!   ^^^^ storage.type.class
+!         ^^^^^^^^ storage.modifier
+!                  ^^ keyword.separator
+!                     ^^^^^^^ entity.name.class
+
    "This is a simple string"
 !
    "This is a simple string,  & 
