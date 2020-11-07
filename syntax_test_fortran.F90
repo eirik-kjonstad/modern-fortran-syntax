@@ -24,10 +24,11 @@
 !
    enddo
 
-   real(dp), intent(in) :: myReal
+   real(dp), intent(in) :: myReal ! a side-comment
 !  ^^^^ storage.type
 !            ^^^^^^ storage.modifier
 !                   ^^ keyword.other
+!                                   ^^^^^^^^^^^^^^ comment.line
 
    class(myClass), allocatable :: myClassInstance
 !  ^^^^^ storage.type.class
