@@ -125,3 +125,6 @@
    1.0d-12
 !  ^^^^^^^ constant.numeric
 !
+   a = minval(b)
+!      ^^^^^^ variable.function
+!
