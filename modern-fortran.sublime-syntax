@@ -197,6 +197,12 @@ contexts:
     - include: operators
     - include: comments
     - include: strings
+    - include: function-parsing
+    # - match: '(\w*)(\%)(\w*)'
+    #   captures:
+    #     1: storage.type.class 
+    #     2: punctuation.accessor
+    #     3: variable.other.member
     - match: (\w*)
       captures: 
         1: variable.other
@@ -209,6 +215,7 @@ contexts:
       pop: true
     - match: \)
       pop: true
+
 
   modules:
     - match: '\b(module)\b\s*(\w*)$'

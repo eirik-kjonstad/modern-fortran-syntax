@@ -151,9 +151,11 @@
 !                 ^^^^^^^^^^^^^^ variable.other.member
 !                                ^^^^^^^^ variable.function
 !
-   myVar = object%objectFunction(a, b, c)
+   myVar = object%objectFunction(a, b, c, otherObject%variable)
 !          ^^^^^^ storage.type.class 
 !                 ^^^^^^^^^^^^^^ variable.function
+!                                         ^^^^^^^^^^^ storage.type.class 
+!                                                     ^^^^^^^^ variable.other.member
 !
    call object%calculateStuff()
 !       ^^^^^^ storage.type.class 
@@ -162,4 +164,11 @@
    if (a == b) call mySubroutine(a, b, c)
 !              ^^^^ keyword.control
 !                   ^^^^^^^^^^^^ variable.function
+!
+   call object%objectFunction(anotherObject%variable)
+!                             ^^^^^^^^^^^^^ storage.type.class 
+!                                           ^^^^^^^^ variable.other.member
+!
+   call object%objectFunction(anotherObject%myFunction())
+!                                           ^^^^^^^^^^ variable.function
 !
