@@ -26,6 +26,7 @@ contexts:
     - include: modules
     - include: classdefinitions
     - include: separators
+    - include: numbers
 
   comments:
     - match: "!"
@@ -216,7 +217,6 @@ contexts:
     - match: (contains)
       scope: keyword.declaration.interface
 
-
   class.name:
     - include: newline-pop
     - match: '\b(extends)\b{{parenthesisStart}}(\w*){{parenthesisEnd}}'
@@ -231,3 +231,9 @@ contexts:
         2: entity.name.class
     - match: '(?<=[end\s*type])(\w*)'
       scope: entity.name.class
+
+  numbers:
+    - match: '\b(\d+[\.]?\d+[d]?[\+|\-]?\d+)'
+      captures: 
+        1: constant.numeric
+

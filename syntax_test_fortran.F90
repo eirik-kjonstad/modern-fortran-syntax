@@ -1,16 +1,16 @@
 ! SYNTAX TEST "modern-fortran.sublime-syntax"
 !
-  a == b .and. c
-!   ^^ keyword.operator.logical
-!        ^^^^^ keyword.operator.word
+   a == b .and. c
+!    ^^ keyword.operator.logical
+!         ^^^^^ keyword.operator.word
 !
    a => b
 !    ^^ keyword.operator
 !
-    integer(kind=8), dimension(:,:), allocatable :: myInt
-!   ^^^^^^^ storage.type
-!                    ^^^^^^^^^ storage.modifier
-!                                    ^^^^^^^^^^^ storage.modifier
+   integer(kind=8), dimension(:,:), allocatable :: myInt
+!  ^^^^^^^ storage.type
+!                   ^^^^^^^^^ storage.modifier
+!                                   ^^^^^^^^^^^ storage.modifier
    if (a == b) then
 !  ^^ keyword.control.conditional
 !              ^^^^ keyword.control.conditional
@@ -24,21 +24,21 @@
 !
    enddo
 
-    real(dp), intent(in) :: myReal
-!   ^^^^ storage.type
-!             ^^^^^^ storage.modifier
-!                    ^^ keyword.other
+   real(dp), intent(in) :: myReal
+!  ^^^^ storage.type
+!            ^^^^^^ storage.modifier
+!                   ^^ keyword.other
 
-    class(myClass), allocatable :: myClassInstance
-!   ^^^^^ storage.type.class
-!         ^^^^^^^ entity.name.class
-!                   ^^^^^^^^^^^ storage.modifier
+   class(myClass), allocatable :: myClassInstance
+!  ^^^^^ storage.type.class
+!        ^^^^^^^ entity.name.class
+!                  ^^^^^^^^^^^ storage.modifier
 !
-    type :: myClass1
-!   ^^^^ storage.type.class
-!        ^^ keyword.separator
-!           ^^^^^^^^ entity.name.class
-
+   type :: myClass1
+!  ^^^^ storage.type.class
+!       ^^ keyword.separator
+!          ^^^^^^^^ entity.name.class
+!
     type, abstract :: myClass2
 !   ^^^^ storage.type.class
 !         ^^^^^^^^ storage.modifier
@@ -115,4 +115,10 @@
    end submodule submoduleName
 !      ^^^^^^^^^ keyword.declaration.interface
 !                ^^^^^^^^^^^^^ entity.name.interface
+!
+   123
+!  ^^^ constant.numeric
+!
+   1.0d-12
+!  ^^^^^^^ constant.numeric
 !
