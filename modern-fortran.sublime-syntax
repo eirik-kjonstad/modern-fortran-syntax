@@ -100,17 +100,12 @@ contexts:
     - match: '{{firstOnLine}}(do)'
       captures:
         1: keyword.control.conditional
-      push: do-loop
+    - match: '(?<=[do])\s*(while)'
+      scope: keyword.control.conditional
     # enddo
     - match: '{{firstOnLine}}(end\s*do)\b'
       captures:
         1: keyword.control
-
-  do-loop:
-    - match: '(while)\s*{{parenthesisStart}}'
-      captures:
-        1: keyword.control
-      set: condition-parser
 
   condition-parser:
     - include: operators

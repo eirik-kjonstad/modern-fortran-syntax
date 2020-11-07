@@ -203,4 +203,21 @@
                            otherModuleRoutine, anotherModuleObject
 !                          ^^^^^^^^^^^^^^^^^^ variable.other
 !                                            ^ punctuation.separator
+   evenNumber = 0
+!
+   do I = 1, 10
+!  ^^ keyword.control
+!     ^ variable.other
+!         ^ constant.numeric
+!          ^ punctuation.separator
+!            ^^ constant.numeric
+!
+      evenNumber = evenNumber + 2*I
+!     ^^^^^^^^^^ variable.other
+!                  ^^^^^^^^^^ variable.other
+!                                 ^ variable.other
+!                               ^ constant.numeric
+   enddo
+!  ^^^^^ keyword.control
+!
 !
