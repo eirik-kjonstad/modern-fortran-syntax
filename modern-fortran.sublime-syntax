@@ -71,6 +71,8 @@ contexts:
   separators:
     - match: '(::)'
       scope: keyword.separator
+    - match: ','
+      scope: punctuation.separator
 
   control:
     - include: comments
@@ -205,11 +207,10 @@ contexts:
     - include: strings
     - include: constants
     - include: function-parsing
+    - include: separators
     - match: (\w*)
       captures: 
         1: variable.other
-    - match: ","
-      scope: punctuation.separator
     - match: "&"
       scope: punctuation.separator.continuation
       push: argument.parser
@@ -232,6 +233,14 @@ contexts:
       captures:
         1: keyword.declaration.interface
         2: entity.name.interface
+    - match: (use)
+      scope: keyword.control
+    - match: (?<=[use])\s*(\w*)
+      scope: entity.name.interface
+    - match: (only)\s*(\:)
+      captures:
+        1: keyword.control
+        2: punctuation.separator
 
   classdefinitions:
     - match: '\b(type)(?!{{parenthesisStart}})'

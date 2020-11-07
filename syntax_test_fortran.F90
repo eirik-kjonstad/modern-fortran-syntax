@@ -192,7 +192,15 @@
 !
    if (thing == object%getThing('string', .true.)) call object%doStuff()
 !               ^^^^^^ storage.type.class 
+!                                       ^ punctuation.separator
 !                      ^^^^^^^^ variable.function
 !                                ^^^^^^ string.quoted.single
 !                                         ^^^^^^ constant.language
+!
+   use moduleName, only: moduleRoutine, moduleObject, &
+!                        ^^^^^^^^^^^^^ variable.other
+!                                                     ^ punctuation.separator.continuation
+                           otherModuleRoutine, anotherModuleObject
+!                          ^^^^^^^^^^^^^^^^^^ variable.other
+!                                            ^ punctuation.separator
 !
