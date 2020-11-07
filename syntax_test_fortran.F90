@@ -128,3 +128,10 @@
    a = minval(b)
 !      ^^^^^^ variable.function
 !
+!  type casting versus variable declaration
+   real(8) :: aRealNumber
+!  ^^^^ storage.type
+!
+   aRealNumber = real(anInteger)
+!                ^^^^ variable.function
+!

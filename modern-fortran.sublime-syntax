@@ -39,7 +39,7 @@ contexts:
         pop: true
 
   types:
-    - match: '\b{{intrinsicType}}\b'
+    - match: '{{firstOnLine}}\b{{intrinsicType}}\b'
       scope: storage.type
       push: declaration
     - match: '\b(type|class){{parenthesisStart}}\s*(\w*){{parenthesisEnd}}'
