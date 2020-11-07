@@ -80,7 +80,6 @@ contexts:
     - match: '{{firstOnLine}}(if)\s*{{parenthesisStart}}'
       captures:
         1: keyword.control.conditional
-      push: condition-parser
     # then
     - match: '\b(then)\b'
       scope: keyword.control.conditional
@@ -106,13 +105,6 @@ contexts:
     - match: '{{firstOnLine}}(end\s*do)\b'
       captures:
         1: keyword.control
-
-  condition-parser:
-    - include: operators
-    - include: numbers
-    - include: function-parsing
-    - match: '{{parenthesisEnd}}'
-      pop: true
 
   newline-pop:
     - match: '\n'
