@@ -1,43 +1,44 @@
 ! SYNTAX TEST "modern-fortran.sublime-syntax"
 !
-  a == b .and. c
-!   ^^ keyword.operator.logical
-!        ^^^^^ keyword.operator.word
+   a == b .and. c
+!    ^^ keyword.operator.logical
+!         ^^^^^ keyword.operator.word
 !
    a => b
 !    ^^ keyword.operator
 !
-    integer(kind=8), dimension(:,:), allocatable :: myInt
-!   ^^^^^^^ storage.type
-!                    ^^^^^^^^^ storage.modifier
-!                                    ^^^^^^^^^^^ storage.modifier
+   integer(kind=8), dimension(:,:), allocatable :: myInt
+!  ^^^^^^^ storage.type
+!                   ^^^^^^^^^ storage.modifier
+!                                   ^^^^^^^^^^^ storage.modifier
    if (a == b) then
 !  ^^ keyword.control.conditional
 !              ^^^^ keyword.control.conditional
    endif
 !  ^^^^ keyword.control.conditional
 !
-   do while (a .ne. c)
+   do while (a .ne. b) ! a side-comment
 !  ^^ keyword.control
 !     ^^^^^ keyword.control
+!                        ^^^^^^^^^^^^^^ comment.line
 !
    enddo
 
-    real(dp), intent(in) :: myReal
-!   ^^^^ storage.type
-!             ^^^^^^ storage.modifier
-!                    ^^ keyword.other
+   real(dp), intent(in) :: myReal
+!  ^^^^ storage.type
+!            ^^^^^^ storage.modifier
+!                   ^^ keyword.other
 
-    class(myClass), allocatable :: myClassInstance
-!   ^^^^^ storage.type.class
-!         ^^^^^^^ entity.name.class
-!                   ^^^^^^^^^^^ storage.modifier
+   class(myClass), allocatable :: myClassInstance
+!  ^^^^^ storage.type.class
+!        ^^^^^^^ entity.name.class
+!                  ^^^^^^^^^^^ storage.modifier
 !
-    type :: myClass1
-!   ^^^^ storage.type.class
-!        ^^ keyword.separator
-!           ^^^^^^^^ entity.name.class
-
+   type :: myClass1
+!  ^^^^ storage.type.class
+!       ^^ keyword.separator
+!          ^^^^^^^^ entity.name.class
+!
     type, abstract :: myClass2
 !   ^^^^ storage.type.class
 !         ^^^^^^^^ storage.modifier
@@ -80,6 +81,7 @@
 !
    pure function getStuff(a) result(theStuff)
 !                            ^^^^^^ keyword.control
+!                                   ^^^^^^^^ variable.other
 !
    end function getStuff
 !  ^^^ keyword.control
@@ -113,4 +115,28 @@
    end submodule submoduleName
 !      ^^^^^^^^^ keyword.declaration.interface
 !                ^^^^^^^^^^^^^ entity.name.interface
+!
+   8
+!  ^ constant.numeric
+!
+   123
+!  ^^^ constant.numeric
+!
+   1.0d-12
+!  ^^^^^^^ constant.numeric
+!
+   a = minval(b)
+!      ^^^^^^ variable.function
+!
+!  type casting versus variable declaration
+   real(8) :: aRealNumber
+!  ^^^^ storage.type
+!
+   aRealNumber = real(anInteger)
+!                ^^^^ variable.function
+!                     ^^^^^^^^^ variable.other
+!  simple function call
+   call mySubroutine(a, b, c)
+!  ^^^^ keyword.control
+!       ^^^^^^^^^^^^ variable.function
 !

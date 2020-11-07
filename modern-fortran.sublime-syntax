@@ -10,9 +10,28 @@ variables:
                         external|intent|intrinsic|optional|parameter|pointer|private|protected|
                         public|save|static|target|value|volatile|deferred|pass|nopass|overridable|
                         non_overridable)'
+  intrinsicFunction: (abs|achar|acos|acosh|adjustl|adjustr|aimag|aint|all|allocated|anint|any|asin|
+                      asinh|associated|atan|atan2|atanh|atomic_add|atomic_and|atomic_cas|atomic_define|
+                      atomic_fetch_add|atomic_fetch_and|atomic_fetch_or|atomic_fetch_xor|atomic_or|
+                      atomic_ref|atomic_xor|bessel_j0|bessel_j1|bessel_jn|bessel_y0|bessel_y1|
+                      bessel_yn|bge|bgt|bit_size|ble|bit|btest|c_associated|c_funloc|c_f_pointer|c_f_procpointer|
+                      c_loc|c_sizeof|ceiling|char|cmplx|co_broadcast|co_max|co_min|co_reduce|co_sum|
+                      command_argument_count|compiler_options|compiler_version|conjg|cos|cosh|count|cpu_time|
+                      cshift|date_and_time|dble|digits|dim|dot_product|dprod|dshiftl|dshiftr|eoshift|epsilon|
+                      erf|erfc|erfc_scaled|event_query|execute_command_line|exp|exponent|extends_type_of|float|
+                      floor|fraction|gamma|get_command|get_command_argument|get_environment_variable|huge|hypot|
+                      iachar|iall|iand|iany|ibclr|ibits|ibset|ichar|ieor|image_index|index|int|ior|iparity|
+                      is_iostat_end|is_iostat_eor|ishft|isfhtc|kind|lbound|lcobound|leadz|len|len_trim|lge|lgt|
+                      lle|llt|log|log10|log_gamma|logical|maskl|maskr|matmul|max|maxexponent|maxloc|maxval|merge|
+                      merge_bits|min|minexponent|minloc|minval|mod|module|move_alloc|mvbits|nearest|new\_line|
+                      nint|not|norm2|null|num_images|pack|parity|popcnt|poppar|precision|present|product|radix|
+                      random_number|random_seed|range|rank|real|repeat|reshape|rrspacing|same_type_as|scale|
+                      scan|selected_char_kind|selected_int_kind|selected_real_kind|set_exponent|shape|shifta|
+                      shiftl|shiftr|sign|sin|sinh|size|sngl|spacing|spread|sqrt|storage_size|sum|system_clock|tan|
+                      tanh|this_image|tiny|trailz|transfer|transpose|trim|ubound|ucobound|unpack|verify)
   firstOnLine: '^\s*'
-  parenthesisStart: '\s*\(\s*'
-  parenthesisEnd: '\s*\)\s*'
+  parenthesisStart: '\(\s*'
+  parenthesisEnd: '\s*\)'
 
 contexts:
   main:
@@ -27,6 +46,8 @@ contexts:
     - include: modules
     - include: classdefinitions
     - include: separators
+    - include: numbers
+    - include: constants
 
   comments:
     - match: "!"
@@ -37,10 +58,10 @@ contexts:
         pop: true
 
   types:
-    - match: \b{{intrinsicType}}\b
+    - match: '{{firstOnLine}}{{intrinsicType}}\b'
       scope: storage.type
       push: declaration
-    - match: \b(type|class){{parenthesisStart}}\s*(\w*){{parenthesisEnd}}
+    - match: '{{firstOnLine}}(type|class){{parenthesisStart}}\s*(\w*){{parenthesisEnd}}'
       captures:
         1: storage.type.class
         2: entity.name.class
@@ -53,11 +74,11 @@ contexts:
   operators:
     - match: (==|/=|>=|<=|<|>)
       scope: keyword.operator.logical
-    - match: (\.and\.|\.or\.|\.ne\.|\.lt\.|\.leq\.|\.gt\.|\.geq\.|\.eq\.)
+    - match: (\.and\.|\.or\.|\.ne\.|\.lt\.|\.le\.|\.gt\.|\.ge\.|\.eq\.|\.not\.)
       scope: keyword.operator.word
     - match: (=>)
       scope: keyword.operator
-    - match: (\*|\+|-|/)
+    - match: (\*|\+|-|/|=)
       scope: keyword.operator.arithmetic
 
   separators:
@@ -65,8 +86,9 @@ contexts:
       scope: keyword.separator
 
   control:
+    - include: comments
     # if ()
-    - match: '{{firstOnLine}}(if){{parenthesisStart}}'
+    - match: '{{firstOnLine}}(if)\s*{{parenthesisStart}}'
       captures:
         1: keyword.control.conditional
       push: condition-parser
@@ -96,19 +118,14 @@ contexts:
         1: keyword.control
 
   do-loop:
-    - match: '\b(while)({{parenthesisStart}})'
+    - match: '(while)\s*{{parenthesisStart}}'
       captures:
         1: keyword.control
-      push: condition-parser
-    - match: '\s+(\w*)\s*(\=)'
-      captures:
-        1: variable.other
-        2: keyword.operator
-      pop: true
-    - include: newline-pop
+      set: condition-parser
 
   condition-parser:
-    - include: main
+    - include: operators
+    - include: numbers
     - match: '{{parenthesisEnd}}'
       pop: true
 
@@ -160,8 +177,15 @@ contexts:
           pop: true 
 
   procedures:
-    - match: \s*(result) 
-      scope: keyword.control
+    - match: \b({{intrinsicFunction}})\(
+      captures: 
+        1: variable.function
+      push: argument.parser
+
+    - match: \s*(result)\s*\( 
+      captures: 
+        1: keyword.control
+      push: argument.parser
 
     - match: \b(pure)\b
       scope: storage.modifier
@@ -179,9 +203,21 @@ contexts:
         3: entity.name.function 
       push: argument.parser   
 
+    - match: '{{firstOnLine}}(call)'
+      captures:
+        1: keyword.control 
+      push: function-parser 
+
+  function-parser:
+    - match: '\s*(\w*)\('
+      captures:
+        1: variable.function
+      set: argument.parser
+
   argument.parser:
-    - include: arithmetics
+    - include: operators
     - include: comments
+    - include: strings
     - match: (\w*)
       captures: 
         1: variable.other
@@ -219,7 +255,6 @@ contexts:
     - match: (contains)
       scope: keyword.declaration.interface
 
-
   class.name:
     - include: newline-pop
     - match: \b(extends)\b{{parenthesisStart}}(\w*){{parenthesisEnd}}
@@ -234,3 +269,12 @@ contexts:
         2: entity.name.class
     - match: (?<=[end\s*type])(\w*)
       scope: entity.name.class
+
+  numbers:
+    - match: '\b(\d+[\.]?[\d+]?[d]?[\+|\-]?\d*)'
+      captures: 
+        1: constant.numeric
+
+  constants:
+    - match: (\.true\.|\.false\.)
+      scope: constant.language
