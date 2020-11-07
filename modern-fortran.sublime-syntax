@@ -188,7 +188,7 @@ contexts:
         3: entity.name.function 
       push: argument.parser   
 
-    - match: '{{firstOnLine}}(call)'
+    - match: '(call)'
       captures:
         1: keyword.control 
       push: function-parser 

@@ -143,3 +143,5 @@
    myVar = object%objVar
    call object%objFunc(a, b, c)
 !
+   if (a == b) call mySubroutine(a, b, c)
+!
