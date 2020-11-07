@@ -13,6 +13,7 @@ variables:
   firstOnLine: '^\s*'
   parenthesisStart: '\(\s*'
   parenthesisEnd: '\s*\)'
+  variableMatch: '[A-Za-z_][A-Za-z_0-9]*'
 
 contexts:
   main:
@@ -29,6 +30,8 @@ contexts:
     - include: separators
     - include: numbers
     - include: constants
+    - include: members
+    - include: matchVariable
 
   comments:
     - match: "!"
@@ -260,3 +263,14 @@ contexts:
   constants:
     - match: (\.true\.|\.false\.)
       scope: constant.language
+
+  members:
+    - match: '(\w*)(\%)(\w*)'
+      captures:
+        1: storage.type.class 
+        2: punctuation.accessor
+        3: variable.other.member
+
+  matchVariable:
+    - match: ({{variableMatch}})
+      scope: variable.other
