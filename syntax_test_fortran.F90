@@ -140,8 +140,26 @@
 !  ^^^^ keyword.control
 !       ^^^^^^^^^^^^ variable.function
 !
-   myVar = object%objVar
-   call object%objFunc(a, b, c)
+   myVar = object%objectVariable
+!  ^^^^^ variable.other
+!          ^^^^^^ storage.type.class 
+!                ^ punctuation.accessor
+!                 ^^^^^^^^^^^^^^ variable.other.member
+!
+   myVar = object%objectVariable%getStuff(a, b)
+!          ^^^^^^ storage.type.class 
+!                 ^^^^^^^^^^^^^^ variable.other.member
+!                                ^^^^^^^^ variable.function
+!
+   myVar = object%objectFunction(a, b, c)
+!          ^^^^^^ storage.type.class 
+!                 ^^^^^^^^^^^^^^ variable.function
+!
+   call object%calculateStuff()
+!       ^^^^^^ storage.type.class 
+!              ^^^^^^^^^^^^^^ variable.function
 !
    if (a == b) call mySubroutine(a, b, c)
+!              ^^^^ keyword.control
+!                   ^^^^^^^^^^^^ variable.function
 !

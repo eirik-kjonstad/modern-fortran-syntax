@@ -30,7 +30,7 @@ contexts:
     - include: separators
     - include: numbers
     - include: constants
-    - include: members
+    - include: function-parsing
     - include: matchVariable
 
   comments:
@@ -191,13 +191,7 @@ contexts:
     - match: '(call)'
       captures:
         1: keyword.control 
-      push: function-parser 
-
-  function-parser:
-    - match: '\s*(\w*)\('
-      captures:
-        1: variable.function
-      set: argument.parser
+      push: function-parsing 
 
   argument.parser:
     - include: operators
@@ -264,12 +258,23 @@ contexts:
     - match: (\.true\.|\.false\.)
       scope: constant.language
 
-  members:
+  function-parsing:
+    - match: '(\w*)\('
+      captures:
+        1: variable.function
+      push: argument.parser
+    - match: '(\w*)(\%)(\w*)\('
+      captures:
+        1: storage.type.class 
+        2: punctuation.accessor
+        3: variable.function
+      push: argument.parser
     - match: '(\w*)(\%)(\w*)'
       captures:
         1: storage.type.class 
         2: punctuation.accessor
         3: variable.other.member
+    - include: newline-pop
 
   matchVariable:
     - match: ({{variableMatch}})
