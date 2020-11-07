@@ -10,8 +10,8 @@ variables:
                         external|intent|intrinsic|optional|parameter|pointer|private|protected|
                         public|save|static|target|value|volatile)'
   firstOnLine: '^\s*'
-  parenthesisStart: '\s*\(\s*'
-  parenthesisEnd: '\s*\)\s*'
+  parenthesisStart: '\(\s*'
+  parenthesisEnd: '\s*\)'
 
 contexts:
   main:
@@ -56,7 +56,7 @@ contexts:
       scope: keyword.operator.word
     - match: (=>)
       scope: keyword.operator
-    - match: (\*|\+|-|/)
+    - match: (\*|\+|-|/|=)
       scope: keyword.operator.arithmetic
 
   separators:
@@ -64,8 +64,9 @@ contexts:
       scope: keyword.separator
 
   control:
+    - include: comments
     # if ()
-    - match: '{{firstOnLine}}(if){{parenthesisStart}}'
+    - match: '{{firstOnLine}}(if)\s*{{parenthesisStart}}'
       captures:
         1: keyword.control.conditional
       push: condition-parser
@@ -98,8 +99,7 @@ contexts:
     - match: '(while)\s*{{parenthesisStart}}'
       captures:
         1: keyword.control
-      push: condition-parser
-    - include: newline-pop
+      set: condition-parser
 
   condition-parser:
     - include: operators
@@ -155,8 +155,10 @@ contexts:
           pop: true 
 
   procedures:
-    - match: \s*(result) 
-      scope: keyword.control
+    - match: \s*(result)\s*\( 
+      captures: 
+        1: keyword.control
+      push: argument.parser
 
     - match: \b(pure)\b
       scope: storage.modifier
@@ -175,7 +177,7 @@ contexts:
       push: argument.parser   
 
   argument.parser:
-    - include: arithmetics
+    - include: operators
     - include: comments
     - match: (\w*)
       captures: 

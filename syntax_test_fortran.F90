@@ -17,9 +17,10 @@
    endif
 !  ^^^^ keyword.control.conditional
 !
-   do while (a .ne. b) 
+   do while (a .ne. b) ! a side-comment
 !  ^^ keyword.control
 !     ^^^^^ keyword.control
+!                        ^^^^^^^^^^^^^^ comment.line
 !
    enddo
 
@@ -80,6 +81,7 @@
 !
    pure function getStuff(a) result(theStuff)
 !                            ^^^^^^ keyword.control
+!                                   ^^^^^^^^ variable.other
 !
    end function getStuff
 !  ^^^ keyword.control
