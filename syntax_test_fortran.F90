@@ -134,4 +134,5 @@
 !
    aRealNumber = real(anInteger)
 !                ^^^^ variable.function
+!                     ^^^^^^^^^ ^^^^ variable.other
 !

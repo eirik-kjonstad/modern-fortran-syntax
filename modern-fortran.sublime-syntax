@@ -161,6 +161,7 @@ contexts:
     - match: \b({{intrinsicFunction}})\(
       captures: 
         1: variable.function
+      push: argument.parser
 
     - match: \s*(result)\s*\( 
       captures: 
