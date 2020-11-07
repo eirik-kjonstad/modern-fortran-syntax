@@ -27,6 +27,7 @@ contexts:
     - include: classdefinitions
     - include: separators
     - include: numbers
+    - include: constants
 
   comments:
     - match: "!"
@@ -53,7 +54,7 @@ contexts:
   operators:
     - match: (==|/=|>=|<=|<|>)
       scope: keyword.operator.logical
-    - match: (\.and\.|\.or\.|\.ne\.|\.lt\.|\.leq\.|\.gt\.|\.geq\.|\.eq\.)
+    - match: (\.and\.|\.or\.|\.ne\.|\.lt\.|\.le\.|\.gt\.|\.ge\.|\.eq\.|\.not\.)
       scope: keyword.operator.word
     - match: (=>)
       scope: keyword.operator
@@ -237,3 +238,6 @@ contexts:
       captures: 
         1: constant.numeric
 
+  constants:
+    - match: (\.true\.|\.false\.)
+      scope: constant.language
