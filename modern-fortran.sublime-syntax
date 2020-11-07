@@ -199,6 +199,7 @@ contexts:
   argument.parser:
     - include: operators
     - include: comments
+    - include: strings
     - match: (\w*)
       captures: 
         1: variable.other
