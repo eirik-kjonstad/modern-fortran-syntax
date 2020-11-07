@@ -8,7 +8,8 @@ variables:
   intrinsicType: '(real|integer|complex|character|logical|byte|double precision|double complex)'
   intrinsicAttribute: '(allocatable|asynchronous|automatic|bind|codimension|contiguous|dimension|
                         external|intent|intrinsic|optional|parameter|pointer|private|protected|
-                        public|save|static|target|value|volatile)'
+                        public|save|static|target|value|volatile|deferred|pass|nopass|overridable|
+                        non_overridable)'
   firstOnLine: '^\s*'
   parenthesisStart: '\s*\(\s*'
   parenthesisEnd: '\s*\)\s*'
@@ -36,17 +37,17 @@ contexts:
         pop: true
 
   types:
-    - match: '\b{{intrinsicType}}\b'
+    - match: \b{{intrinsicType}}\b
       scope: storage.type
       push: declaration
-    - match: '\b(type|class){{parenthesisStart}}\s*(\w*){{parenthesisEnd}}'
+    - match: \b(type|class){{parenthesisStart}}\s*(\w*){{parenthesisEnd}}
       captures:
         1: storage.type.class
         2: entity.name.class
       push: declaration
 
   attribute:
-    - match: '\b{{intrinsicAttribute}}\b'
+    - match: \b{{intrinsicAttribute}}\b
       scope: storage.modifier
 
   operators:
@@ -60,7 +61,7 @@ contexts:
       scope: keyword.operator.arithmetic
 
   separators:
-    - match: '(::)'
+    - match: (::)
       scope: keyword.separator
 
   control:
@@ -119,10 +120,9 @@ contexts:
     - include: attribute
     - include: operators
     - include: separators
+    - include: newline-pop
     - match: '\b(in|out|inout)\b'
       scope: keyword.other
-    - match: '\n'
-      pop: true
 
   continuation:
     - match: "&"
@@ -196,7 +196,7 @@ contexts:
       pop: true
 
   modules:
-    - match: '\b(module)\b\s*(\w*)$'
+    - match: \b(module)\b\s*(\w*)$
       captures: 
         1: keyword.declaration.interface
         2: entity.name.interface
@@ -211,7 +211,7 @@ contexts:
         2: entity.name.interface
 
   classdefinitions:
-    - match: '\b(type)(?!{{parenthesisStart}})'
+    - match: \b(type)(?!{{parenthesisStart}})
       scope: storage.type.class
       push: class.name
     - match: (procedure)
@@ -222,15 +222,15 @@ contexts:
 
   class.name:
     - include: newline-pop
-    - match: '\b(extends)\b{{parenthesisStart}}(\w*){{parenthesisEnd}}'
+    - match: \b(extends)\b{{parenthesisStart}}(\w*){{parenthesisEnd}}
       captures:
         1: keyword.operator
         2: entity.other.inherited-class
-    - match: '\b(abstract)\b'
+    - match: \b(abstract)\b
       scope: storage.modifier
-    - match: '(::)\s*(\w*)'
+    - match: (::)\s*(\w*)
       captures:
         1: keyword.separator
         2: entity.name.class
-    - match: '(?<=[end\s*type])(\w*)'
+    - match: (?<=[end\s*type])(\w*)
       scope: entity.name.class
