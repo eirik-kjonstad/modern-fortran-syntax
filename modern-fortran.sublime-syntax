@@ -233,7 +233,7 @@ contexts:
       scope: entity.name.class
 
   numbers:
-    - match: '\b(\d+[\.]?\d+[d]?[\+|\-]?\d+)'
+    - match: '\b(\d+[\.]?[\d+]?[d]?[\+|\-]?\d*)'
       captures: 
         1: constant.numeric
 

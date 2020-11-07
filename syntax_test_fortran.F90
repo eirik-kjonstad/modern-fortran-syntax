@@ -116,6 +116,9 @@
 !      ^^^^^^^^^ keyword.declaration.interface
 !                ^^^^^^^^^^^^^ entity.name.interface
 !
+   8
+!  ^ constant.numeric
+!
    123
 !  ^^^ constant.numeric
 !
