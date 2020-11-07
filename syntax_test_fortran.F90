@@ -172,3 +172,20 @@
    call object%objectFunction(anotherObject%myFunction())
 !                                           ^^^^^^^^^^ variable.function
 !
+   interface myInterface
+!  ^^^^^^^^^ keyword.declaration.interface 
+!            ^^^^^^^^^^^ entity.name.interface
+!
+   end interface myInterface 
+!  ^^^ keyword.control
+!      ^^^^^^^^^ keyword.declaration.interface
+!                ^^^^^^^^^^^ entity.name.interface
+!
+   abstract interface
+!  ^^^^^^^^ storage.modifier
+!           ^^^^^^^^^ keyword.declaration.interface
+!
+   end interface 
+!  ^^^ keyword.control
+!      ^^^^^^^^^ keyword.declaration.interface
+!

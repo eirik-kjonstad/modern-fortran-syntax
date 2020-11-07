@@ -26,6 +26,7 @@ contexts:
     - include: continuation
     - include: procedures
     - include: modules
+    - include: interfaces 
     - include: classdefinitions
     - include: separators
     - include: numbers
@@ -282,6 +283,14 @@ contexts:
         2: punctuation.accessor
         3: variable.other.member
     - include: newline-pop
+
+  interfaces:
+    - match: (abstract)\s*(?=interface)
+      scope: storage.modifier
+    - match: (interface)
+      scope: keyword.declaration.interface
+    - match: '(?<=[interface])\s*(\w*)'
+      scope: entity.name.interface
 
   matchVariable:
     - match: ({{variableMatch}})
