@@ -140,3 +140,6 @@
 !  ^^^^ keyword.control
 !       ^^^^^^^^^^^^ variable.function
 !
+   myVar = object%objVar
+   call object%objFunc(a, b, c)
+!
