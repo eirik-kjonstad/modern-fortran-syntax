@@ -40,11 +40,11 @@
 !       ^^ keyword.separator
 !          ^^^^^^^^ entity.name.class
 !
-    type, abstract :: myClass2
-!   ^^^^ storage.type.class
-!         ^^^^^^^^ storage.modifier
-!                  ^^ keyword.separator
-!                     ^^^^^^^ entity.name.class
+   type, abstract :: myClass2
+!  ^^^^ storage.type.class
+!        ^^^^^^^^ storage.modifier
+!                 ^^ keyword.separator
+!                    ^^^^^^^ entity.name.class
 
    "This is a simple string"
 !
@@ -189,4 +189,10 @@
    end interface 
 !  ^^^ keyword.control
 !      ^^^^^^^^^ keyword.declaration.interface
+!
+   if (thing == object%getThing('string', .true.)) call object%doStuff()
+!               ^^^^^^ storage.type.class 
+!                      ^^^^^^^^ variable.function
+!                                ^^^^^^ string.quoted.single
+!                                         ^^^^^^ constant.language
 !
