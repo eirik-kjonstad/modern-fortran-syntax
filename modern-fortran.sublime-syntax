@@ -106,6 +106,7 @@ contexts:
 
   condition-parser:
     - include: operators
+    - include: numbers
     - match: '{{parenthesisEnd}}'
       pop: true
 
@@ -183,6 +184,17 @@ contexts:
         2: keyword.declaration.function
         3: entity.name.function 
       push: argument.parser   
+
+    - match: '{{firstOnLine}}(call)'
+      captures:
+        1: keyword.control 
+      push: function-parser 
+
+  function-parser:
+    - match: '\s*(\w*)\('
+      captures:
+        1: variable.function
+      set: argument.parser
 
   argument.parser:
     - include: operators

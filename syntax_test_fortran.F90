@@ -134,5 +134,9 @@
 !
    aRealNumber = real(anInteger)
 !                ^^^^ variable.function
-!                     ^^^^^^^^^ ^^^^ variable.other
+!                     ^^^^^^^^^ variable.other
+!  simple function call
+   call mySubroutine(a, b, c)
+!  ^^^^ keyword.control
+!       ^^^^^^^^^^^^ variable.function
 !
