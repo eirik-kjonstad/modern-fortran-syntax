@@ -44,6 +44,7 @@ contexts:
     - include: continuation
     - include: procedures
     - include: modules
+    - include: interfaces 
     - include: classdefinitions
     - include: separators
     - include: numbers
@@ -54,13 +55,16 @@ contexts:
   comments:
     - match: "!"
       scope: punctuation.definition.comment
-      push:
+      set:
       - meta_scope: comment.line
       - match: \n 
         pop: true
 
   types:
-    - match: '{{firstOnLine}}{{intrinsicType}}\b'
+
+    - include: comments
+    - include: strings
+    - match: '{{firstOnLine}}\b{{intrinsicType}}\b'
       scope: storage.type
       push: declaration
     - match: '{{firstOnLine}}(type|class){{parenthesisStart}}\s*(\w*){{parenthesisEnd}}'
@@ -86,6 +90,8 @@ contexts:
   separators:
     - match: (::)
       scope: keyword.separator
+    - match: ','
+      scope: punctuation.separator
 
   control:
     - include: comments
@@ -113,21 +119,17 @@ contexts:
     - match: '{{firstOnLine}}(do)'
       captures:
         1: keyword.control.conditional
-      push: do-loop
+    - match: '(?<=[do])\s*(while)'
+      scope: keyword.control.conditional
     # enddo
     - match: '{{firstOnLine}}(end\s*do)\b'
       captures:
         1: keyword.control
 
-  do-loop:
-    - match: '(while)\s*{{parenthesisStart}}'
-      captures:
-        1: keyword.control
-      set: condition-parser
-
   condition-parser:
     - include: operators
     - include: numbers
+    - include: function-parsing
     - match: '{{parenthesisEnd}}'
       pop: true
 
@@ -140,6 +142,8 @@ contexts:
     - include: operators
     - include: separators
     - include: newline-pop
+    - include: comments
+    - include: strings
     - match: '\b(in|out|inout)\b'
       scope: keyword.other
 
@@ -214,11 +218,12 @@ contexts:
     - include: operators
     - include: comments
     - include: strings
+    - include: constants
+    - include: function-parsing
+    - include: separators
     - match: (\w*)
       captures: 
         1: variable.other
-    - match: ","
-      scope: punctuation.separator
     - match: "&"
       scope: punctuation.separator.continuation
       push: argument.parser
@@ -241,6 +246,14 @@ contexts:
       captures:
         1: keyword.declaration.interface
         2: entity.name.interface
+    - match: (use)
+      scope: keyword.control
+    - match: (?<=[use])\s*(\w*)
+      scope: entity.name.interface
+    - match: (only)\s*(\:)
+      captures:
+        1: keyword.control
+        2: punctuation.separator
 
   classdefinitions:
     - match: \b(type)(?!{{parenthesisStart}})
@@ -292,6 +305,14 @@ contexts:
         2: punctuation.accessor
         3: variable.other.member
     - include: newline-pop
+
+  interfaces:
+    - match: (abstract)\s*(?=interface)
+      scope: storage.modifier
+    - match: (interface)
+      scope: keyword.declaration.interface
+    - match: '(?<=[interface])\s*(\w*)'
+      scope: entity.name.interface
 
   matchVariable:
     - match: ({{variableMatch}})

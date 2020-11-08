@@ -24,10 +24,11 @@
 !
    enddo
 
-   real(dp), intent(in) :: myReal
+   real(dp), intent(in) :: myReal ! a side-comment
 !  ^^^^ storage.type
 !            ^^^^^^ storage.modifier
 !                   ^^ keyword.other
+!                                   ^^^^^^^^^^^^^^ comment.line
 
    class(myClass), allocatable :: myClassInstance
 !  ^^^^^ storage.type.class
@@ -39,11 +40,11 @@
 !       ^^ keyword.separator
 !          ^^^^^^^^ entity.name.class
 !
-    type, abstract :: myClass2
-!   ^^^^ storage.type.class
-!         ^^^^^^^^ storage.modifier
-!                  ^^ keyword.separator
-!                     ^^^^^^^ entity.name.class
+   type, abstract :: myClass2
+!  ^^^^ storage.type.class
+!        ^^^^^^^^ storage.modifier
+!                 ^^ keyword.separator
+!                    ^^^^^^^ entity.name.class
 
    "This is a simple string"
 !
@@ -151,9 +152,11 @@
 !                 ^^^^^^^^^^^^^^ variable.other.member
 !                                ^^^^^^^^ variable.function
 !
-   myVar = object%objectFunction(a, b, c)
+   myVar = object%objectFunction(a, b, c, otherObject%variable)
 !          ^^^^^^ storage.type.class 
 !                 ^^^^^^^^^^^^^^ variable.function
+!                                         ^^^^^^^^^^^ storage.type.class 
+!                                                     ^^^^^^^^ variable.other.member
 !
    call object%calculateStuff()
 !       ^^^^^^ storage.type.class 
@@ -162,4 +165,59 @@
    if (a == b) call mySubroutine(a, b, c)
 !              ^^^^ keyword.control
 !                   ^^^^^^^^^^^^ variable.function
+!
+   call object%objectFunction(anotherObject%variable)
+!                             ^^^^^^^^^^^^^ storage.type.class 
+!                                           ^^^^^^^^ variable.other.member
+!
+   call object%objectFunction(anotherObject%myFunction())
+!                                           ^^^^^^^^^^ variable.function
+!
+   interface myInterface
+!  ^^^^^^^^^ keyword.declaration.interface 
+!            ^^^^^^^^^^^ entity.name.interface
+!
+   end interface myInterface 
+!  ^^^ keyword.control
+!      ^^^^^^^^^ keyword.declaration.interface
+!                ^^^^^^^^^^^ entity.name.interface
+!
+   abstract interface
+!  ^^^^^^^^ storage.modifier
+!           ^^^^^^^^^ keyword.declaration.interface
+!
+   end interface 
+!  ^^^ keyword.control
+!      ^^^^^^^^^ keyword.declaration.interface
+!
+   if (thing == object%getThing('string', .true.)) call object%doStuff()
+!               ^^^^^^ storage.type.class 
+!                                       ^ punctuation.separator
+!                      ^^^^^^^^ variable.function
+!                                ^^^^^^ string.quoted.single
+!                                         ^^^^^^ constant.language
+!
+   use moduleName, only: moduleRoutine, moduleObject, &
+!                        ^^^^^^^^^^^^^ variable.other
+!                                                     ^ punctuation.separator.continuation
+                           otherModuleRoutine, anotherModuleObject
+!                          ^^^^^^^^^^^^^^^^^^ variable.other
+!                                            ^ punctuation.separator
+   evenNumber = 0
+!
+   do I = 1, 10
+!  ^^ keyword.control
+!     ^ variable.other
+!         ^ constant.numeric
+!          ^ punctuation.separator
+!            ^^ constant.numeric
+!
+      evenNumber = evenNumber + 2*I
+!     ^^^^^^^^^^ variable.other
+!                  ^^^^^^^^^^ variable.other
+!                                 ^ variable.other
+!                               ^ constant.numeric
+   enddo
+!  ^^^^^ keyword.control
+!
 !
