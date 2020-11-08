@@ -65,7 +65,7 @@ contexts:
       scope: keyword.operator.word
     - match: (=>)
       scope: keyword.operator
-    - match: (\*|\+|-|/|=)
+    - match: (\*|\+|-|\/|=)
       scope: keyword.operator.arithmetic
 
   separators:
@@ -116,7 +116,10 @@ contexts:
     - include: separators
     - include: comments
     - include: strings
-    - match: '\b(in|out|inout)\b'
+    - match: '\b(in|out|inout)\b' # E: we need to make this be keywords,
+                                  # but dimension(a,b,c) should make 
+                                  # a,b,c be variables - intent & dimension
+                                  # should trigger different scopes
       scope: keyword.other
     - match: '\n'
       pop: true
@@ -287,6 +290,8 @@ contexts:
       scope: keyword.declaration.interface
     - match: '(?<=[interface])\s*(\w*)'
       scope: entity.name.interface
+    - match: (include)
+      scope: keyword.control
 
   matchVariable:
     - match: ({{variableMatch}})
