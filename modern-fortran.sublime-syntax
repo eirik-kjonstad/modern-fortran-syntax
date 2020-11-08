@@ -28,10 +28,14 @@ variables:
 |scan|selected_char_kind|selected_int_kind|selected_real_kind|set_exponent|shape|shifta
 |shiftl|shiftr|sign|sin|sinh|size|sngl|spacing|spread|sqrt|storage_size|sum|system_clock|tan
 |tanh|this_image|tiny|trailz|transfer|transpose|trim|ubound|ucobound|unpack|verify)'
+
   firstOnLine: '^\s*'
   parenthesisStart: '\(\s*'
   parenthesisEnd: '\s*\)'
   variableMatch: '[A-Za-z_][A-Za-z_0-9]*'
+  ompDirectives: '(end|parallel|do|simd|single|target|update|workshare|declare|sections|distribute|teams|task|taskyield|master|critical|barrier|taskwait|taskgroup|atomic|flush|ordered|cancel|cancellation point|reduction)'
+  ompIntrinsics: (omp_set_num_threads|omp_get_num_threads|omp_get_max_threads|omp_get_thread_num|omp_get_num_procs|omp_in_parallel|omp_set_dynamic|omp_get_dynamic|omp_get_cancellation|omp_set_nested|omp_get_nested|omp_set_schedule|omp_get_schedule|omp_get_thread_limit|omp_set_max_active_levels|omp_get_max_active_levels|omp_get_level|omp_get_ancestor_thread_num|omp_get_team_size|omp_get_active_level|omp_in_final|omp_get_proc_bind|omp_set_default_device|omp_get_default_device|omp_get_num_devices|omp_get_num_teams|omp_get_team_num|omp_is_initial_device|omp_init_lock|omp_init_nest_lock|omp_destroy_lock|omp_destroy_nest_lock|omp_set_lock|omp_set_nest_lock|omp_unset_lock|omp_unset_nest_lock|omp_test_lock|omp_test_nest_lock|omp_get_wtime|omp_get_wtick)
+  ompClauses: (default|shared|private|firstprivate|lastprivate|linear|reduction|copyin|copyprivate|map|tofrom|safelen|collapse|simdlen|aligned|uniform|Inbrach|notinbranch)
 
 contexts:
   main:
@@ -51,9 +55,10 @@ contexts:
     - include: constants
     - include: function-parsing
     - include: matchVariable
+    - include: omp
 
   comments:
-    - match: "!"
+    - match: '!(?![$])'
       scope: punctuation.definition.comment
       set:
       - meta_scope: comment.line
@@ -314,3 +319,60 @@ contexts:
   matchVariable:
     - match: ({{variableMatch}})
       scope: variable.other
+
+  omp:
+    - match: '{{firstOnLine}}(\!\$omp)'
+      scope: support.function
+      push: omp.line 
+    #- match: '{{firstOnLine}}(\!\$)'
+    #  scope: support.function
+    #  push: omp.line 
+
+  omp.line:
+    - include: omp.continuation
+    - include: omp.directives
+    - include: omp.intrinsic
+    - include: omp.clauses
+    - match: (schedule)
+      scope: support.function
+      push: omp.schedule
+    - match: '\n'
+      pop: true
+
+  omp.directives:
+    - match: ({{ompDirectives}})
+      scope: support.function
+
+  omp.intrinsic:
+    - match: ({{ompIntrinsics}})
+      scope: support.function
+
+  omp.clauses:
+    - include: omp.continuation
+    - match: ({{ompClauses}})
+      scope: support.constant
+      push: omp.clause-list
+
+  omp.schedule:
+    - include: omp.continuation
+    - match: (static|dynamic|guided|auto)
+      scope: support.constant
+    - match: '{{parenthesisEnd}}'
+      pop: true
+
+  omp.clause-list:
+    - match: '{{variableMatch}}'
+      scope: variable.other
+    - match: '{{parenthesisEnd}}'
+      pop: true
+
+  omp.continuation:
+    - match: "&" 
+      push:
+        - match: '{{firstOnLine}}(\!\$omp)'
+          scope: support.function
+          pop: true
+
+
+
+
