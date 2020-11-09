@@ -108,7 +108,7 @@ contexts:
     - match: '\b(then)\b'
       scope: keyword.control.conditional
     # elseif ()
-    - match: '{{firstOnLine}}(else)\s*(if)'
+    - match: '{{firstOnLine}}(else)\s*(if)\b'
       captures:
         1: keyword.control.conditional
         2: keyword.control.conditional
@@ -120,7 +120,7 @@ contexts:
       captures:
         1: keyword.control.conditional
     # do 
-    - match: '{{firstOnLine}}(do)'
+    - match: '{{firstOnLine}}(do)\b'
       captures:
         1: keyword.control.conditional
     - match: '(?<=[do])\s*(while)'
