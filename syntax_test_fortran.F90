@@ -26,8 +26,10 @@
 
    real(dp), intent(in) :: myReal ! a side-comment
 !  ^^^^ storage.type
+!       ^^ variable.other
 !            ^^^^^^ storage.modifier
 !                   ^^ keyword.other
+!                          ^^^^^^ variable.other
 !                                   ^^^^^^^^^^^^^^ comment.line
 
    class(myClass), allocatable :: myClassInstance
@@ -220,3 +222,18 @@
    enddo
 !  ^^^^^ keyword.control
 !
+
+   thing = object%inObject%inInObject(I)%get_thing(J)
+!  ^^^^^ variable.other
+!          ^^^^^^ storage.type.class
+!                 ^^^^^^^^ variable.other.member
+!                          ^^^^^^^^^^ variable.function
+!                                        ^^^^^^^^^ variable.function
+   if (present(myArgument)) call doThing(myArgument)
+!  ^^ keyword.control
+!      ^^^^^^^ variable.function
+
+   real(dp), dimension(wf%n_ao**2, wf%n_densities), intent(in), optional :: prev_ao_density
+!  ^^^^ storage.type
+!            ^^^^^^^^^ storage.modifier
+!                                                   ^^^^^^ storage.modifier
