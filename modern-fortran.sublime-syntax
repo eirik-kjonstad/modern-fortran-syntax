@@ -23,7 +23,7 @@ variables:
 |is_iostat_end|is_iostat_eor|ishft|isfhtc|kind|lbound|lcobound|leadz|len|len_trim|lge|lgt
 |lle|llt|log|log10|log_gamma|logical|maskl|maskr|matmul|max|maxexponent|maxloc|maxval|merge
 |merge_bits|min|minexponent|minloc|minval|mod|module|move_alloc|mvbits|nearest|new\_line
-|nint|not|norm2|null|num_images|pack|parity|popcnt|poppar|precision|present|product|radix
+|nint|not|norm2|null|num_images|pack|parity|popcnt|poppar|precision|present|print|product|radix
 |random_number|random_seed|range|rank|real|repeat|reshape|rrspacing|same_type_as|scale
 |scan|selected_char_kind|selected_int_kind|selected_real_kind|set_exponent|shape|shifta
 |shiftl|shiftr|sign|sin|sinh|size|sngl|spacing|spread|sqrt|storage_size|sum|system_clock|tan
@@ -94,6 +94,8 @@ contexts:
 
   separators:
     - match: (::)
+      scope: keyword.separator
+    - match: (:)
       scope: keyword.separator
     - match: ','
       scope: punctuation.separator
