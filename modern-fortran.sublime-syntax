@@ -127,10 +127,7 @@ contexts:
     - include: comments
     - include: strings
     - include: numbers
-    - match: '\b(in|out|inout)\b' # E: we need to make this be keywords,
-                                  # but dimension(a,b,c) should make 
-                                  # a,b,c be variables - intent & dimension
-                                  # should trigger different scopes
+    - match: '\b(in|out|inout)\b' 
       scope: keyword.other 
     - include: class-accessing
     - include: matchVariable
