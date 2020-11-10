@@ -233,8 +233,13 @@
    if (present(myArgument)) call doThing(myArgument)
 !  ^^ keyword.control
 !      ^^^^^^^ variable.function
-
+!                                ^^^^^^^ variable.function
+!
    real(dp), dimension(wf%n_ao**2, wf%n_densities), intent(in), optional :: prev_ao_density
 !  ^^^^ storage.type
 !            ^^^^^^^^^ storage.modifier
 !                                                   ^^^^^^ storage.modifier
+!                      ^^ storage.type.class
+!                        ^ punctuation.accessor
+!                         ^^^ variable.other
+!

@@ -132,6 +132,7 @@ contexts:
                                   # a,b,c be variables - intent & dimension
                                   # should trigger different scopes
       scope: keyword.other 
+    - include: class-accessing
     - include: matchVariable
 
   continuation:
