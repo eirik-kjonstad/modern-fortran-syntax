@@ -34,7 +34,8 @@ contexts:
     - include: separators
     - include: numbers
     - include: constants
-    - include: function-parsing
+    - include: class-accessing
+    - include: function-call
     - include: matchVariable
     - include: omp
 
@@ -79,6 +80,8 @@ contexts:
       scope: keyword.separator
     - match: ','
       scope: punctuation.separator
+    - match: '\%'
+      scope: punctuation.accessor
 
   control:
     - include: comments
@@ -129,7 +132,6 @@ contexts:
                                   # a,b,c be variables - intent & dimension
                                   # should trigger different scopes
       scope: keyword.other 
-    - include: function-parsing
     - include: matchVariable
 
   continuation:
@@ -194,7 +196,6 @@ contexts:
     - match: '(call)'
       captures:
         1: keyword.control 
-      push: function-parsing 
 
   modules:
     - match: \b(module)\b\s*(\w*)$
@@ -252,22 +253,15 @@ contexts:
     - match: (\.true\.|\.false\.)
       scope: constant.language
 
-  function-parsing:
+  class-accessing:
     - include: comments 
+    - match: '(\w*)(?=\%|\(.*\)\%)' # matches a in a%something or a(...)%something
+      scope: storage.type.class
+
+  function-call:
     - match: '(\w*)\('
       captures:
         1: variable.function
-    - match: '(\w*)(\%)(\w*)\('
-      captures:
-        1: storage.type.class 
-        2: punctuation.accessor
-        3: variable.function
-    - match: '(\w*)(\%)(\w*)'
-      captures:
-        1: storage.type.class 
-        2: punctuation.accessor
-        3: variable.other.member
-    - include: newline-pop
 
   interfaces:
     - match: (abstract)\s*(?=interface)

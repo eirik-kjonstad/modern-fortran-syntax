@@ -135,46 +135,6 @@
    real(8) :: aRealNumber
 !  ^^^^ storage.type
 !
-   aRealNumber = real(anInteger)
-!                ^^^^ variable.function
-!                     ^^^^^^^^^ variable.other
-!  simple function call
-   call mySubroutine(a, b, c)
-!  ^^^^ keyword.control
-!       ^^^^^^^^^^^^ variable.function
-!
-   myVar = object%objectVariable
-!  ^^^^^ variable.other
-!          ^^^^^^ storage.type.class 
-!                ^ punctuation.accessor
-!                 ^^^^^^^^^^^^^^ variable.other.member
-!
-   myVar = object%objectVariable%getStuff(a, b)
-!          ^^^^^^ storage.type.class 
-!                 ^^^^^^^^^^^^^^ variable.other.member
-!                                ^^^^^^^^ variable.function
-!
-   myVar = object%objectFunction(a, b, c, otherObject%variable)
-!          ^^^^^^ storage.type.class 
-!                 ^^^^^^^^^^^^^^ variable.function
-!                                         ^^^^^^^^^^^ storage.type.class 
-!                                                     ^^^^^^^^ variable.other.member
-!
-   call object%calculateStuff()
-!       ^^^^^^ storage.type.class 
-!              ^^^^^^^^^^^^^^ variable.function
-!
-   if (a == b) call mySubroutine(a, b, c)
-!              ^^^^ keyword.control
-!                   ^^^^^^^^^^^^ variable.function
-!
-   call object%objectFunction(anotherObject%variable)
-!                             ^^^^^^^^^^^^^ storage.type.class 
-!                                           ^^^^^^^^ variable.other.member
-!
-   call object%objectFunction(anotherObject%myFunction())
-!                                           ^^^^^^^^^^ variable.function
-!
    interface myInterface
 !  ^^^^^^^^^ keyword.declaration.interface 
 !            ^^^^^^^^^^^ entity.name.interface
@@ -226,9 +186,50 @@
    thing = object%inObject%inInObject(I)%get_thing(J)
 !  ^^^^^ variable.other
 !          ^^^^^^ storage.type.class
-!                 ^^^^^^^^ variable.other.member
-!                          ^^^^^^^^^^ variable.function
+!                 ^^^^^^^^ storage.type.class
+!                          ^^^^^^^^^^ storage.type.class
 !                                        ^^^^^^^^^ variable.function
+!
+   aRealNumber = real(anInteger)
+!                ^^^^ variable.function
+!                     ^^^^^^^^^ variable.other
+!  simple function call
+   call mySubroutine(a, b, c)
+!  ^^^^ keyword.control
+!       ^^^^^^^^^^^^ variable.function
+!
+   myVar = object%objectVariable
+!  ^^^^^ variable.other
+!          ^^^^^^ storage.type.class 
+!                ^ punctuation.accessor
+!                 ^^^^^^^^^^^^^^ variable.other
+!
+   myVar = object%objectVariable%getStuff(a, b)
+!          ^^^^^^ storage.type.class 
+!                 ^^^^^^^^^^^^^^ storage.type.class 
+!                                ^^^^^^^^ variable.function
+!
+   myVar = object%objectFunction(a, b, c, otherObject%variable)
+!          ^^^^^^ storage.type.class 
+!                 ^^^^^^^^^^^^^^ variable.function
+!                                         ^^^^^^^^^^^ storage.type.class 
+!                                                     ^^^^^^^^ variable.other
+!
+   call object%calculateStuff()
+!       ^^^^^^ storage.type.class 
+!              ^^^^^^^^^^^^^^ variable.function
+!
+   if (a == b) call mySubroutine(a, b, c)
+!              ^^^^ keyword.control
+!                   ^^^^^^^^^^^^ variable.function
+!
+   call object%objectFunction(anotherObject%variable)
+!                             ^^^^^^^^^^^^^ storage.type.class 
+!                                           ^^^^^^^^ variable.other
+!
+   call object%objectFunction(anotherObject%myFunction())
+!                                           ^^^^^^^^^^ variable.function
+!
    if (present(myArgument)) call doThing(myArgument)
 !  ^^ keyword.control
 !      ^^^^^^^ variable.function
