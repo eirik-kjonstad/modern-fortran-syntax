@@ -264,3 +264,12 @@
 !
    enddo
 !$omp end parallel do 
+
+   type1 = "hello!" ! should understand that 'type1' is a variable 
+!  ^^^^^ variable.other
+!           ^^^^^^ string.quoted.single
+!                     ^^^^^^ comment.line
+!
+   used_diag(j) = 5 ! should not recognize "use" as keyword
+!  ^^^^^^^^^ variable.function
+!

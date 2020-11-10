@@ -17,6 +17,7 @@ variables:
   ompDirectives: '(end|parallel|do|simd|single|target|update|workshare|declare|sections|distribute|teams|task|taskyield|master|critical|barrier|taskwait|taskgroup|atomic|flush|ordered|cancel|cancellation point|reduction)'
   ompIntrinsics: (omp_set_num_threads|omp_get_num_threads|omp_get_max_threads|omp_get_thread_num|omp_get_num_procs|omp_in_parallel|omp_set_dynamic|omp_get_dynamic|omp_get_cancellation|omp_set_nested|omp_get_nested|omp_set_schedule|omp_get_schedule|omp_get_thread_limit|omp_set_max_active_levels|omp_get_max_active_levels|omp_get_level|omp_get_ancestor_thread_num|omp_get_team_size|omp_get_active_level|omp_in_final|omp_get_proc_bind|omp_set_default_device|omp_get_default_device|omp_get_num_devices|omp_get_num_teams|omp_get_team_num|omp_is_initial_device|omp_init_lock|omp_init_nest_lock|omp_destroy_lock|omp_destroy_nest_lock|omp_set_lock|omp_set_nest_lock|omp_unset_lock|omp_unset_nest_lock|omp_test_lock|omp_test_nest_lock|omp_get_wtime|omp_get_wtick)
   ompClauses: (default|shared|private|firstprivate|lastprivate|linear|reduction|copyin|copyprivate|map|tofrom|safelen|collapse|simdlen|aligned|uniform|Inbrach|notinbranch)
+  fppCommands: (define|undef|ifdef|ifndef|if|elif|else|endif|include|error|warning|line-number|line)
 
 contexts:
   main:
@@ -210,9 +211,9 @@ contexts:
       captures:
         1: keyword.declaration.interface
         2: entity.name.interface
-    - match: (use)
+    - match: \b(use)\b
       scope: keyword.control
-    - match: (?<=use)\s*(\w*)
+    - match: (?<=\buse\b)\s*(\w*)
       scope: entity.name.interface
     - match: (only)\s*(\:)
       captures:
@@ -220,7 +221,8 @@ contexts:
         2: punctuation.separator
 
   classdefinitions:
-    - match: \b(type)(?!{{parenthesisStart}})
+    #- match: \b(type)(?!{{parenthesisStart}})
+    - match: \b(type)(?=.*(::))
       scope: storage.type.class
       push: class.name
     - match: (procedure)
@@ -326,7 +328,7 @@ contexts:
   preprocessing:
     - match: '{{firstOnLine}}(\#)'
       scope: support.function
-    - match: '(?<=\#)(define|undef|ifdef|ifndef|if|elif|else|endif|include|error|warning|line)'
+    - match: '(?<=\#)({{fppCommands}})'
       scope: support.function
     
 
