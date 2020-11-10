@@ -20,6 +20,7 @@ variables:
 
 contexts:
   main:
+    - include: preprocessing
     - include: comments 
     - include: types
     - include: attribute
@@ -108,7 +109,7 @@ contexts:
     - match: '{{firstOnLine}}(do)\b'
       captures:
         1: keyword.control.conditional
-    - match: '(?<=[do])\s*(while)'
+    - match: '(?<=do)\s*(while)'
       scope: keyword.control.conditional
     # enddo
     - match: '{{firstOnLine}}(end\s*do)\b'
@@ -211,7 +212,7 @@ contexts:
         2: entity.name.interface
     - match: (use)
       scope: keyword.control
-    - match: (?<=[use])\s*(\w*)
+    - match: (?<=use)\s*(\w*)
       scope: entity.name.interface
     - match: (only)\s*(\:)
       captures:
@@ -239,7 +240,7 @@ contexts:
       captures:
         1: keyword.separator
         2: entity.name.class
-    - match: (?<=[end\s*type])(\w*)
+    - match: '(?<=type)(\w*)'
       scope: entity.name.class
 
   numbers:
@@ -266,7 +267,7 @@ contexts:
       scope: storage.modifier
     - match: (interface)
       scope: keyword.declaration.interface
-    - match: '(?<=[interface])\s*(\w*)'
+    - match: '(?<=interface)\s*(\w*)'
       scope: entity.name.interface
     - match: (include)
       scope: keyword.control
@@ -322,6 +323,10 @@ contexts:
     - match: ({{variableMatch}})
       scope: variable.other
 
-
-
+  preprocessing:
+    - match: '{{firstOnLine}}(\#)'
+      scope: support.function
+    - match: '(?<=\#)(define|undef|ifdef|ifndef|if|elif|else|endif|include|error|warning|line)'
+      scope: support.function
+    
 

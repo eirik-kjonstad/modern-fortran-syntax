@@ -243,3 +243,24 @@
 !                        ^ punctuation.accessor
 !                         ^^^ variable.other
 !
+#ifdef myVar
+!      ^^^^^ variable.other
+   integer, parameter :: p = 1
+#else
+   integer, parameter :: p = 2
+#endif
+!<- support.function
+!^^^^^ support.function
+
+#include "someFile.F08"
+!         ^^^^^^^^^^^^ string.quoted.single
+
+!$omp parallel do private(I)
+!^ support.function
+! ^^^ support.function
+   do I = 1, 10
+!
+      f(I) = someThing(I)
+!
+   enddo
+!$omp end parallel do 
