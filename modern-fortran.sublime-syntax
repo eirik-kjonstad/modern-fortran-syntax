@@ -52,7 +52,9 @@ contexts:
   types:
     - include: comments
     - include: strings
-    - match: '{{firstOnLine}}\b{{intrinsicType}}\b'
+    - match: '\b{{intrinsicType}}\b(?!.*::)' # not a declaration
+      scope: storage.type
+    - match: '{{firstOnLine}}\b{{intrinsicType}}\b(?=.*::)'
       scope: storage.type
       push: declaration
     - match: '{{firstOnLine}}(type|class){{parenthesisStart}}\s*(\w*){{parenthesisEnd}}'
@@ -221,7 +223,6 @@ contexts:
         2: punctuation.separator
 
   classdefinitions:
-    #- match: \b(type)(?!{{parenthesisStart}})
     - match: \b(type)(?=.*(::))
       scope: storage.type.class
       push: class.name

@@ -190,7 +190,7 @@
 !                          ^^^^^^^^^^ storage.type.class
 !                                        ^^^^^^^^^ variable.function
 !
-   aRealNumber = real(anInteger)
+   aRealNumber = real(anInteger) ! ruined this one; have to think to fix it
 !                ^^^^ variable.function
 !                     ^^^^^^^^^ variable.other
 !  simple function call
@@ -273,3 +273,8 @@
    used_diag(j) = 5 ! should not recognize "use" as keyword
 !  ^^^^^^^^^ variable.function
 !
+   real(dp) function myFunction(a, b, c)
+!  ^^^^ storage.type
+!       ^^ variable.other
+!           ^^^^^^^^ keyword.declaration.function
+!                    ^^^^^^^^^^ entity.name.function
