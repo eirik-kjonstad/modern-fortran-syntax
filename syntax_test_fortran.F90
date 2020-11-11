@@ -42,6 +42,13 @@
 !       ^^ keyword.separator
 !          ^^^^^^^^ entity.name.class
 !
+!     ...
+!
+   contains
+!
+   end type myClass1
+!
+!
    type, abstract :: myClass2
 !  ^^^^ storage.type.class
 !        ^^^^^^^^ storage.modifier
@@ -279,3 +286,13 @@
 !                                               ^^^^^^^^^^ variable.other
 !           ^^^^^^^^ keyword.declaration.function
 !                    ^^^^^^^^^^ entity.name.function
+!
+program myProgram
+!<-^^^^ keyword.other
+!       ^^^^^^^^^ entity.name
+!
+!  Program contents
+!
+end program myProgram
+!   ^^^^^^^ keyword.other
+!           ^^^^^^^^^ entity.name

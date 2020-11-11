@@ -36,6 +36,7 @@ contexts:
     - include: separators
     - include: numbers
     - include: constants
+    - include: program
     - include: class-accessing
     - include: function-call
     - include: matchVariable
@@ -333,4 +334,8 @@ contexts:
     - match: '(?<=\#)({{fppCommands}})'
       scope: support.function
     
-
+  program:
+    - match: \b(program)\b 
+      scope: keyword.other 
+    - match: '(?<=program)\s+(\w*)'
+      scope: entity.name
