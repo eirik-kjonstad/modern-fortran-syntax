@@ -46,7 +46,16 @@
 !
    contains
 !
+      procedure :: doStuff => myDoStuffRoutine
+!     ^^^^^^^^^ keyword.declaration.interface
+!                  ^^^^^^^ variable.other
+!                             ^^^^^^^^^^^^^^^^ variable.other
+!                             E: these shouldn't be variables I think
+!
    end type myClass1
+!  ^^^ keyword.control
+!      ^^^^ storage.type.class
+!           ^^^^^^^^ entity.name.class
 !
 !
    type, abstract :: myClass2

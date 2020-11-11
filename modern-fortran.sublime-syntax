@@ -232,6 +232,10 @@ contexts:
       scope: keyword.declaration.interface
     - match: (contains)
       scope: keyword.declaration.interface
+    - match: '(?<=end)\s+(type)\s+(\w*)'
+      captures:
+        1: storage.type.class
+        2: entity.name.class
 
   class.name:
     - include: newline-pop
@@ -245,8 +249,6 @@ contexts:
       captures:
         1: keyword.separator
         2: entity.name.class
-    - match: '(?<=type)(\w*)'
-      scope: entity.name.class
 
   numbers:
     - match: '\b(\d+[\.]?[\d+]?[d]?[\+|\-]?\d*)'
