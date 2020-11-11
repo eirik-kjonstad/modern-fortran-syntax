@@ -52,9 +52,10 @@ contexts:
   types:
     - include: comments
     - include: strings
-    - match: '\b{{intrinsicType}}\b(?!.*::)' # not a declaration
+    - match: '\b{{intrinsicType}}\b(?=.*(function))' # type of return value in
+                                                     # function 
       scope: storage.type
-    - match: '{{firstOnLine}}\b{{intrinsicType}}\b(?=.*::)'
+    - match: '{{firstOnLine}}\b{{intrinsicType}}\b(?=.*::)' # type declaration
       scope: storage.type
       push: declaration
     - match: '{{firstOnLine}}(type|class){{parenthesisStart}}\s*(\w*){{parenthesisEnd}}'

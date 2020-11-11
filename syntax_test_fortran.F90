@@ -273,8 +273,9 @@
    used_diag(j) = 5 ! should not recognize "use" as keyword
 !  ^^^^^^^^^ variable.function
 !
-   real(dp) function myFunction(a, b, c)
+   real(dp) function myFunction(a, b, c) result(someResult)
 !  ^^^^ storage.type
 !       ^^ variable.other
+!                                               ^^^^^^^^^^ variable.other
 !           ^^^^^^^^ keyword.declaration.function
 !                    ^^^^^^^^^^ entity.name.function
