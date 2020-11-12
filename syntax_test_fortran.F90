@@ -305,3 +305,21 @@ program myProgram
 end program myProgram
 !   ^^^^^^^ keyword.other
 !           ^^^^^^^^^ entity.name
+!
+   DO I = 1, 10
+!  ^^ keyword.control
+!     ^ variable.other
+!
+   ENDDO 
+!  ^^^^^ keyword.control
+!
+   TYPE simpleStruct
+!  ^^^^ storage.type.class
+!       ^^^^^^^^^^^^ entity.name.class
+!
+      integer :: x
+      integer :: y 
+!
+   END TYPE simpleStruct
+!      ^^^^ storage.type.class
+!           ^^^^^^^^^^^^ entity.name.class

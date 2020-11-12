@@ -53,26 +53,25 @@ contexts:
   types:
     - include: comments
     - include: strings
-    - match: '\b{{intrinsicType}}\b(?=.*(function))' # type of return value in
-                                                     # function 
+    - match: '(?i)\b{{intrinsicType}}\b(?=.*(function))' # type of return value in function 
       scope: storage.type
-    - match: '{{firstOnLine}}\b{{intrinsicType}}\b(?=.*::)' # type declaration
+    - match: '(?i){{firstOnLine}}\b{{intrinsicType}}\b(?=.*::)' # type declaration
       scope: storage.type
       push: declaration
-    - match: '{{firstOnLine}}(type|class){{parenthesisStart}}\s*(\w*){{parenthesisEnd}}'
+    - match: '(?i){{firstOnLine}}(type|class){{parenthesisStart}}\s*(\w*){{parenthesisEnd}}'
       captures:
         1: storage.type.class
         2: entity.name.class
       push: declaration
 
   attribute:
-    - match: \b{{intrinsicAttribute}}\b
+    - match: '(?i)\b{{intrinsicAttribute}}\b'
       scope: storage.modifier
 
   operators:
     - match: (==|/=|>=|<=|<|>)
       scope: keyword.operator.logical
-    - match: (\.and\.|\.or\.|\.ne\.|\.lt\.|\.le\.|\.gt\.|\.ge\.|\.eq\.|\.not\.)
+    - match: (?i)(\.and\.|\.or\.|\.ne\.|\.lt\.|\.le\.|\.gt\.|\.ge\.|\.eq\.|\.not\.)
       scope: keyword.operator.word
     - match: (=>)
       scope: keyword.operator
@@ -92,32 +91,32 @@ contexts:
   control:
     - include: comments
     # if ()
-    - match: '{{firstOnLine}}(if)\s*{{parenthesisStart}}'
+    - match: '(?i){{firstOnLine}}(if)\s*{{parenthesisStart}}'
       captures:
         1: keyword.control.conditional
     # then
-    - match: '\b(then)\b'
+    - match: '(?i)\b(then)\b'
       scope: keyword.control.conditional
     # elseif ()
-    - match: '{{firstOnLine}}(else)\s*(if)\b'
+    - match: '(?i){{firstOnLine}}(else)\s*(if)\b'
       captures:
         1: keyword.control.conditional
         2: keyword.control.conditional
     # else
-    - match: '{{firstOnLine}}*(else)\b'
+    - match: '(?i){{firstOnLine}}*(else)\b'
       scope: keyword.control.conditional
     # endif
-    - match: '{{firstOnLine}}(end\s*if)\b'
+    - match: '(?i){{firstOnLine}}(end\s*if)\b'
       captures:
         1: keyword.control.conditional
     # do 
-    - match: '{{firstOnLine}}(do)\b'
+    - match: '(?i){{firstOnLine}}(do)\b'
       captures:
         1: keyword.control.conditional
-    - match: '(?<=do)\s*(while)'
+    - match: '(?i)(?<=do)\s*(while)'
       scope: keyword.control.conditional
     # enddo
-    - match: '{{firstOnLine}}(end\s*do)\b'
+    - match: '(?i){{firstOnLine}}(end\s*do)\b'
       captures:
         1: keyword.control
 
@@ -133,7 +132,7 @@ contexts:
     - include: comments
     - include: strings
     - include: numbers
-    - match: '\b(in|out|inout)\b' 
+    - match: '(?i)\b(in|out|inout)\b' 
       scope: keyword.other 
     - include: class-accessing
     - include: matchVariable
@@ -174,81 +173,83 @@ contexts:
           pop: true 
 
   procedures:
-    - match: \b({{intrinsicFunction}})\(
+    - match: (?i)\b({{intrinsicFunction}})\(
       captures: 
         1: variable.function
 
-    - match: \s*(result)\s*\( 
+    - match: (?i)\s*(result)\s*\( 
       captures: 
         1: keyword.control
 
-    - match: \b(pure)\b
+    - match: (?i)\b(pure)\b
       scope: storage.modifier
 
-    - match: (implicit none)
+    - match: (?i)(implicit none)
       scope: keyword.control
 
-    - match: (end)
+    - match: (?i)(end)
       scope: keyword.control
 
-    - match: (module|)\s*\b(function|subroutine)\b\s*(\w*)(\(|)
+    - match: (?i)(module|)\s*\b(function|subroutine)\b\s*(\w*)(\(|)
       captures:
         1: storage.modifier
         2: keyword.declaration.function
         3: entity.name.function  
 
-    - match: '(call)'
+    - match: '(?i)(call)'
       captures:
         1: keyword.control 
 
   modules:
-    - match: \b(module)\b\s*(\w*)$
+    - match: (?i)\b(module)\b\s*(\w*)$
       captures: 
         1: keyword.declaration.interface
         2: entity.name.interface
-    - match: \b(submodule)\b\s*\((\w*)\)\s*(\w*)
+    - match: (?i)\b(submodule)\b\s*\((\w*)\)\s*(\w*)
       captures:
         1: keyword.declaration.interface
         2: entity.name.interface
         3: entity.name.interface
-    - match: \b(submodule)\b\s*(\w*)
+    - match: (?i)\b(submodule)\b\s*(\w*)
       captures:
         1: keyword.declaration.interface
         2: entity.name.interface
-    - match: \b(use)\b
+    - match: (?i)\b(use)\b
       scope: keyword.control
-    - match: (?<=\buse\b)\s*(\w*)
+    - match: (?i)(?<=\buse\b)\s*(\w*)
       scope: entity.name.interface
-    - match: (only)\s*(\:)
+    - match: (?i)(only)\s*(\:)
       captures:
         1: keyword.control
         2: punctuation.separator
 
   classdefinitions:
-    - match: \b(type)(?=.*(::))
+    - match: (?i)(?<!end)\b(type)\b(?!\s*\() # not the end of type; not variable specification; must be beginning of declaration
       scope: storage.type.class
       push: class.name
-    - match: (procedure)
+    - match: (?i)(procedure)
       scope: keyword.declaration.interface
-    - match: (contains)
+    - match: (?i)(contains)
       scope: keyword.declaration.interface
-    - match: '(?<=end)\s+(type)\s+(\w*)'
+    - match: '(?i)(?<=end)\s+(type)\s+(\w*)'
       captures:
         1: storage.type.class
         2: entity.name.class
 
   class.name:
     - include: newline-pop
-    - match: \b(extends)\b{{parenthesisStart}}(\w*){{parenthesisEnd}}
+    - match: (?i)\b(extends)\b{{parenthesisStart}}(\w*){{parenthesisEnd}}
       captures:
         1: keyword.operator
         2: entity.other.inherited-class
-    - match: \b(abstract)\b
+    - match: (?i)\b(abstract)\b
       scope: storage.modifier
     - match: (::)\s*(\w*)
       captures:
         1: keyword.separator
         2: entity.name.class
+    - match: (?i)(?<=type)\s+(\w*) # simple type definition (type myType)
+      scope: entity.name.class
 
   numbers:
     - match: '\b(\d+[\.]?[\d+]?[d]?[\+|\-]?\d*)'
@@ -256,7 +257,7 @@ contexts:
         1: constant.numeric
 
   constants:
-    - match: (\.true\.|\.false\.)
+    - match: (?i)(\.true\.|\.false\.)
       scope: constant.language
 
   class-accessing:
@@ -270,13 +271,13 @@ contexts:
         1: variable.function
 
   interfaces:
-    - match: (abstract)\s*(?=interface)
+    - match: (?i)(abstract)\s*(?=interface)
       scope: storage.modifier
-    - match: (interface)
+    - match: (?i)(interface)
       scope: keyword.declaration.interface
-    - match: '(?<=interface)\s*(\w*)'
+    - match: '(?i)(?<=interface)\s*(\w*)'
       scope: entity.name.interface
-    - match: (include)
+    - match: (?i)(include)
       scope: keyword.control
 
   omp:
@@ -337,7 +338,7 @@ contexts:
       scope: support.function
     
   program:
-    - match: \b(program)\b 
+    - match: (?i)\b(program)\b 
       scope: keyword.other 
-    - match: '(?<=program)\s+(\w*)'
+    - match: '(?i)(?<=program)\s+(\w*)'
       scope: entity.name
