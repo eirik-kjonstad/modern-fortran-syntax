@@ -14,6 +14,16 @@
    if (a == b) then
 !  ^^ keyword.control.conditional
 !              ^^^^ keyword.control.conditional
+   elseif (a == c) then 
+!  ^^^^^^ keyword.control.conditional
+!
+   else if (a == d) then 
+!  ^^^^ keyword.control.conditional
+!       ^^ keyword.control.conditional
+!
+   else 
+!  ^^^^ keyword.control.conditional
+!  
    endif
 !  ^^^^ keyword.control.conditional
 !
@@ -60,6 +70,7 @@
 !
    type, abstract :: myClass2
 !  ^^^^ storage.type.class
+!      ^ punctuation.separator
 !        ^^^^^^^^ storage.modifier
 !                 ^^ keyword.separator
 !                    ^^^^^^^ entity.name.class
@@ -323,3 +334,28 @@ end program myProgram
    END TYPE simpleStruct
 !      ^^^^ storage.type.class
 !           ^^^^^^^^^^^^ entity.name.class
+   ALLOCATE(array(10))
+!  ^^^^^^^^ variable.function
+   do I = 1, 10; array(I) = I; end do 
+!              ^ punctuation.terminator
+!                            ^ punctuation.terminator
+!
+   DEALLOCATE(array)
+!  ^^^^^^^^^^ variable.function
+   select case (myString)
+!
+      case ('Phaedo')
+         ! do stuff
+!
+      case ('Crito')
+         ! do other stuff 
+!
+      case default
+         ! what to do if string doesn't match any case
+!
+   end select
+!
+   type, abstract, extends(cat) :: superCat
+!      ^ punctuation.separator
+!                ^ punctuation.separator
+!                               ^^ keyword.separator
