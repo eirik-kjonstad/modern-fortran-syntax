@@ -153,7 +153,14 @@
 !  ^^^ constant.numeric
 !
    1.0d-12
-!  ^^^^^^^ constant.numeric
+!  ^ constant.numeric
+!    ^^ constant.numeric
+!       ^^ constant.numeric
+!
+   1.2345E-10
+!  ^ constant.numeric
+!          ^^ constant.numeric
+!    ^^^^^ constant.numeric
 !
    a = minval(b)
 !      ^^^^^^ variable.function

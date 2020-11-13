@@ -263,9 +263,10 @@ contexts:
       scope: entity.name.class
 
   numbers:
-    - match: '(?i)\b(\d+[\.]?[\d+]?[d]?[\+|\-]?\d*)'
-      captures: 
-        1: constant.numeric
+    - match: '(\d+)'
+      scope: constant.numeric
+    - match: '(?i)(?<=\d)(d|e)'
+      scope: constant.numeric
 
   constants:
     - match: (?i)(\.true\.|\.false\.)
