@@ -202,11 +202,15 @@ contexts:
     - match: (?i)(end)
       scope: keyword.control
 
-    - match: (?i)(module|)\s*\b(function|subroutine)\b\s*(\w*)(\(|)
-      captures:
-        1: storage.modifier
-        2: keyword.declaration.function
-        3: entity.name.function  
+    - match: '(?i)(module)\s+(?=function|subroutine|procedure)'
+      scope: storage.modifier
+
+    - match: (?i)\b(function|subroutine)\b 
+      scope: keyword.declaration.function
+
+    - match: (?i)(?<=function|subroutine)\s+(\w+)
+      captures: 
+        1: entity.name.function 
 
     - match: '(?i)(call)'
       captures:
@@ -240,7 +244,7 @@ contexts:
       scope: storage.type.class
       push: class.name
     - match: (?i)(procedure)
-      scope: keyword.declaration.interface
+      scope: keyword.declaration.function
     - match: (?i)(contains)
       scope: keyword.declaration.interface
     - match: '(?i)(?<=end)\s+(type)\s+(\w*)'
@@ -266,6 +270,8 @@ contexts:
     - match: '(\d+)'
       scope: constant.numeric
     - match: '(?i)(?<=\d)(d|e)'
+      scope: constant.numeric
+    - match: '(?<=\d)(\.)'
       scope: constant.numeric
 
   constants:

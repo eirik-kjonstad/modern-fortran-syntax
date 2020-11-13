@@ -57,7 +57,7 @@
    contains
 !
       procedure :: doStuff => myDoStuffRoutine
-!     ^^^^^^^^^ keyword.declaration.interface
+!     ^^^^^^^^^ keyword.declaration.function
 !                  ^^^^^^^ variable.other
 !                             ^^^^^^^^^^^^^^^^ variable.other
 !                             E: these shouldn't be variables I think
@@ -157,10 +157,14 @@
 !    ^^ constant.numeric
 !       ^^ constant.numeric
 !
-   1.2345E-10
+   1.2345E-10 
 !  ^ constant.numeric
+!   ^ constant.numeric
 !          ^^ constant.numeric
 !    ^^^^^ constant.numeric
+!
+   1.23_dp
+!       ^^ variable.other
 !
    a = minval(b)
 !      ^^^^^^ variable.function
@@ -366,3 +370,14 @@ end program myProgram
 !      ^ punctuation.separator
 !                ^ punctuation.separator
 !                               ^^ keyword.separator
+
+   MODULE SUBROUTINE MY_SUBROUTINE(A, B, Cee%Dee)
+!  ^^^^^^ storage.modifier
+!         ^^^^^^^^^^ keyword.declaration.function
+!                    ^^^^^^^^^^^^^ entity.name.function
+!                                  ^ variable.other
+!                                   ^ punctuation.separator
+!                                      ^ punctuation.separator
+!                                     ^ variable.other
+!                                            ^^^ variable.other
+!                                        ^^^ storage.type.class
