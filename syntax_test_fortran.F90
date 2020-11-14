@@ -366,3 +366,7 @@ end program myProgram
 !      ^ punctuation.separator
 !                ^ punctuation.separator
 !                               ^^ keyword.separator
+
+
+   read(unit=fileUnit, *) myVariable
+!  ^^^^
