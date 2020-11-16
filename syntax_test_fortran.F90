@@ -370,7 +370,7 @@ end program myProgram
 !      ^ punctuation.separator
 !                ^ punctuation.separator
 !                               ^^ keyword.separator
-
+!
    MODULE SUBROUTINE MY_SUBROUTINE(A, B, Cee%Dee)
 !  ^^^^^^ storage.modifier
 !         ^^^^^^^^^^ keyword.declaration.function
@@ -381,3 +381,7 @@ end program myProgram
 !                                     ^ variable.other
 !                                            ^^^ variable.other
 !                                        ^^^ storage.type.class
+
+   read(unit=fileUnit, *) myVariable
+!  ^^^^ variable.function 
+!       ^^^^ keyword.declaration.function
