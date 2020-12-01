@@ -12,20 +12,20 @@
 !                   ^^^^^^^^^ storage.modifier
 !                                   ^^^^^^^^^^^ storage.modifier
    if (a == b) then
-!  ^^ keyword.control.conditional
-!              ^^^^ keyword.control.conditional
+!  ^^ keyword.control
+!              ^^^^ keyword.control
    elseif (a == c) then 
-!  ^^^^^^ keyword.control.conditional
+!  ^^^^^^ keyword.control
 !
    else if (a == d) then 
-!  ^^^^ keyword.control.conditional
-!       ^^ keyword.control.conditional
+!  ^^^^ keyword.control
+!       ^^ keyword.control
 !
    else 
-!  ^^^^ keyword.control.conditional
+!  ^^^^ keyword.control
 !  
    endif
-!  ^^^^ keyword.control.conditional
+!  ^^^^ keyword.control
 !
    do while (a .ne. b) ! a side-comment
 !  ^^ keyword.control
@@ -33,6 +33,7 @@
 !                        ^^^^^^^^^^^^^^ comment.line
 !
    enddo
+!  ^^^^^ keyword.control
 
    real(dp), intent(in) :: myReal ! a side-comment
 !  ^^^^ storage.type

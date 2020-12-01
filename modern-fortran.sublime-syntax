@@ -95,33 +95,35 @@ contexts:
 
   control:
     - include: comments
+    - match: (?i)\b(end)\b
+      scope: keyword.control
     # if ()
     - match: '(?i)\b(if)\b\s*{{parenthesisStart}}'
       captures:
-        1: keyword.control.conditional
+        1: keyword.control
     # then
     - match: '(?i)\b(then)\b'
-      scope: keyword.control.conditional
+      scope: keyword.control
     # elseif ()
     - match: '(?i)\b(else)\s*(if)\b'
       captures:
-        1: keyword.control.conditional
-        2: keyword.control.conditional
+        1: keyword.control
+        2: keyword.control
     # else
     - match: '(?i)\b(else)\b'
-      scope: keyword.control.conditional
+      scope: keyword.control
     # endif
-    - match: '(?i)\b(end\s*if)\b'
+    - match: '(?i)\b(endif)\b'
       captures:
-        1: keyword.control.conditional
+        1: keyword.control
     # do 
     - match: '(?i)\b(do)\b'
       captures:
-        1: keyword.control.conditional
+        1: keyword.control
     - match: '(?i)(?<=do)\s*(while)\b'
-      scope: keyword.control.conditional
+      scope: keyword.control
     # enddo
-    - match: '(?i)(end\s*do)\b'
+    - match: '(?i)(enddo)\b'
       captures:
         1: keyword.control
     - match: (?i)\b(select|case|default)\b
@@ -199,9 +201,6 @@ contexts:
       scope: storage.modifier
 
     - match: (?i)(implicit none)
-      scope: keyword.control
-
-    - match: (?i)\b(end)\b
       scope: keyword.control
 
     - match: '(?i)\b(module)\b\s+(?=function|subroutine|procedure)'
