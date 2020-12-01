@@ -126,7 +126,7 @@ contexts:
         1: keyword.control
     - match: (?i)\b(select|case|default)\b
       scope: keyword.control
-    - match: (?i)\b(exit|cycle)\b 
+    - match: (?i)\b(exit|cycle|return)\b 
       scope: keyword.control
 
   newline-pop:
@@ -204,11 +204,15 @@ contexts:
     - match: (?i)\b(end)\b
       scope: keyword.control
 
-    - match: (?i)(module|)\s*\b(function|subroutine)\b\s*(\w*)(\(|)
-      captures:
-        1: storage.modifier
-        2: keyword.declaration.function
-        3: entity.name.function  
+    - match: '(?i)\b(module)\b\s+(?=function|subroutine|procedure)'
+      scope: storage.modifier
+
+    - match: (?i)\b(function|subroutine)\b 
+      scope: keyword.declaration.function
+
+    - match: (?i)(?<=\bfunction|subroutine\b)\s+(\w+)
+      captures: 
+        1: entity.name.function 
 
     - match: '(?i)\b(call)\b'
       captures:
@@ -240,17 +244,17 @@ contexts:
       scope: keyword.control
     - match: (?i)(?<=\buse\b)\s*(\w*)
       scope: entity.name.interface
-    - match: (?i)(only)\s*(\:)
+    - match: (?i)\b(only)\b\s*(\:)
       captures:
         1: keyword.control
         2: punctuation.separator
 
   classdefinitions:
-    - match: (?i)(?<!end)\b(type)\b(?!\s*\() # not the end of type; not variable specification; must be beginning of declaration
+    - match: ^(?i)(?<!\bend\b)\s+\b(type)\b(?!\s*\() # not the end of type; not variable specification; must be beginning of declaration
       scope: storage.type.class
       push: class.name
     - match: (?i)(procedure)
-      scope: keyword.declaration.interface
+      scope: keyword.declaration.function
     - match: (?i)(contains)
       scope: keyword.declaration.interface
     - match: '(?i)(?<=end)\s+(type)\s+(\w*)'
@@ -276,6 +280,8 @@ contexts:
     - match: '(\d+)'
       scope: constant.numeric
     - match: '(?i)(?<=\d)(d|e)'
+      scope: constant.numeric
+    - match: '(?<=\d)(\.)'
       scope: constant.numeric
 
   constants:
