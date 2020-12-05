@@ -380,4 +380,4 @@ end program myProgram
 
    read(unit=fileUnit, *) myVariable
 !  ^^^^ variable.function 
-!       ^^^^ keyword.declaration.function
+!       ^^^^ variable.language

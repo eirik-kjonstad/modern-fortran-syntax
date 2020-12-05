@@ -225,7 +225,7 @@ contexts:
         1: variable.function
     - match: '(?i)\b({{intrinsicIOArguments}})\b'
       captures: 
-        1: keyword.declaration.function
+        1: variable.language
 
   modules:
     - match: (?i)\b(module)\b\s*(\w*)$
