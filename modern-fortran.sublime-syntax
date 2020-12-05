@@ -34,7 +34,7 @@ contexts:
     - include: procedures
     - include: modules
     - include: interfaces 
-    - include: classdefinitions
+    - include: class-definitions
     - include: separators
     - include: numbers
     - include: constants
@@ -42,7 +42,7 @@ contexts:
     - include: class-accessing
     - include: io
     - include: function-call
-    - include: matchVariable
+    - include: match-variable
     - include: omp
 
   comments:
@@ -146,7 +146,7 @@ contexts:
     - match: '(?i)\b(in|out|inout)\b' 
       scope: keyword.other 
     - include: class-accessing
-    - include: matchVariable
+    - include: match-variable
 
   continuation:
     - match: "&"
@@ -248,10 +248,10 @@ contexts:
         1: keyword.control
         2: punctuation.separator
 
-  classdefinitions:
+  class-definitions:
     - match: ^(?i)(?<!\bend\b)\s+\b(type)\b(?!\s*\() # not the end of type; not variable specification; must be beginning of declaration
       scope: storage.type.class
-      push: class.name
+      push: class-name
     - match: (?i)(procedure)
       scope: keyword.declaration.function
     - match: (?i)(contains)
@@ -261,7 +261,7 @@ contexts:
         1: storage.type.class
         2: entity.name.class
 
-  class.name:
+  class-name:
     - include: newline-pop
     - include: separators
     - match: (?i)\b(extends)\b{{parenthesisStart}}(\w*){{parenthesisEnd}}
@@ -310,51 +310,51 @@ contexts:
   omp:
     - match: '{{firstOnLine}}(\!\$omp)'
       scope: support.function
-      push: omp.line 
+      push: omp-line 
     - match: '{{firstOnLine}}(\!\$)'
       scope: support.function
-      push: omp.line 
+      push: omp-line 
 
-  omp.line:
-    - include: omp.continuation
-    - include: omp.directives
-    - include: omp.intrinsic
-    - include: omp.clauses
+  omp-line:
+    - include: omp-continuation
+    - include: omp-directives
+    - include: omp-intrinsic
+    - include: omp-clauses
     - match: (schedule)
       scope: support.function
-      push: omp.schedule
+      push: omp-schedule
     - match: '\n'
       pop: true
 
-  omp.directives:
+  omp-directives:
     - match: ({{ompDirectives}})
       scope: support.function
 
-  omp.intrinsic:
+  omp-intrinsic:
     - match: ({{ompIntrinsics}})
       scope: support.function
 
-  omp.clauses:
-    - include: omp.continuation
+  omp-clauses:
+    - include: omp-continuation
     - match: ({{ompClauses}})
       scope: support.constant
 
-  omp.schedule:
-    - include: omp.continuation
+  omp-schedule:
+    - include: omp-continuation
     - match: (static|dynamic|guided|auto)
       scope: support.constant
     - match: '{{parenthesisEnd}}'
       pop: true
 
 
-  omp.continuation:
+  omp-continuation:
     - match: "&" 
       push:
         - match: '{{firstOnLine}}(\!\$omp)'
           scope: support.function
           pop: true
 
-  matchVariable:
+  match-variable:
     - match: ({{variableMatch}})
       scope: variable.other
 
