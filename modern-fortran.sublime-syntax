@@ -251,7 +251,7 @@ contexts:
     - match: ^(?i)(?<!\bend\b)\s+\b(type)\b(?!\s*\() # not the end of type; not variable specification; must be beginning of declaration
       scope: storage.type.class
       push: class-name
-    - match: (?i)(procedure)
+    - match: (?i)(procedure|generic)
       scope: keyword.declaration.function
     - match: (?i)(contains)
       scope: keyword.declaration.interface
