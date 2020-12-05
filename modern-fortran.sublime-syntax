@@ -289,8 +289,8 @@ contexts:
   class-accessing:
     - include: comments 
     - match: '(\w*)(?=\%|\(.*\)\%)' # matches a in a%something or a(...)%something
-      #scope: storage.type.class
-      scope: variable.other
+      scope: storage.type.class # should this not be a variable? class variable?
+      #scope: variable.other
 
   function-call:
     - match: '(\w*)\('
