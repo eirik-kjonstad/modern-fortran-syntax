@@ -78,6 +78,9 @@ contexts:
       scope: keyword.operator.word
     - match: (=>)
       scope: keyword.operator
+    - match: (?i)(?<=d|e)(\-|\+)(?=\d) # - and + is not arithmetic 
+                                       # in scientific notation (1.0d-2)
+      scope: constant.numeric
     - match: (\*|\+|-|\/|=)
       scope: keyword.operator.arithmetic
 
