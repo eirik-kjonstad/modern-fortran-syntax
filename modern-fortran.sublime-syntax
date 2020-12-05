@@ -119,6 +119,8 @@ contexts:
     - match: '(?i)\b(endif)\b'
       captures:
         1: keyword.control
+    - match: '(?i)(?<=end)\s*(if)\b'
+      scope: keyword.control
     # do 
     - match: '(?i)\b(do)\b'
       captures:
@@ -133,6 +135,16 @@ contexts:
       scope: keyword.control
     - match: (?i)\b(exit|cycle|return)\b 
       scope: keyword.control
+    # do concurrent 
+    - match: (?i)(?<=do)\s+(concurrent)\b 
+      scope: keyword.control
+    - match: (?i)\b(concurrent|local|shared|local_init|default)\b 
+      scope: keyword.control
+    # named do & if statements
+    - match: (?i)(\w+)\:\s*(?=do|if)
+      scope: entity.name.label
+    - match: (?i)(?<=then|else|if|do)\s+(\w+)\s*\n
+      scope: entity.name.label
 
   newline-pop:
     - match: '\n'

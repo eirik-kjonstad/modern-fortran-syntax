@@ -381,3 +381,41 @@ end program myProgram
    read(unit=fileUnit, *) myVariable
 !  ^^^^ variable.function 
 !       ^^^^ variable.language
+!
+   DO CONCURRENT (I = 1:N, J(I) > 0) LOCAL(M) SHARED(J, K)
+!     ^^^^^^^^^^ keyword.control
+!                                    ^^^^^ keyword.control
+!                                             ^^^^^^ keyword.control
+      M =  MOD (K(I), J(I))
+      K(I) = K(I) – M
+!
+   END DO
+!
+   extraordinaryLoop: do i = 1, 5
+!  ^^^^^^^^^^^^^^^^^ entity.name.label
+!
+      print*, "I can count: ", i
+!
+   end do extraordinaryLoop
+!         ^^^^^^^^^^^^^^^^^ entity.name.label
+!
+   readingTime: if (.not. person%hasBooks()) then 
+!  ^^^^^^^^^^^ entity.name.label
+!
+      call person%read()
+!
+   else if (person%hasMoney()) then readingTime
+!                                   ^^^^^^^^^^^ entity.name.label
+!
+      call person%buyBooks()
+      call person%read()
+!
+   else readingTime
+!       ^^^^^^^^^^^ entity.name.label
+!
+      call person%cry()
+!
+   end if readingTime
+!      ^^ keyword.control
+!         ^^^^^^^^^^^ entity.name.label
+!
