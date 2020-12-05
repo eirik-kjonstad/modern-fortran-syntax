@@ -57,9 +57,9 @@ contexts:
     - include: comments
     - include: strings
     - match: '(?i)\b{{intrinsicType}}\b(?=.*(function))' # type of return value in function 
-      scope: storage.type
+      scope: storage.type.intrinsic
     - match: '(?i){{firstOnLine}}\b{{intrinsicType}}\b(?=.*::)' # type declaration
-      scope: storage.type
+      scope: storage.type.intrinsic
       push: declaration
     - match: '(?i){{firstOnLine}}(type|class){{parenthesisStart}}\s*(\w*){{parenthesisEnd}}'
       captures:
@@ -192,7 +192,6 @@ contexts:
       captures:
         1: variable.function
 
-
     - match: (?i)\s*(result)\s*\( 
       captures: 
         1: keyword.control
@@ -290,7 +289,8 @@ contexts:
   class-accessing:
     - include: comments 
     - match: '(\w*)(?=\%|\(.*\)\%)' # matches a in a%something or a(...)%something
-      scope: storage.type.class
+      #scope: storage.type.class
+      scope: variable.other
 
   function-call:
     - match: '(\w*)\('
@@ -320,9 +320,11 @@ contexts:
     - include: omp-directives
     - include: omp-intrinsic
     - include: omp-clauses
+    - include: separators
     - match: (schedule)
       scope: support.function
       push: omp-schedule
+    - include: match-variable
     - match: '\n'
       pop: true
 
