@@ -224,7 +224,7 @@
 !                          ^^^^^^^^^^ storage.type.class
 !                                        ^^^^^^^^^ variable.function
 !
-   aRealNumber = real(anInteger) ! ruined this one; have to think to fix it
+   aRealNumber = real(anInteger) 
 !                ^^^^ variable.function
 !                     ^^^^^^^^^ variable.other
 !  simple function call
