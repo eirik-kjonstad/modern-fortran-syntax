@@ -324,7 +324,7 @@ contexts:
       scope: keyword.control
 
   omp:
-    - match: '{{firstOnLine}}(\!\$omp)'
+    - match: '{{firstOnLine}}(?i)(\!\$omp)'
       scope: support.function
       push: omp-line 
     - match: '{{firstOnLine}}(\!\$)'
@@ -337,7 +337,7 @@ contexts:
     - include: omp-intrinsic
     - include: omp-clauses
     - include: separators
-    - match: (schedule)
+    - match: (?i)(schedule)
       scope: support.function
       push: omp-schedule
     - include: match-variable
@@ -359,7 +359,7 @@ contexts:
 
   omp-schedule:
     - include: omp-continuation
-    - match: (static|dynamic|guided|auto)
+    - match: (?i)(static|dynamic|guided|auto)
       scope: support.constant
     - match: '{{parenthesisEnd}}'
       pop: true
@@ -368,7 +368,7 @@ contexts:
   omp-continuation:
     - match: "&" 
       push:
-        - match: '{{firstOnLine}}(\!\$omp)'
+        - match: '{{firstOnLine}}(?i)(\!\$omp)'
           scope: support.function
           pop: true
 
@@ -379,7 +379,7 @@ contexts:
   preprocessing:
     - match: '{{firstOnLine}}(\#)'
       scope: support.function
-    - match: '(?<=\#)({{fppCommands}})'
+    - match: '(?i)(?<=\#)({{fppCommands}})'
       scope: support.function
     
   program:
