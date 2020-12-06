@@ -477,6 +477,10 @@ end program myProgram
 !                            ^^^^^^^^^^ variable.function
 !  ^^^^^^^^ variable.function
 !            ^^ storage.type.class
-!                 ^^^^ variable.other
+!                 ^^^^ variable.function
 !                       ^^ constant.numeric
+!
+   result = thisFunction ()
+!  ^^^^^^ variable.other
+!           ^^^^^^^^^^^^ variable.function
 !

@@ -309,7 +309,7 @@ contexts:
       #scope: variable.other (alternative scope)
 
   function-call:
-    - match: '(\w*)\('
+    - match: '(\w*)\s*\('
       captures:
         1: variable.function
 
