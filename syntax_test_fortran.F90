@@ -5,7 +5,10 @@
 !         ^^^^^ keyword.operator.word
 !
    a => b
-!    ^^ keyword.operator
+!    ^^ keyword.operator.points-to.fortran
+!
+   a = b 
+!    ^ keyword.operator.assignment.fortran
 !
    integer(kind=8), dimension(:,:), allocatable :: myInt
 !  ^^^^^^^ storage.type
@@ -39,7 +42,7 @@
 !  ^^^^ storage.type
 !       ^^ variable.other
 !            ^^^^^^ storage.modifier
-!                   ^^ keyword.other
+!                   ^^ keyword.other.intent.fortran 
 !                          ^^^^^^ variable.other
 !                                   ^^^^^^^^^^^^^^ comment.line
 
@@ -286,6 +289,7 @@
    real(dp), dimension(wf%n_ao**2, wf%n_densities), intent(in), optional :: prev_ao_density
 !  ^^^^ storage.type
 !            ^^^^^^^^^ storage.modifier
+!                                                          ^^ keyword.other.intent.fortran
 !                                                   ^^^^^^ storage.modifier
 !                      ^^ storage.type.class
 !                        ^ punctuation.accessor
@@ -407,6 +411,7 @@ end program myProgram
 !
    extraordinaryLoop: do i = 1, 5
 !  ^^^^^^^^^^^^^^^^^ entity.name.label
+!                   ^ punctuation.separator
 !
       print*, "I can count: ", i
 !
@@ -464,7 +469,7 @@ end program myProgram
 !                   ^^ constant.numeric
 !                ^ punctuation.separator
 !                  ^ punctuation.separator
-   if ( this_image() .eq. 2 ) sync images( 3 ) 
+!
    if ( this_image() .eq. 2 ) sync images( 3 )
 !       ^^^^^^^^^^ variable.function
 !                             ^^^^ keyword.control

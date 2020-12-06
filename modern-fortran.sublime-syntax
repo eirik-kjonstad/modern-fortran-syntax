@@ -61,7 +61,7 @@ contexts:
     - match: '(?i){{firstOnLine}}\b{{intrinsicType}}\b(?=.*::)' # type declaration
       scope: storage.type.intrinsic.fortran
     - match: '(?i)\b(in|out|inout)\b' 
-      scope: keyword.other 
+      scope: keyword.other.intent.fortran 
     - match: '(?<=::)\s*(\w+)'
       scope: variable.other
     - match: '(?i){{firstOnLine}}(type|class){{parenthesisStart}}\s*(\w*){{parenthesisEnd}}'
@@ -85,8 +85,10 @@ contexts:
     - match: (?i)(?<=d|e)(\-|\+)(?=\d) # - and + is not arithmetic 
                                        # in scientific notation (1.0d-2)
       scope: constant.numeric
-    - match: (\*|\+|-|\/|=)
+    - match: (\*|\+|-|\/)
       scope: keyword.operator.arithmetic
+    - match: (=)(?!>)
+      scope: keyword.operator.assignment.fortran
 
   separators:
     - match: (::)
@@ -145,8 +147,10 @@ contexts:
     - match: (?i)\b(concurrent|local|shared|local_init|default)\b 
       scope: keyword.control
     # named do & if statements
-    - match: (?i)(\w+)\:\s*(?=do|if)
-      scope: entity.name.label
+    - match: (?i)(\w+)(\:)\s*(?=do|if)
+      captures: 
+        1: entity.name.label
+        2: punctuation.separator
     - match: (?i)(?<=then|else|if|do)\s+(\w+)\s*\n
       scope: entity.name.label
 
