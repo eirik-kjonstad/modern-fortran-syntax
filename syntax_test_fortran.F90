@@ -59,9 +59,23 @@
 !
       procedure :: doStuff => myDoStuffRoutine
 !     ^^^^^^^^^ keyword.declaration.function
-!                  ^^^^^^^ variable.other
-!                             ^^^^^^^^^^^^^^^^ variable.other
-!                             E: these shouldn't be variables I think
+!               ^^ punctuation.separator.double-colon.fortran
+!                  ^^^^^^^ entity.name.function
+!                          ^^ keyword.operator.points-to.fortran
+!                             ^^^^^^^^^^^^^^^^ entity.name.function
+!
+      procedure, private :: doStuffMyWay => doStuffMyWayRoutine
+!     ^^^^^^^^^ keyword.declaration.function
+!                                        ^^ keyword.operator.points-to.fortran
+!              ^ punctuation.separator
+!                ^^^^^^^ storage.modifier  
+!                           ^^^^^^^^^^^^ entity.name.function
+!                                            ^^^^^^^^^^^^^^^^^^ entity.name.function
+!
+      procedure, private :: aRatherLongFunctionNameIndeed &
+!                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ entity.name.function
+!                                                         ^ punctuation.separator.continuation                       
+                         => theImplementationNameOfTheRatherLongFunction
 !
    end type myClass1
 !  ^^^ keyword.control
@@ -450,12 +464,13 @@ end program myProgram
 !                   ^^ constant.numeric
 !                ^ punctuation.separator
 !                  ^ punctuation.separator
-!
+   if ( this_image() .eq. 2 ) sync images( 3 ) 
    if ( this_image() .eq. 2 ) sync images( 3 )
 !       ^^^^^^^^^^ variable.function
 !                             ^^^^ keyword.control
 !                                  ^^^^^^ keyword.control
 !                                          ^ constant.numeric
+!
 !
    type(t) :: myValue[*]
    if ( img .eq. num_images() ) myValue%i(1) = myValue[1]%i(1)

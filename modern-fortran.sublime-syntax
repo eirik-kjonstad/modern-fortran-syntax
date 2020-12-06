@@ -43,42 +43,45 @@ contexts:
     - include: class-accessing
     - include: io
     - include: function-call
+    - include: pointer-symbol
     - include: match-variable
     - include: omp
 
   comments:
     - match: '!(?![$])'
       scope: punctuation.definition.comment.fortran
-      set:
+      push:
       - meta_scope: comment.line.fortran
       - match: \n 
         pop: true
 
   types:
-    - include: comments
-    - include: strings
     - match: '(?i)\b{{intrinsicType}}\b(?=.*(function))' # type of return value in function 
       scope: storage.type.intrinsic
     - match: '(?i){{firstOnLine}}\b{{intrinsicType}}\b(?=.*::)' # type declaration
       scope: storage.type.intrinsic.fortran
-      push: declaration
+    - match: '(?i)\b(in|out|inout)\b' 
+      scope: keyword.other 
+    - match: '(?<=::)\s*(\w+)'
+      scope: variable.other
     - match: '(?i){{firstOnLine}}(type|class){{parenthesisStart}}\s*(\w*){{parenthesisEnd}}'
       captures:
         1: storage.type.class.fortran
         2: entity.name.class.fortran
-      push: declaration
 
   attribute:
     - match: '(?i)\b{{intrinsicAttribute}}\b'
       scope: storage.modifier
+
+  pointer-symbol:
+    - match: (=>)
+      scope: keyword.operator.points-to.fortran    
 
   operators:
     - match: (==|/=|>=|<=|<|>)
       scope: keyword.operator.logical
     - match: (?i)(\.and\.|\.or\.|\.ne\.|\.lt\.|\.le\.|\.gt\.|\.ge\.|\.eq\.|\.not\.)
       scope: keyword.operator.word
-    - match: (=>)
-      scope: keyword.operator
     - match: (?i)(?<=d|e)(\-|\+)(?=\d) # - and + is not arithmetic 
                                        # in scientific notation (1.0d-2)
       scope: constant.numeric
@@ -87,7 +90,7 @@ contexts:
 
   separators:
     - match: (::)
-      scope: punctuation.separator
+      scope: punctuation.separator.double-colon.fortran
     - match: (:)
       scope: punctuation.separator
     - match: ','
@@ -150,19 +153,6 @@ contexts:
   newline-pop:
     - match: '\n'
       pop: true     
-
-  declaration:
-    - include: attribute
-    - include: operators
-    - include: separators
-    - include: newline-pop
-    - include: comments
-    - include: strings
-    - include: numbers
-    - match: '(?i)\b(in|out|inout)\b' 
-      scope: keyword.other 
-    - include: class-accessing
-    - include: match-variable
 
   continuation:
     - match: "&"
@@ -268,13 +258,25 @@ contexts:
       scope: keyword.declaration.class.fortran 
       push: class-name
     - match: (?i)(procedure|generic)
-      scope: keyword.declaration.function
+      scope: keyword.declaration.function.fortran
+      push: member-routine-declaration
     - match: (?i)(contains)
       scope: keyword.declaration.interface
     - match: '(?i)(?<=end)\s+(type)\s+(\w*)'
       captures:
         1: keyword.declaration.class.fortran
         2: entity.name.class
+
+  member-routine-declaration:
+    - include: comments
+    - include: separators 
+    - include: continuation 
+    - include: attribute
+    - include: pointer-symbol
+    - match: '(\w*)'
+      scope: entity.name.function.fortran
+    - match: '(?<!\&)\s*\n'
+      pop: true
 
   class-name:
     - include: newline-pop
