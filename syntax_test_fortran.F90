@@ -315,13 +315,13 @@
 !                    ^^^^^^^^^^ entity.name.function
 !
 program myProgram
-!<-^^^^ keyword.other
+!<-^^^^ keyword.declaration.program.fortran
 !       ^^^^^^^^^ entity.name
 !
 !  Program contents
 !
 end program myProgram
-!   ^^^^^^^ keyword.other
+!   ^^^^^^^ keyword.declaration.program.fortran
 !           ^^^^^^^^^ entity.name
 !
    DO I = 1, 10
@@ -483,4 +483,8 @@ end program myProgram
    result = thisFunction ()
 !  ^^^^^^ variable.other
 !           ^^^^^^^^^^^^ variable.function
+!
+   event post (...)
+!  ^^^^^ keyword.control
+!        ^^^^ keyword.control
 !
