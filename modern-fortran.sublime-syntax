@@ -345,16 +345,16 @@ contexts:
       pop: true
 
   omp-directives:
-    - match: ({{ompDirectives}})
+    - match: (?i)({{ompDirectives}})
       scope: support.function
 
   omp-intrinsic:
-    - match: ({{ompIntrinsics}})
+    - match: (?i)({{ompIntrinsics}})
       scope: support.function
 
   omp-clauses:
     - include: omp-continuation
-    - match: ({{ompClauses}})
+    - match: (?i)({{ompClauses}})
       scope: support.constant
 
   omp-schedule:
