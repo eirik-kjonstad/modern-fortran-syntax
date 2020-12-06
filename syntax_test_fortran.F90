@@ -50,7 +50,7 @@
 !
    type :: myClass1
 !  ^^^^ storage.type.class
-!       ^^ keyword.separator
+!       ^^ punctuation.separator
 !          ^^^^^^^^ entity.name.class
 !
 !     ...
@@ -73,7 +73,7 @@
 !  ^^^^ storage.type.class
 !      ^ punctuation.separator
 !        ^^^^^^^^ storage.modifier
-!                 ^^ keyword.separator
+!                 ^^ punctuation.separator
 !                    ^^^^^^^ entity.name.class
 
    "This is a simple string"
@@ -365,7 +365,7 @@ end program myProgram
    type, abstract, extends(cat) :: superCat
 !      ^ punctuation.separator
 !                ^ punctuation.separator
-!                               ^^ keyword.separator
+!                               ^^ punctuation.separator
 !
    MODULE SUBROUTINE MY_SUBROUTINE(A, B, Cee%Dee)
 !  ^^^^^^ storage.modifier
@@ -418,4 +418,50 @@ end program myProgram
    end if readingTime
 !      ^^ keyword.control
 !         ^^^^^^^^^^^ entity.name.label
+!
+   integer, codimension(*) :: myInt
+!           ^^^^^^^^^^^ storage.modifier
+!
+   sync all
+!  ^^^^ keyword.control
+!       ^^^ keyword.control
+   sync images
+!  ^^^^ keyword.control
+!       ^^^^^^ keyword.control
+   sync memory
+!  ^^^^ keyword.control
+!       ^^^^^^ keyword.control
+!
+   lock 
+!  ^^^^ keyword.control
+   unlock
+!  ^^^^^^ keyword.control
+!
+   complex :: c(7,0:13) [-3:2,5,*] ! complex array coarray of corank 3
+!  ^^^^^^^ storage.type.intrinsic
+!             ^ variable.other
+!                        ^ keyword.operator.arithmetic
+!                         ^ constant.numeric
+!                          ^ punctuation.separator
+!                           ^ constant.numeric
+!                            ^ punctuation.separator
+!               ^ constant.numeric
+!                 ^ constant.numeric
+!                   ^^ constant.numeric
+!                ^ punctuation.separator
+!                  ^ punctuation.separator
+!
+   if ( this_image() .eq. 2 ) sync images( 3 )
+!       ^^^^^^^^^^ variable.function
+!                             ^^^^ keyword.control
+!                                  ^^^^^^ keyword.control
+!                                          ^ constant.numeric
+!
+   type(t) :: myValue[*]
+   if ( img .eq. num_images() ) myValue%i(1) = myValue[1]%i(1)
+!                               ^^^^^^^ storage.type.class 
+!                                              ^^^^^^^ storage.type.class 
+!
+   a = gei[i](j)%asd
+!      ^^^ storage.type.class 
 !

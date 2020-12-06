@@ -35,6 +35,7 @@ contexts:
     - include: modules
     - include: interfaces 
     - include: class-definitions
+    - include: coarray
     - include: separators
     - include: numbers
     - include: constants
@@ -86,9 +87,9 @@ contexts:
 
   separators:
     - match: (::)
-      scope: keyword.separator
+      scope: punctuation.separator
     - match: (:)
-      scope: keyword.separator
+      scope: punctuation.separator
     - match: ','
       scope: punctuation.separator
     - match: '\%'
@@ -303,9 +304,9 @@ contexts:
 
   class-accessing:
     - include: comments 
-    - match: '(\w*)(?=\%|\(.*\)\%)' # matches a in a%something or a(...)%something
-      scope: storage.type.class # should this not be a variable? class variable?
-      #scope: variable.other
+    - match: '(\w+)\s*(?=\%|\[.*\]\(.*\)\%|\(.*\)\%|\[.*\]\%)'
+      scope: storage.type.class
+      #scope: variable.other (alternative scope)
 
   function-call:
     - match: '(\w*)\('
@@ -386,3 +387,12 @@ contexts:
       scope: keyword.other 
     - match: '(?i)(?<=program)\s+(\w*)'
       scope: entity.name
+
+  coarray:
+    - match: (?i)\b(sync)\s+(all|images|memory)\b 
+      captures: 
+        1: keyword.control
+        2: keyword.control
+    - match: (?i)\b(lock|unlock)\b 
+      scope: keyword.control
+
