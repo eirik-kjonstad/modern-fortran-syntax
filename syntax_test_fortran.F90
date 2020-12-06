@@ -462,6 +462,21 @@ end program myProgram
 !                               ^^^^^^^ storage.type.class 
 !                                              ^^^^^^^ storage.type.class 
 !
-   a = gei[i](j)%asd
+   a = gei[i,k](j)%asd
 !      ^^^ storage.type.class 
+!                 ^ punctuation.accessor
+!          ^ variable.other 
+!           ^ punctuation.separator 
+!            ^ variable.other 
+!                  ^^^ variable.other 
+!
+   a = this_image()
+!      ^^^^^^^^^^ variable.function
+!
+   allocate (co % data (10 * this_image()))
+!                            ^^^^^^^^^^ variable.function
+!  ^^^^^^^^ variable.function
+!            ^^ storage.type.class
+!                 ^^^^ variable.other
+!                       ^^ constant.numeric
 !

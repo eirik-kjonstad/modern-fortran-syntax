@@ -200,11 +200,11 @@ contexts:
           pop: true 
 
   procedures:
-    - match: (?i)\b({{intrinsicFunction}})\(
+    - match: (?i)\b({{intrinsicFunction}})\b\s*\(
       captures: 
         1: variable.function
 
-    - match: (?i)\b({{intrinsicSubroutine}})\b\(
+    - match: (?i)\b({{intrinsicSubroutine}})\b\s*\(
       captures:
         1: variable.function
 
