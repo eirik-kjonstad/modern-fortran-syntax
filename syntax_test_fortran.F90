@@ -49,7 +49,7 @@
 !                  ^^^^^^^^^^^ storage.modifier
 !
    type :: myClass1
-!  ^^^^ storage.type.class
+!  ^^^^ keyword.declaration.class
 !       ^^ punctuation.separator
 !          ^^^^^^^^ entity.name.class
 !
@@ -65,12 +65,12 @@
 !
    end type myClass1
 !  ^^^ keyword.control
-!      ^^^^ storage.type.class
+!      ^^^^ keyword.declaration.class
 !           ^^^^^^^^ entity.name.class
 !
 !
    type, abstract :: myClass2
-!  ^^^^ storage.type.class
+!  ^^^^ keyword.declaration.class
 !      ^ punctuation.separator
 !        ^^^^^^^^ storage.modifier
 !                 ^^ punctuation.separator
@@ -332,14 +332,14 @@ end program myProgram
 !  ^^^^^ keyword.control
 !
    TYPE simpleStruct
-!  ^^^^ storage.type.class
+!  ^^^^ keyword.declaration.class
 !       ^^^^^^^^^^^^ entity.name.class
 !
       integer :: x
       integer :: y 
 !
    END TYPE simpleStruct
-!      ^^^^ storage.type.class
+!      ^^^^ keyword.declaration.class
 !           ^^^^^^^^^^^^ entity.name.class
    ALLOCATE(array(10))
 !  ^^^^^^^^ variable.function

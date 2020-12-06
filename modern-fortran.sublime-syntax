@@ -48,9 +48,9 @@ contexts:
 
   comments:
     - match: '!(?![$])'
-      scope: punctuation.definition.comment
+      scope: punctuation.definition.comment.fortran
       set:
-      - meta_scope: comment.line
+      - meta_scope: comment.line.fortran
       - match: \n 
         pop: true
 
@@ -60,12 +60,12 @@ contexts:
     - match: '(?i)\b{{intrinsicType}}\b(?=.*(function))' # type of return value in function 
       scope: storage.type.intrinsic
     - match: '(?i){{firstOnLine}}\b{{intrinsicType}}\b(?=.*::)' # type declaration
-      scope: storage.type.intrinsic
+      scope: storage.type.intrinsic.fortran
       push: declaration
     - match: '(?i){{firstOnLine}}(type|class){{parenthesisStart}}\s*(\w*){{parenthesisEnd}}'
       captures:
-        1: storage.type.class
-        2: entity.name.class
+        1: storage.type.class.fortran
+        2: entity.name.class.fortran
       push: declaration
 
   attribute:
@@ -265,7 +265,7 @@ contexts:
 
   class-definitions:
     - match: ^(?i)(?<!\bend\b)\s+\b(type)\b(?!\s*\() # not the end of type; not variable specification; must be beginning of declaration
-      scope: storage.type.class # should this be keyword.declaration.class??
+      scope: keyword.declaration.class.fortran 
       push: class-name
     - match: (?i)(procedure|generic)
       scope: keyword.declaration.function
@@ -273,7 +273,7 @@ contexts:
       scope: keyword.declaration.interface
     - match: '(?i)(?<=end)\s+(type)\s+(\w*)'
       captures:
-        1: storage.type.class
+        1: keyword.declaration.class.fortran
         2: entity.name.class
 
   class-name:
