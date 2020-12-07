@@ -7,7 +7,7 @@ scope: source.fortran
 variables:
   intrinsicType: '(real|integer|complex|character|logical|byte|double precision|double complex)'
   intrinsicAttribute: '(allocatable|asynchronous|automatic|bind|codimension|contiguous|dimension|external|intent|intrinsic|optional|parameter|pointer|private|protected|public|save|static|target|value|volatile|deferred|pass|nopass|overridable|non_overridable)'
-  intrinsicFunction: '(abs|achar|acos|acosh|adjustl|adjustr|aimag|aint|all|allocated|anint|any|asin|asinh|associated|atan|atan2|atanh|atomic_add|atomic_and|atomic_cas|atomic_define|atomic_fetch_add|atomic_fetch_and|atomic_fetch_or|atomic_fetch_xor|atomic_or|atomic_ref|atomic_xor|bessel_j0|bessel_j1|bessel_jn|bessel_y0|bessel_y1|bessel_yn|bge|bgt|bit_size|ble|bit|btest|c_associated|c_funloc|c_f_pointer|c_f_procpointer|c_loc|c_sizeof|ceiling|char|cmplx|co_broadcast|co_max|co_min|co_reduce|co_sum|command_argument_count|compiler_options|compiler_version|conjg|cos|cosh|count|cpu_time|cshift|date_and_time|dble|digits|dim|dot_product|dprod|dshiftl|dshiftr|eoshift|epsilon|erf|erfc|erfc_scaled|event_query|execute_command_line|exp|exponent|extends_type_of|float|floor|fraction|gamma|get_command|get_command_argument|get_environment_variable|huge|hypot|iachar|iall|iand|iany|ibclr|ibits|ibset|ichar|ieor|image_index|index|int|ior|iparity|is_iostat_end|is_iostat_eor|ishft|isfhtc|kind|lbound|lcobound|leadz|len|len_trim|lge|lgt|lle|llt|log|log10|log_gamma|logical|maskl|maskr|matmul|max|maxexponent|maxloc|maxval|merge|merge_bits|min|minexponent|minloc|minval|mod|module|move_alloc|mvbits|nearest|new\_line|nint|not|norm2|null|num_images|pack|parity|popcnt|poppar|precision|present|product|radix|random_number|random_seed|range|rank|real|repeat|reshape|rrspacing|same_type_as|scale|scan|selected_char_kind|selected_int_kind|selected_real_kind|set_exponent|shape|shifta|shiftl|shiftr|sign|sin|sinh|size|sngl|spacing|spread|sqrt|storage_size|sum|system_clock|tan|tanh|this_image|tiny|trailz|transfer|transpose|trim|ubound|ucobound|unpack|verify)'
+  intrinsicFunction: '(abs|achar|acos|acosh|adjustl|adjustr|aimag|aint|all|allocated|anint|any|asin|asinh|associated|atan|atan2|atanh|atomic_add|atomic_and|atomic_cas|atomic_define|atomic_fetch_add|atomic_fetch_and|atomic_fetch_or|atomic_fetch_xor|atomic_or|atomic_ref|atomic_xor|bessel_j0|bessel_j1|bessel_jn|bessel_y0|bessel_y1|bessel_yn|bge|bgt|bit_size|ble|bit|btest|c_associated|c_funloc|c_f_pointer|c_f_procpointer|c_loc|c_sizeof|ceiling|char|cmplx|co_broadcast|co_max|co_min|co_reduce|co_sum|coshape|command_argument_count|compiler_options|compiler_version|conjg|cos|cosh|count|cpu_time|cshift|date_and_time|dble|digits|dim|dot_product|dprod|dshiftl|dshiftr|eoshift|epsilon|erf|erfc|erfc_scaled|event_query|execute_command_line|exp|exponent|extends_type_of|float|floor|fraction|gamma|get_command|get_command_argument|get_environment_variable|huge|hypot|iachar|iall|iand|iany|ibclr|ibits|ibset|ichar|ieor|image_index|index|int|ior|iparity|is_iostat_end|is_iostat_eor|ishft|isfhtc|kind|lbound|lcobound|leadz|len|len_trim|lge|lgt|lle|llt|log|log10|log_gamma|logical|maskl|maskr|matmul|max|maxexponent|maxloc|maxval|merge|merge_bits|min|minexponent|minloc|minval|mod|module|move_alloc|mvbits|nearest|new\_line|nint|not|norm2|null|num_images|pack|parity|popcnt|poppar|precision|present|product|radix|random_number|random_seed|range|rank|real|repeat|reshape|rrspacing|same_type_as|scale|scan|selected_char_kind|selected_int_kind|selected_real_kind|set_exponent|shape|shifta|shiftl|shiftr|sign|sin|sinh|size|sngl|spacing|spread|sqrt|storage_size|sum|system_clock|tan|tanh|this_image|tiny|trailz|transfer|transpose|trim|ubound|ucobound|unpack|verify)'
   intrinsicSubroutine: '(nullify|allocate|deallocate)'
   intrinsicIO: '(print|write|read|inquire|open|close|rewind|backspace|endfile|flush|namelist)'
   intrinsicIOArguments: (unit|newunit|iunit|eunit|format|advance|asynchronous|blank|decimal|id|pad|pos|round|size|iostat|err|end|eor|iomsg|io-list|form|nml-group|nml|rec|delim|sign|name|label|msg-var|i-var|slist|access|action|associatevariable|blocksize|buffercount|buffered|carriagecontrol|convert|decimal|defaultfile|dispose|encoding|file|iofocus|maxrec|mode|noshared|organization|readonly|recordsize|recordtype|share|status|title|type|useropen|sz|slist|def)
@@ -34,7 +34,8 @@ contexts:
     - include: procedures
     - include: modules
     - include: interfaces 
-    - include: classdefinitions
+    - include: class-definitions
+    - include: coarray
     - include: separators
     - include: numbers
     - include: constants
@@ -42,50 +43,58 @@ contexts:
     - include: class-accessing
     - include: io
     - include: function-call
-    - include: matchVariable
+    - include: pointer-symbol
+    - include: match-variable
     - include: omp
 
   comments:
     - match: '!(?![$])'
-      scope: punctuation.definition.comment
-      set:
-      - meta_scope: comment.line
+      scope: punctuation.definition.comment.fortran
+      push:
+      - meta_scope: comment.line.fortran
       - match: \n 
         pop: true
 
   types:
-    - include: comments
-    - include: strings
     - match: '(?i)\b{{intrinsicType}}\b(?=.*(function))' # type of return value in function 
-      scope: storage.type
+      scope: storage.type.intrinsic
     - match: '(?i){{firstOnLine}}\b{{intrinsicType}}\b(?=.*::)' # type declaration
-      scope: storage.type
-      push: declaration
+      scope: storage.type.intrinsic.fortran
+    - match: '(?i)\b(in|out|inout)\b' 
+      scope: keyword.other.intent.fortran 
+    - match: '(?<=::)\s*(\w+)'
+      scope: variable.other
     - match: '(?i){{firstOnLine}}(type|class){{parenthesisStart}}\s*(\w*){{parenthesisEnd}}'
       captures:
-        1: storage.type.class
-        2: entity.name.class
-      push: declaration
+        1: storage.type.class.fortran
+        2: entity.name.class.fortran
 
   attribute:
     - match: '(?i)\b{{intrinsicAttribute}}\b'
       scope: storage.modifier
+
+  pointer-symbol:
+    - match: (=>)
+      scope: keyword.operator.points-to.fortran    
 
   operators:
     - match: (==|/=|>=|<=|<|>)
       scope: keyword.operator.logical
     - match: (?i)(\.and\.|\.or\.|\.ne\.|\.lt\.|\.le\.|\.gt\.|\.ge\.|\.eq\.|\.not\.)
       scope: keyword.operator.word
-    - match: (=>)
-      scope: keyword.operator
-    - match: (\*|\+|-|\/|=)
+    - match: (?i)(?<=d|e)(\-|\+)(?=\d) # - and + is not arithmetic 
+                                       # in scientific notation (1.0d-2)
+      scope: constant.numeric
+    - match: (\*|\+|-|\/)
       scope: keyword.operator.arithmetic
+    - match: (=)(?!>)
+      scope: keyword.operator.assignment.fortran
 
   separators:
     - match: (::)
-      scope: keyword.separator
+      scope: punctuation.separator.double-colon.fortran
     - match: (:)
-      scope: keyword.separator
+      scope: punctuation.separator
     - match: ','
       scope: punctuation.separator
     - match: '\%'
@@ -107,23 +116,22 @@ contexts:
       scope: keyword.control
     - match: (?i)\b(exit|cycle|return)\b 
       scope: keyword.control
+    # do concurrent 
+    - match: (?i)(?<=do)\s+(concurrent)\b 
+      scope: keyword.control
+    - match: (?i)\b(concurrent|local|shared|local_init|default)\b 
+      scope: keyword.control
+    # named do & if statements
+    - match: (?i)(\w+)(\:)\s*(?=do|if)
+      captures: 
+        1: entity.name.label
+        2: punctuation.separator
+    - match: (?i)(?<=then|else|if|do)\s+(\w+)\s*\n
+      scope: entity.name.label
 
   newline-pop:
     - match: '\n'
       pop: true     
-
-  declaration:
-    - include: attribute
-    - include: operators
-    - include: separators
-    - include: newline-pop
-    - include: comments
-    - include: strings
-    - include: numbers
-    - match: '(?i)\b(in|out|inout)\b' 
-      scope: keyword.other 
-    - include: class-accessing
-    - include: matchVariable
 
   continuation:
     - match: "&"
@@ -161,14 +169,13 @@ contexts:
           pop: true 
 
   procedures:
-    - match: (?i)\b({{intrinsicFunction}})\(
+    - match: (?i)\b({{intrinsicFunction}})\b\s*(?=\()
       captures: 
         1: constant.language
 
-    - match: (?i)\b({{intrinsicSubroutine}})\b\(
+    - match: (?i)\b({{intrinsicSubroutine}})\b\s*(?=\()
       captures:
         1: variable.function
-
 
     - match: (?i)\s*(result)\s*\( 
       captures: 
@@ -200,7 +207,7 @@ contexts:
         1: variable.function
     - match: '(?i)\b({{intrinsicIOArguments}})\b'
       captures: 
-        1: keyword.declaration.function
+        1: variable.language
 
   modules:
     - match: (?i)\b(module)\b\s*(\w*)$
@@ -225,20 +232,32 @@ contexts:
         1: keyword.control
         2: punctuation.separator
 
-  classdefinitions:
+  class-definitions:
     - match: ^(?i)(?<!\bend\b)\s+\b(type)\b(?!\s*\() # not the end of type; not variable specification; must be beginning of declaration
-      scope: storage.type.class
-      push: class.name
-    - match: (?i)(procedure)
-      scope: keyword.declaration.function
+      scope: keyword.declaration.class.fortran 
+      push: class-name
+    - match: (?i)(procedure|generic)
+      scope: keyword.declaration.function.fortran
+      push: member-routine-declaration
     - match: (?i)(contains)
       scope: keyword.declaration.interface
     - match: '(?i)(?<=end)\s+(type)\s+(\w*)'
       captures:
-        1: storage.type.class
+        1: keyword.declaration.class.fortran
         2: entity.name.class
 
-  class.name:
+  member-routine-declaration:
+    - include: comments
+    - include: separators 
+    - include: continuation 
+    - include: attribute
+    - include: pointer-symbol
+    - match: '(\w*)'
+      scope: entity.name.function.fortran
+    - match: '(?<!\&)\s*\n'
+      pop: true
+
+  class-name:
     - include: newline-pop
     - include: separators
     - match: (?i)\b(extends)\b{{parenthesisStart}}(\w*){{parenthesisEnd}}
@@ -266,11 +285,12 @@ contexts:
 
   class-accessing:
     - include: comments 
-    - match: '(\w*)(?=\%|\(.*\)\%)' # matches a in a%something or a(...)%something
+    - match: '(\w+)\s*(?=\%|\[.*\]\(.*\)\%|\(.*\)\%|\[.*\]\%)'
       scope: storage.type.class
+      #scope: variable.other (alternative scope)
 
   function-call:
-    - match: '(\w*)\('
+    - match: '(\w*)\s*(?=\()'
       captures:
         1: variable.function
 
@@ -285,64 +305,79 @@ contexts:
       scope: keyword.control
 
   omp:
-    - match: '{{firstOnLine}}(\!\$omp)'
+    - match: '{{firstOnLine}}(?i)(\!\$omp)'
       scope: support.function
-      push: omp.line 
+      push: omp-line 
     - match: '{{firstOnLine}}(\!\$)'
       scope: support.function
-      push: omp.line 
+      push: omp-line 
 
-  omp.line:
-    - include: omp.continuation
-    - include: omp.directives
-    - include: omp.intrinsic
-    - include: omp.clauses
-    - match: (schedule)
+  omp-line:
+    - include: omp-continuation
+    - include: omp-directives
+    - include: omp-intrinsic
+    - include: omp-clauses
+    - include: separators
+    - match: (?i)(schedule)
       scope: support.function
-      push: omp.schedule
+      push: omp-schedule
+    - include: match-variable
     - match: '\n'
       pop: true
 
-  omp.directives:
-    - match: ({{ompDirectives}})
+  omp-directives:
+    - match: (?i)({{ompDirectives}})
       scope: support.function
 
-  omp.intrinsic:
-    - match: ({{ompIntrinsics}})
+  omp-intrinsic:
+    - match: (?i)({{ompIntrinsics}})
       scope: support.function
 
-  omp.clauses:
-    - include: omp.continuation
-    - match: ({{ompClauses}})
+  omp-clauses:
+    - include: omp-continuation
+    - match: (?i)({{ompClauses}})
       scope: support.constant
 
-  omp.schedule:
-    - include: omp.continuation
-    - match: (static|dynamic|guided|auto)
+  omp-schedule:
+    - include: omp-continuation
+    - match: (?i)(static|dynamic|guided|auto)
       scope: support.constant
     - match: '{{parenthesisEnd}}'
       pop: true
 
 
-  omp.continuation:
+  omp-continuation:
     - match: "&" 
       push:
-        - match: '{{firstOnLine}}(\!\$omp)'
+        - match: '{{firstOnLine}}(?i)(\!\$omp)'
           scope: support.function
           pop: true
 
-  matchVariable:
+  match-variable:
     - match: ({{variableMatch}})
       scope: variable.other
 
   preprocessing:
     - match: '{{firstOnLine}}(\#)'
       scope: support.function
-    - match: '(?<=\#)({{fppCommands}})'
+    - match: '(?i)(?<=\#)({{fppCommands}})'
       scope: support.function
     
   program:
     - match: (?i)\b(program)\b 
-      scope: keyword.other 
+      scope: keyword.declaration.program.fortran 
     - match: '(?i)(?<=program)\s+(\w*)'
       scope: entity.name
+
+  coarray:
+    - match: (?i)\b(sync)\s+(all|images|memory)\b 
+      captures: 
+        1: keyword.control
+        2: keyword.control
+    - match: (?i)\b(lock|unlock)\b 
+      scope: keyword.control
+    - match: (?i)(event)\s+(post|wait)\s*(?=\()
+      captures:
+        1: keyword.control
+        2: keyword.control 
+

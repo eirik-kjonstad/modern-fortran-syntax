@@ -5,7 +5,10 @@
 !         ^^^^^ keyword.operator.word
 !
    a => b
-!    ^^ keyword.operator
+!    ^^ keyword.operator.points-to.fortran
+!
+   a = b 
+!    ^ keyword.operator.assignment.fortran
 !
    integer(kind=8), dimension(:,:), allocatable :: myInt
 !  ^^^^^^^ storage.type
@@ -39,7 +42,7 @@
 !  ^^^^ storage.type
 !       ^^ variable.other
 !            ^^^^^^ storage.modifier
-!                   ^^ keyword.other
+!                   ^^ keyword.other.intent.fortran 
 !                          ^^^^^^ variable.other
 !                                   ^^^^^^^^^^^^^^ comment.line
 
@@ -49,8 +52,8 @@
 !                  ^^^^^^^^^^^ storage.modifier
 !
    type :: myClass1
-!  ^^^^ storage.type.class
-!       ^^ keyword.separator
+!  ^^^^ keyword.declaration.class
+!       ^^ punctuation.separator
 !          ^^^^^^^^ entity.name.class
 !
 !     ...
@@ -59,21 +62,35 @@
 !
       procedure :: doStuff => myDoStuffRoutine
 !     ^^^^^^^^^ keyword.declaration.function
-!                  ^^^^^^^ variable.other
-!                             ^^^^^^^^^^^^^^^^ variable.other
-!                             E: these shouldn't be variables I think
+!               ^^ punctuation.separator.double-colon.fortran
+!                  ^^^^^^^ entity.name.function
+!                          ^^ keyword.operator.points-to.fortran
+!                             ^^^^^^^^^^^^^^^^ entity.name.function
+!
+      procedure, private :: doStuffMyWay => doStuffMyWayRoutine
+!     ^^^^^^^^^ keyword.declaration.function
+!                                        ^^ keyword.operator.points-to.fortran
+!              ^ punctuation.separator
+!                ^^^^^^^ storage.modifier  
+!                           ^^^^^^^^^^^^ entity.name.function
+!                                            ^^^^^^^^^^^^^^^^^^ entity.name.function
+!
+      procedure, private :: aRatherLongFunctionNameIndeed &
+!                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ entity.name.function
+!                                                         ^ punctuation.separator.continuation                       
+                         => theImplementationNameOfTheRatherLongFunction
 !
    end type myClass1
 !  ^^^ keyword.control
-!      ^^^^ storage.type.class
+!      ^^^^ keyword.declaration.class
 !           ^^^^^^^^ entity.name.class
 !
 !
    type, abstract :: myClass2
-!  ^^^^ storage.type.class
+!  ^^^^ keyword.declaration.class
 !      ^ punctuation.separator
 !        ^^^^^^^^ storage.modifier
-!                 ^^ keyword.separator
+!                 ^^ punctuation.separator
 !                    ^^^^^^^ entity.name.class
 
    "This is a simple string"
@@ -154,15 +171,10 @@
 !  ^^^ constant.numeric
 !
    1.0d-12
-!  ^ constant.numeric
-!    ^^ constant.numeric
-!       ^^ constant.numeric
+!  ^^^^^^^ constant.numeric
 !
    1.2345E-10 
-!  ^ constant.numeric
-!   ^ constant.numeric
-!          ^^ constant.numeric
-!    ^^^^^ constant.numeric
+!  ^^^^^^^^^^ constant.numeric
 !
    1.23_dp
 !       ^^ variable.other
@@ -229,7 +241,7 @@
 !                          ^^^^^^^^^^ storage.type.class
 !                                        ^^^^^^^^^ variable.function
 !
-   aRealNumber = real(anInteger) ! ruined this one; have to think to fix it
+   aRealNumber = real(anInteger) 
 !                ^^^^ variable.function
 !                     ^^^^^^^^^ variable.other
 !  simple function call
@@ -277,6 +289,7 @@
    real(dp), dimension(wf%n_ao**2, wf%n_densities), intent(in), optional :: prev_ao_density
 !  ^^^^ storage.type
 !            ^^^^^^^^^ storage.modifier
+!                                                          ^^ keyword.other.intent.fortran
 !                                                   ^^^^^^ storage.modifier
 !                      ^^ storage.type.class
 !                        ^ punctuation.accessor
@@ -320,13 +333,13 @@
 !                    ^^^^^^^^^^ entity.name.function
 !
 program myProgram
-!<-^^^^ keyword.other
+!<-^^^^ keyword.declaration.program.fortran
 !       ^^^^^^^^^ entity.name
 !
 !  Program contents
 !
 end program myProgram
-!   ^^^^^^^ keyword.other
+!   ^^^^^^^ keyword.declaration.program.fortran
 !           ^^^^^^^^^ entity.name
 !
    DO I = 1, 10
@@ -337,14 +350,14 @@ end program myProgram
 !  ^^^^^ keyword.control
 !
    TYPE simpleStruct
-!  ^^^^ storage.type.class
+!  ^^^^ keyword.declaration.class
 !       ^^^^^^^^^^^^ entity.name.class
 !
       integer :: x
       integer :: y 
 !
    END TYPE simpleStruct
-!      ^^^^ storage.type.class
+!      ^^^^ keyword.declaration.class
 !           ^^^^^^^^^^^^ entity.name.class
    ALLOCATE(array(10))
 !  ^^^^^^^^ variable.function
@@ -370,7 +383,7 @@ end program myProgram
    type, abstract, extends(cat) :: superCat
 !      ^ punctuation.separator
 !                ^ punctuation.separator
-!                               ^^ keyword.separator
+!                               ^^ punctuation.separator
 !
    MODULE SUBROUTINE MY_SUBROUTINE(A, B, Cee%Dee)
 !  ^^^^^^ storage.modifier
@@ -385,4 +398,113 @@ end program myProgram
 
    read(unit=fileUnit, *) myVariable
 !  ^^^^ variable.function 
-!       ^^^^ keyword.declaration.function
+!       ^^^^ variable.language
+!
+   DO CONCURRENT (I = 1:N, J(I) > 0) LOCAL(M) SHARED(J, K)
+!     ^^^^^^^^^^ keyword.control
+!                                    ^^^^^ keyword.control
+!                                             ^^^^^^ keyword.control
+      M =  MOD (K(I), J(I))
+      K(I) = K(I) – M
+!
+   END DO
+!
+   extraordinaryLoop: do i = 1, 5
+!  ^^^^^^^^^^^^^^^^^ entity.name.label
+!                   ^ punctuation.separator
+!
+      print*, "I can count: ", i
+!
+   end do extraordinaryLoop
+!         ^^^^^^^^^^^^^^^^^ entity.name.label
+!
+   readingTime: if (.not. person%hasBooks()) then 
+!  ^^^^^^^^^^^ entity.name.label
+!
+      call person%read()
+!
+   else if (person%hasMoney()) then readingTime
+!                                   ^^^^^^^^^^^ entity.name.label
+!
+      call person%buyBooks()
+      call person%read()
+!
+   else readingTime
+!       ^^^^^^^^^^^ entity.name.label
+!
+      call person%cry()
+!
+   end if readingTime
+!      ^^ keyword.control
+!         ^^^^^^^^^^^ entity.name.label
+!
+   integer, codimension(*) :: myInt
+!           ^^^^^^^^^^^ storage.modifier
+!
+   sync all
+!  ^^^^ keyword.control
+!       ^^^ keyword.control
+   sync images
+!  ^^^^ keyword.control
+!       ^^^^^^ keyword.control
+   sync memory
+!  ^^^^ keyword.control
+!       ^^^^^^ keyword.control
+!
+   lock 
+!  ^^^^ keyword.control
+   unlock
+!  ^^^^^^ keyword.control
+!
+   complex :: c(7,0:13) [-3:2,5,*] ! complex array coarray of corank 3
+!  ^^^^^^^ storage.type.intrinsic
+!             ^ variable.other
+!                        ^ keyword.operator.arithmetic
+!                         ^ constant.numeric
+!                          ^ punctuation.separator
+!                           ^ constant.numeric
+!                            ^ punctuation.separator
+!               ^ constant.numeric
+!                 ^ constant.numeric
+!                   ^^ constant.numeric
+!                ^ punctuation.separator
+!                  ^ punctuation.separator
+!
+   if ( this_image() .eq. 2 ) sync images( 3 )
+!       ^^^^^^^^^^ variable.function
+!                             ^^^^ keyword.control
+!                                  ^^^^^^ keyword.control
+!                                          ^ constant.numeric
+!
+!
+   type(t) :: myValue[*]
+   if ( img .eq. num_images() ) myValue%i(1) = myValue[1]%i(1)
+!                               ^^^^^^^ storage.type.class 
+!                                              ^^^^^^^ storage.type.class 
+!
+   a = gei[i,k](j)%asd
+!      ^^^ storage.type.class 
+!                 ^ punctuation.accessor
+!          ^ variable.other 
+!           ^ punctuation.separator 
+!            ^ variable.other 
+!                  ^^^ variable.other 
+!
+   a = this_image()
+!      ^^^^^^^^^^ variable.function
+!
+   allocate (co % data (10 * this_image()))
+!                            ^^^^^^^^^^ variable.function
+!  ^^^^^^^^ variable.function
+!            ^^ storage.type.class
+!                 ^^^^ variable.function
+!                       ^^ constant.numeric
+!
+   result = thisFunction ()
+!  ^^^^^^ variable.other
+!           ^^^^^^^^^^^^ variable.function
+!
+   event post (...)
+!  ^^^^^ keyword.control
+!        ^^^^ keyword.control
+!
