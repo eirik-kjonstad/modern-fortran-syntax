@@ -84,7 +84,7 @@ contexts:
       scope: keyword.operator.word
     - match: (?i)(?<=d|e)(\-|\+)(?=\d) # - and + is not arithmetic 
                                        # in scientific notation (1.0d-2)
-      scope: constant.numeric
+      scope: constant.numeric.fortran
     - match: (\*|\+|-)
       scope: keyword.operator.arithmetic
     - match: (\/)(?!/)
@@ -276,7 +276,8 @@ contexts:
   class-name:
     - include: newline-pop
     - include: separators
-    - match: (?i)\b(extends)\b{{parenthesisStart}}(\w*){{parenthesisEnd}}
+    - include: comments
+    - match: (?i)\b(extends)\b\s*{{parenthesisStart}}\s*(\w*)\s*{{parenthesisEnd}}
       captures:
         1: keyword.operator
         2: entity.other.inherited-class
@@ -289,11 +290,11 @@ contexts:
 
   numbers:
     - match: '(\d+)'
-      scope: constant.numeric
+      scope: constant.numeric.fortran
     - match: '(?i)(?<=\d)(d|e)'
-      scope: constant.numeric
+      scope: constant.numeric.fortran
     - match: '(?<=\d)(\.)'
-      scope: constant.numeric
+      scope: constant.numeric.fortran
 
   constants:
     - match: (?i)(\.true\.|\.false\.)

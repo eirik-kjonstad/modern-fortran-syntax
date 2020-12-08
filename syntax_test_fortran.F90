@@ -165,16 +165,16 @@
 !                ^^^^^^^^^^^^^ entity.name.interface
 !
    8
-!  ^ constant.numeric
+!  ^ constant.numeric.fortran
 !
    123
-!  ^^^ constant.numeric
+!  ^^^ constant.numeric.fortran
 !
    1.0d-12
-!  ^^^^^^^ constant.numeric
+!  ^^^^^^^ constant.numeric.fortran
 !
    1.2345E-10 
-!  ^^^^^^^^^^ constant.numeric
+!  ^^^^^^^^^^ constant.numeric.fortran
 !
    1.23_dp
 !       ^^ variable.other.fortran
@@ -221,15 +221,15 @@
    do I = 1, 10
 !  ^^ keyword.control.fortran
 !     ^ variable.other.fortran
-!         ^ constant.numeric
+!         ^ constant.numeric.fortran
 !          ^ punctuation.separator
-!            ^^ constant.numeric
+!            ^^ constant.numeric.fortran
 !
       evenNumber = evenNumber + 2*I
 !     ^^^^^^^^^^ variable.other.fortran
 !                  ^^^^^^^^^^ variable.other.fortran
 !                                 ^ variable.other.fortran
-!                               ^ constant.numeric
+!                               ^ constant.numeric.fortran
    enddo
 !  ^^^^^ keyword.control.fortran
 !
@@ -461,13 +461,13 @@ end program myProgram
 !  ^^^^^^^ storage.type.intrinsic
 !             ^ variable.other.fortran
 !                        ^ keyword.operator.arithmetic
-!                         ^ constant.numeric
+!                         ^ constant.numeric.fortran
 !                          ^ punctuation.separator.single-colon.fortran
-!                           ^ constant.numeric
+!                           ^ constant.numeric.fortran
 !                            ^ punctuation.separator.comma.fortran
-!               ^ constant.numeric
-!                 ^ constant.numeric
-!                   ^^ constant.numeric
+!               ^ constant.numeric.fortran
+!                 ^ constant.numeric.fortran
+!                   ^^ constant.numeric.fortran
 !                ^ punctuation.separator
 !                  ^ punctuation.separator
 !
@@ -475,7 +475,7 @@ end program myProgram
 !       ^^^^^^^^^^ variable.function
 !                             ^^^^ keyword.control.fortran
 !                                  ^^^^^^ keyword.control.fortran
-!                                          ^ constant.numeric
+!                                          ^ constant.numeric.fortran
 !
 !
    type(t) :: myValue[*]
@@ -499,7 +499,7 @@ end program myProgram
 !  ^^^^^^^^ variable.function
 !            ^^ storage.type.class
 !                 ^^^^ variable.function
-!                       ^^ constant.numeric
+!                       ^^ constant.numeric.fortran
 !
    result = thisFunction ()
 !  ^^^^^^ variable.other.fortran
@@ -537,4 +537,11 @@ end program myProgram
 !             ^^^^^^^^^^^^^^^^ entity.name.function
               specificRoutineB ! just a side comment
 !             ^^^^^^^^^^^^^^^^ entity.name.function
+!
+   type, extends (animal) :: cat ! with spaces & commment
+!                                ^ punctuation.definition.comment.fortran
+!                                  ^^^^^^^^^^^^^^^^^^^^^^ comment.line.fortran
+!        ^^^^^^^ keyword.operator
+!                 ^^^^^^ entity.other.inherited-class  
+!                            ^^^ entity.name.class
 !
