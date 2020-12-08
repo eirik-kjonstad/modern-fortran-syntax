@@ -171,7 +171,7 @@ contexts:
   procedures:
     - match: (?i)\b({{intrinsicFunction}})\b\s*(?=\()
       captures: 
-        1: constant.language
+        1: variable.function
 
     - match: (?i)\b({{intrinsicSubroutine}})\b\s*(?=\()
       captures:
@@ -247,15 +247,29 @@ contexts:
         2: entity.name.class
 
   member-routine-declaration:
-    - include: comments
-    - include: separators 
-    - include: continuation 
+    - include: separators
     - include: attribute
     - include: pointer-symbol
-    - match: '(\w*)'
+    - match: (\w+)
       scope: entity.name.function.fortran
-    - match: '(?<!\&)\s*\n'
+    - match: \n 
       pop: true
+    - match: \&
+      scope: punctuation.separator.continuation
+      push: continuation-context
+    - match: \! # begin comment but no & on the same line, pop off and into comment context
+      scope: punctuation.definition.comment.fortran
+      set:
+      - meta_scope: comment.line.fortran
+      - match: \n 
+        pop: true
+    - match: \n 
+      pop: true
+
+  continuation-context: # continues until non-comment newline
+    - include: comments
+    - match: '^\s*(?!\!)'
+      pop: true  
 
   class-name:
     - include: newline-pop

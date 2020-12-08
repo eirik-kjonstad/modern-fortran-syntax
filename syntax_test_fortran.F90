@@ -95,7 +95,7 @@
 
    "This is a simple string"
 !
-   "This is a simple string,  & 
+   "This is a simple string,  &
    & but 'with' continuation, &
    & and more continuation!" 
 !
@@ -507,4 +507,33 @@ end program myProgram
    event post (...)
 !  ^^^^^ keyword.control
 !        ^^^^ keyword.control
+!
+   procedure, public :: theRoutine & ! side-comment
+!                                  ^ punctuation.separator.continuation
+!                       ^^^^^^^^^^ entity.name.function
+                     => theRoutine_impl ! just a side comment
+!                       ^^^^^^^^^^^^^^^ entity.name.function
+!
+   procedure, public :: get_oei_1der &
+!                                    ^ punctuation.separator.continuation
+!                       ^^^^^^^^^^^^ entity.name.function
+! interrupting comment!
+                     => get_oei_1der_ao_tool
+!                       ^^^^^^^^^^^^^^^^^^^^ entity.name.function
+!
+   generic :: genericRoutine => specificRoutineA, & ! and another side comment
+!             ^^^^^^^^^^^^^^ entity.name.function
+!                               ^^^^^^^^^^^^^^^^ entity.name.function
+!                                                 ^ punctuation.separator.continuation
+!                                               ^ punctuation.separator
+                                specificRoutineB    ! just a side comment
+!                               ^^^^^^^^^^^^^^^^ entity.name.function
+!
+   generic :: genericRoutine     & 
+!             ^^^^^^^^^^^^^^ entity.name.function
+           => specificRoutineA,  &
+!          ^^ keyword.operator.points-to.fortran 
+!             ^^^^^^^^^^^^^^^^ entity.name.function
+              specificRoutineB ! just a side comment
+!             ^^^^^^^^^^^^^^^^ entity.name.function
 !
