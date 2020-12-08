@@ -554,3 +554,6 @@ end program myProgram
 !                 ^^^^^^ entity.other.inherited-class  
 !                            ^^^ entity.name.class.fortran
 !
+   return
+!  ^^^^^^ keyword.control.fortran
+!

@@ -259,12 +259,7 @@ contexts:
     - match: \&
       scope: punctuation.separator.continuation.fortran
       push: continuation-context
-    - match: \! # begin comment but no & on the same line, pop off and into comment context
-      scope: punctuation.definition.comment.fortran
-      set:
-      - meta_scope: comment.line.fortran
-      - match: \n 
-        pop: true
+    - include: comment-pop
     - match: \n 
       pop: true
 
@@ -273,10 +268,19 @@ contexts:
     - match: '^\s*(?!\!)'
       pop: true  
 
+  comment-pop: # in "include" statements, this code will pop off and push into comment context (via "set") if it encounters "!"
+               # (useful when one needs to pop out of context at a newline, also in the case of an inline comment)
+    - match: \! 
+      scope: punctuation.definition.comment.fortran
+      set: # pop off and in
+      - meta_scope: comment.line.fortran
+      - match: \n 
+        pop: true    
+
   class-name:
     - include: newline-pop
     - include: separators
-    - include: comments
+    - include: comment-pop
     - match: (?i)\b(extends)\b\s*{{parenthesisStart}}\s*(\w*)\s*{{parenthesisEnd}}
       captures:
         1: keyword.operator
