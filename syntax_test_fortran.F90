@@ -2,7 +2,7 @@
 !
    a == b .and. c
 !    ^^ keyword.operator.logical
-!         ^^^^^ keyword.operator.word
+!         ^^^^^ keyword.operator.word.logical.fortran
 !
    a => b
 !    ^^ keyword.operator.points-to.fortran
@@ -161,18 +161,20 @@
 !                            ^^^^ variable.other.fortran
 !
    module myModule
-!  ^^^^^^ keyword.declaration.interface
-!         ^^^^^^^^ entity.name.interface
+!  ^^^^^^ keyword.declaration.interface.module.fortran
+!         ^^^^^^^^ entity.name.interface.module.fortran
 !
    submodule (moduleName) submoduleName
-!  ^^^^^^^^^ keyword.declaration.interface
-!             ^^^^^^^^^^ entity.name.interface
-!                         ^^^^^^^^^^^^^ entity.name.interface
+!  ^^^^^^^^^ keyword.declaration.interface.submodule.fortran
+!             ^^^^^^^^^^ entity.name.interface.inherited-module.fortran
+!                         ^^^^^^^^^^^^^ entity.name.interface.submodule.fortran
 !
    end submodule submoduleName
-!      ^^^^^^^^^ keyword.declaration.interface
-!                ^^^^^^^^^^^^^ entity.name.interface
+!      ^^^^^^^^^ keyword.declaration.interface.submodule.fortran
+!                ^^^^^^^^^^^^^ entity.name.interface.submodule.fortran
 !
+   end submodule ! just empty end-name also allowed
+!      ^^^^^^^^^ keyword.declaration.interface.submodule.fortran
    8
 !  ^ constant.numeric.fortran
 !
@@ -220,7 +222,11 @@
 !                                         ^^^^^^ constant.language
 !
    use moduleName, only: moduleRoutine, moduleObject, &
+!      ^^^^^^^^^^ entity.name.interface.module.fortran
 !                        ^^^^^^^^^^^^^ variable.other.fortran
+!                  ^^^^ keyword.control.fortran
+!                ^ punctuation.separator.comma.fortran
+!                      ^ punctuation.separator.single-colon.fortran
 !                                                     ^ punctuation.separator.continuation.fortran
                            otherModuleRoutine, anotherModuleObject
 !                          ^^^^^^^^^^^^^^^^^^ variable.other.fortran
@@ -469,7 +475,7 @@ end program myProgram
    complex :: c(7,0:13) [-3:2,5,*] ! complex array coarray of corank 3
 !  ^^^^^^^ storage.type.intrinsic
 !             ^ variable.other.fortran
-!                        ^ keyword.operator.arithmetic
+!                        ^ keyword.operator.arithmetic.fortran
 !                         ^ constant.numeric.fortran
 !                          ^ punctuation.separator.single-colon.fortran
 !                           ^ constant.numeric.fortran
@@ -479,6 +485,13 @@ end program myProgram
 !                   ^^ constant.numeric.fortran
 !                ^ punctuation.separator
 !                  ^ punctuation.separator
+!
+   a = 3 + 4*(12/5)
+!  ^ variable.other.fortran
+!    ^ keyword.operator.assignment.fortran
+!        ^ keyword.operator.arithmetic.fortran
+!           ^ keyword.operator.arithmetic.fortran
+!               ^ keyword.operator.arithmetic.fortran
 !
    if ( this_image() .eq. 2 ) sync images( 3 )
 !       ^^^^^^^^^^ variable.function
@@ -556,4 +569,9 @@ end program myProgram
 !
    return
 !  ^^^^^^ keyword.control.fortran
+!
+   use :: myModule, only: thatRoutine, thisRoutine
+!  ^^^ keyword.control.fortran
+!      ^^ punctuation.separator.double-colon.fortran
+!         ^^^^^^^^ entity.name.interface.module.fortran
 !

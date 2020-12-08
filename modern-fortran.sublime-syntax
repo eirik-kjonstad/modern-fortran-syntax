@@ -81,14 +81,14 @@ contexts:
     - match: (==|/=|>=|<=|<|>)
       scope: keyword.operator.logical
     - match: (?i)(\.and\.|\.or\.|\.ne\.|\.lt\.|\.le\.|\.gt\.|\.ge\.|\.eq\.|\.not\.)
-      scope: keyword.operator.word
+      scope: keyword.operator.word.logical.fortran
     - match: (?i)(?<=d|e)(\-|\+)(?=\d) # - and + is not arithmetic 
                                        # in scientific notation (1.0d-2)
       scope: constant.numeric.fortran
     - match: (\*|\+|-)
-      scope: keyword.operator.arithmetic
+      scope: keyword.operator.arithmetic.fortran
     - match: (\/)(?!/)
-      scope: keyword.operator.arithmetic # division, not string concatenation!
+      scope: keyword.operator.arithmetic.fortran # division, not string concatenation!
     - match: (=)(?!>)
       scope: keyword.operator.assignment.fortran
 
@@ -214,25 +214,28 @@ contexts:
   modules:
     - match: (?i)\b(module)\b\s*(\w*)$
       captures: 
-        1: keyword.declaration.interface
-        2: entity.name.interface
+        1: keyword.declaration.interface.module.fortran
+        2: entity.name.interface.module.fortran
     - match: (?i)\b(submodule)\b\s*\((\w*)\)\s*(\w*)
       captures:
-        1: keyword.declaration.interface
-        2: entity.name.interface
-        3: entity.name.interface
-    - match: (?i)\b(submodule)\b\s*(\w*)
+        1: keyword.declaration.interface.submodule.fortran
+        2: entity.name.interface.inherited-module.fortran
+        3: entity.name.interface.submodule.fortran
+    - match: (?i)(?<=end)\s*\b(submodule)\b\s*(\w*)
       captures:
-        1: keyword.declaration.interface
-        2: entity.name.interface
+        1: keyword.declaration.interface.submodule.fortran
+        2: entity.name.interface.submodule.fortran
     - match: (?i)\b(use)\b
       scope: keyword.control.fortran
-    - match: (?i)(?<=\buse\b)\s*(\w*)
-      scope: entity.name.interface
-    - match: (?i)\b(only)\b\s*(\:)
-      captures:
-        1: keyword.control.fortran
-        2: punctuation.separator
+      push: find-use-module
+    - match: (?i)\b(only)\b
+      scope: keyword.control.fortran
+
+  find-use-module:
+    - include: separators
+    - match: (\w+)
+      scope: entity.name.interface.module.fortran
+      pop: true
 
   class-definitions:
     - match: ^(?i)(?<!\bend\b)\s+\b(type)\b(?!\s*\() # not the end of type; not variable specification; must be beginning of declaration
