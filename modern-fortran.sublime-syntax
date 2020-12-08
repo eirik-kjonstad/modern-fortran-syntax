@@ -57,7 +57,7 @@ contexts:
 
   types:
     - match: '(?i)\b{{intrinsicType}}\b(?=.*(function))' # type of return value in function 
-      scope: storage.type.intrinsic
+      scope: storage.type.intrinsic.fortran
     - match: '(?i){{firstOnLine}}\b{{intrinsicType}}\b(?=.*::)' # type declaration
       scope: storage.type.intrinsic.fortran
     - match: '(?i)\b(in|out|inout)\b' 
@@ -173,31 +173,31 @@ contexts:
   procedures:
     - match: (?i)\b({{intrinsicFunction}})\b\s*(?=\()
       captures: 
-        1: variable.function
+        1: variable.function.function.intrinsic.fortran
 
     - match: (?i)\b({{intrinsicSubroutine}})\b\s*(?=\()
       captures:
-        1: variable.function
+        1: variable.function.subroutine.intrinsic.fortran
 
     - match: (?i)\s*(result)\s*\( 
       captures: 
-        1: keyword.control.fortran
+        1: keyword.control.function-result.fortran
 
-    - match: (?i)\b(pure)\b
-      scope: storage.modifier.fortran
+    - match: (?i)\b(impure|pure|elemental|non\_recursive|recursive)\b
+      scope: storage.modifier.function.prefix.fortran
 
     - match: (?i)(implicit none)
       scope: keyword.control.fortran
 
     - match: '(?i)\b(module)\b\s+(?=function|subroutine|procedure)'
-      scope: storage.modifier.fortran
+      scope: storage.modifier.function.prefix.fortran
 
     - match: (?i)\b(function|subroutine)\b 
-      scope: keyword.declaration.function
+      scope: keyword.declaration.function.fortran
 
     - match: (?i)(?<=\bfunction|subroutine\b)\s+(\w+)
       captures: 
-        1: entity.name.function 
+        1: entity.name.function.fortran 
 
     - match: '(?i)\b(call)\b'
       captures:
@@ -206,10 +206,10 @@ contexts:
   io: 
     - match: '(?i)\b({{intrinsicIO}})\b'
       captures:
-        1: variable.function
+        1: variable.function.subroutine.intrinsic.io.fortran
     - match: '(?i)\b({{intrinsicIOArguments}})\b'
       captures: 
-        1: variable.language
+        1: variable.language.io.fortran
 
   modules:
     - match: (?i)\b(module)\b\s*(\w*)$
@@ -239,21 +239,21 @@ contexts:
       scope: keyword.declaration.class.fortran 
       push: class-name
     - match: (?i)(procedure|generic)
-      scope: keyword.declaration.function.fortran
+      scope: keyword.declaration.function.fortran.fortran
       push: member-routine-declaration
     - match: (?i)(contains)
       scope: keyword.declaration.interface
     - match: '(?i)(?<=end)\s+(type)\s+(\w*)'
       captures:
         1: keyword.declaration.class.fortran
-        2: entity.name.class
+        2: entity.name.class.fortran
 
   member-routine-declaration:
     - include: separators
     - include: attribute
     - include: pointer-symbol
     - match: (\w+)
-      scope: entity.name.function.fortran
+      scope: entity.name.function.fortran.fortran
     - match: \n 
       pop: true
     - match: \&
@@ -284,9 +284,9 @@ contexts:
     - match: (?i)\b(abstract)\b
       scope: storage.modifier.fortran
     - match: (?<=::)\s*(\w*)
-      scope: entity.name.class
+      scope: entity.name.class.fortran
     - match: (?i)(?<=type)\s+(\w*) # simple type definition (type myType)
-      scope: entity.name.class
+      scope: entity.name.class.fortran
 
   numbers:
     - match: '(\d+)'
@@ -303,12 +303,12 @@ contexts:
   class-accessing:
     - include: comments 
     - match: '(\w+)\s*(?=\%|\[.*\]\(.*\)\%|\(.*\)\%|\[.*\]\%)'
-      scope: storage.type.class
+      scope: storage.type.class.fortran
 
   function-call:
     - match: '(\w*)\s*(?=\()'
       captures:
-        1: variable.function
+        1: variable.function.fortran
 
   interfaces:
     - match: (?i)(abstract)\s*(?=interface)
