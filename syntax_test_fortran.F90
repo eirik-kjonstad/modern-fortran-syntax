@@ -230,7 +230,7 @@
 !                                                     ^ punctuation.separator.continuation.fortran
                            otherModuleRoutine, anotherModuleObject
 !                          ^^^^^^^^^^^^^^^^^^ variable.other.fortran
-!                                            ^ punctuation.separator
+!                                            ^ punctuation.separator.comma.fortran
    evenNumber = 0
 !
    do I = 1, 10
@@ -538,6 +538,7 @@ end program myProgram
 !                       ^^^^^^^^^^^^^^^ entity.name.function.fortran
 !
    procedure, public :: get_oei_1der &
+!  ^^^^^^^^^ keyword.declaration.function.fortran
 !                                    ^ punctuation.separator.continuation.fortran
 !                       ^^^^^^^^^^^^ entity.name.function.fortran
 ! interrupting comment!
@@ -545,6 +546,7 @@ end program myProgram
 !                       ^^^^^^^^^^^^^^^^^^^^ entity.name.function.fortran
 !
    generic :: genericRoutine => specificRoutineA, & ! and another side comment
+!  ^^^^^^^ keyword.declaration.function.fortran
 !             ^^^^^^^^^^^^^^ entity.name.function.fortran
 !                               ^^^^^^^^^^^^^^^^ entity.name.function.fortran
 !                                                 ^ punctuation.separator.continuation.fortran
@@ -559,6 +561,10 @@ end program myProgram
 !             ^^^^^^^^^^^^^^^^ entity.name.function.fortran
               specificRoutineB ! just a side comment
 !             ^^^^^^^^^^^^^^^^ entity.name.function.fortran
+!
+   final :: myDestructor
+!  ^^^^^ keyword.declaration.function.fortran
+!           ^^^^^^^^^^^^ entity.name.function.fortran
 !
    type, extends (animal) :: cat ! with spaces & commment
 !                                ^ punctuation.definition.comment.fortran
