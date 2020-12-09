@@ -436,24 +436,39 @@ end program myProgram
    end select namedSelect 
 !             ^^^^^^^^^^^ entity.name.label.conditional.fortran
 !
-!  these selects needs to be fixed!!
    select type (animal)
+!  ^^^^^^^^^^^ keyword.control.fortran
+!               ^^^^^^ variable.other.fortran
 !
       type is (cat)
+!     ^^^^^^^ keyword.control.fortran
+!              ^^^ entity.name.class.fortran
 
       type is (dog)
+!     ^^^^^^^ keyword.control.fortran
+!              ^^^ entity.name.class.fortran
 !
    end select 
 !
-   select class (animal)
+   animalCasting: select class (animal)
+!  ^^^^^^^^^^^^^ entity.name.label.conditional.fortran
+!                 ^^^^^^^^^^^^ keyword.control.fortran
+!                               ^^^^^^ variable.other.fortran
 !
       class is (cat)
+!     ^^^^^^^^ keyword.control.fortran
+!               ^^^ entity.name.class.fortran
 !
       class is (dog)
+!     ^^^^^^^^ keyword.control.fortran
+!               ^^^ entity.name.class.fortran
 !
       class default
+!     ^^^^^^^^^^^^^ keyword.control.fortran
 !
-   end select 
+   end select animalCasting
+!             ^^^^^^^^^^^^^ entity.name.label.conditional.fortran
+!  ^^^^^^^^^^ keyword.control.fortran
 !
 !
    type, abstract, extends(cat) :: superCat
