@@ -72,7 +72,7 @@
 !     ...
 !
    contains
-!  ^^^^^^^^ keyword.other.fortran
+!  ^^^^^^^^ keyword.declaration.contains.fortran
 !
       procedure :: doStuff => myDoStuffRoutine
 !     ^^^^^^^^^ keyword.declaration.function.fortran
@@ -98,7 +98,7 @@
 !                        ^^ keyword.operator.points-to.fortran
 !
    end type myClass1
-!  ^^^ keyword.control.fortran
+!  ^^^ keyword.declaration.class.fortran
 !      ^^^^ keyword.declaration.class.fortran
 !           ^^^^^^^^ entity.name.class.fortran
 !
@@ -151,7 +151,7 @@
 !                                   ^^^^^^^^ variable.other.fortran
 !
    end function getStuff
-!  ^^^ keyword.control.fortran
+!  ^^^ keyword.declaration.function.fortran
 !      ^^^^^^^^ keyword.declaration.function.fortran
 !               ^^^^^^^^ entity.name.function.fortran
 !
@@ -223,7 +223,7 @@
 !     ^^^^^^^ keyword.control.import.fortran
 !
    end interface myInterface 
-!  ^^^ keyword.control.fortran
+!  ^^^ keyword.declaration.interface.interface.fortran
 !      ^^^^^^^^^ keyword.declaration.interface.interface.fortran
 !                ^^^^^^^^^^^ entity.name.interface.interface.fortran
 !
@@ -232,7 +232,7 @@
 !           ^^^^^^^^^ keyword.declaration.interface.interface.fortran
 !
    end interface 
-!  ^^^ keyword.control.fortran
+!  ^^^ keyword.declaration.interface.interface.fortran
 !      ^^^^^^^^^ keyword.declaration.interface.interface.fortran
 !
    if (thing == object%getThing('string', .true.)) call object%doStuff()

@@ -295,7 +295,7 @@ contexts:
       scope: keyword.declaration.function.fortran
       push: member-routine-declaration
     - match: (?i)(contains)
-      scope: keyword.declaration.contains.fortran #keyword.other.fortran # This is the only keyword.other.fortran
+      scope: keyword.declaration.contains.fortran 
     - match: '(?i)(end)\s+(type)\s+(\w+)'
       captures:
         1: keyword.declaration.class.fortran
