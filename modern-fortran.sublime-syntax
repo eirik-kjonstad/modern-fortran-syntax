@@ -1,0 +1,468 @@
+%YAML 1.2
+---
+#
+# Modern Fortran syntax - Sublime Text syntax highlighting for modern Fortran code
+#
+# Copyright (c) 2020-2021 by the authors 
+# Sarai D. Folkestad and Eirik F. Kjønstad
+#
+name: Modern-Fortran
+file_extensions: [F90,F08,F18,f90,f08,f18]
+scope: source.fortran
+
+variables:
+  intrinsicType: '(real|integer|complex|character|logical|byte|double precision|double complex)'
+  intrinsicAttribute: '(allocatable|asynchronous|automatic|bind|codimension|contiguous|dimension|external|intent|intrinsic|optional|parameter|pointer|private|protected|public|save|static|target|value|volatile|deferred|pass|nopass|overridable|non_overridable)'
+  intrinsicFunction: '(abs|achar|acos|acosh|adjustl|adjustr|aimag|aint|all|allocated|anint|any|asin|asinh|associated|atan|atan2|atanh|atomic_add|atomic_and|atomic_cas|atomic_define|atomic_fetch_add|atomic_fetch_and|atomic_fetch_or|atomic_fetch_xor|atomic_or|atomic_ref|atomic_xor|bessel_j0|bessel_j1|bessel_jn|bessel_y0|bessel_y1|bessel_yn|bge|bgt|bit_size|ble|bit|btest|c_associated|c_funloc|c_f_pointer|c_f_procpointer|c_loc|c_sizeof|ceiling|char|cmplx|co_broadcast|co_max|co_min|co_reduce|co_sum|coshape|command_argument_count|compiler_options|compiler_version|conjg|cos|cosh|count|cpu_time|cshift|date_and_time|dble|digits|dim|dot_product|dprod|dshiftl|dshiftr|eoshift|epsilon|erf|erfc|erfc_scaled|event_query|execute_command_line|exp|exponent|extends_type_of|float|floor|fraction|gamma|get_command|get_command_argument|get_environment_variable|huge|hypot|iachar|iall|iand|iany|ibclr|ibits|ibset|ichar|ieor|image_index|index|int|ior|iparity|is_iostat_end|is_iostat_eor|ishft|isfhtc|kind|lbound|lcobound|leadz|len|len_trim|lge|lgt|lle|llt|log|log10|log_gamma|logical|maskl|maskr|matmul|max|maxexponent|maxloc|maxval|merge|merge_bits|min|minexponent|minloc|minval|mod|module|move_alloc|mvbits|nearest|new\_line|nint|not|norm2|null|num_images|pack|parity|popcnt|poppar|precision|present|product|radix|random_number|random_seed|range|rank|real|repeat|reshape|rrspacing|same_type_as|scale|scan|selected_char_kind|selected_int_kind|selected_real_kind|set_exponent|shape|shifta|shiftl|shiftr|sign|sin|sinh|size|sngl|spacing|spread|sqrt|storage_size|sum|system_clock|tan|tanh|this_image|tiny|trailz|transfer|transpose|trim|ubound|ucobound|unpack|verify)'
+  intrinsicSubroutine: '(nullify|allocate|deallocate)'
+  intrinsicIO: '(print|write|read|inquire|open|close|rewind|backspace|endfile|flush|namelist)'
+  intrinsicIOArguments: (unit|newunit|iunit|eunit|position|format|advance|asynchronous|blank|decimal|id|pad|pos|round|size|iostat|err|end|eor|iomsg|io-list|form|nml-group|nml|rec|delim|sign|name|label|msg-var|i-var|slist|access|action|associatevariable|blocksize|buffercount|buffered|carriagecontrol|convert|decimal|defaultfile|dispose|encoding|file|iofocus|maxrec|mode|noshared|organization|readonly|recordsize|recordtype|share|status|title|type|useropen|sz|slist|def)
+
+  firstOnLine: '^\s*'
+  parenthesisStart: '\(\s*'
+  parenthesisEnd: '\s*\)'
+  variableMatch: '[A-Za-z_][A-Za-z_0-9]*'
+  ompDirectives: '(end|parallel|do|simd|single|target|update|workshare|declare|sections|distribute|teams|task|taskyield|master|critical|barrier|taskwait|taskgroup|atomic|flush|ordered|cancel|cancellation point|reduction)'
+  ompIntrinsics: (omp_set_num_threads|omp_get_num_threads|omp_get_max_threads|omp_get_thread_num|omp_get_num_procs|omp_in_parallel|omp_set_dynamic|omp_get_dynamic|omp_get_cancellation|omp_set_nested|omp_get_nested|omp_set_schedule|omp_get_schedule|omp_get_thread_limit|omp_set_max_active_levels|omp_get_max_active_levels|omp_get_level|omp_get_ancestor_thread_num|omp_get_team_size|omp_get_active_level|omp_in_final|omp_get_proc_bind|omp_set_default_device|omp_get_default_device|omp_get_num_devices|omp_get_num_teams|omp_get_team_num|omp_is_initial_device|omp_init_lock|omp_init_nest_lock|omp_destroy_lock|omp_destroy_nest_lock|omp_set_lock|omp_set_nest_lock|omp_unset_lock|omp_unset_nest_lock|omp_test_lock|omp_test_nest_lock|omp_get_wtime|omp_get_wtick)
+  ompClauses: (default|shared|private|firstprivate|lastprivate|linear|reduction|copyin|copyprivate|map|tofrom|safelen|collapse|simdlen|aligned|uniform|Inbrach|notinbranch)
+  fppCommands: (define|undef|ifdef|ifndef|if|elif|else|endif|include|error|warning|line-number|line)
+
+contexts:
+  main:
+    - include: preprocessing
+    - include: comments 
+    - include: types
+    - include: attribute
+    - include: operators
+    - include: procedures
+    - include: modules
+    - include: interfaces 
+    - include: class-definitions
+    - include: control
+    - include: strings
+    - include: continuation
+    - include: coarray
+    - include: separators
+    - include: numbers
+    - include: constants
+    - include: program
+    - include: class-accessing
+    - include: io
+    - include: stop
+    - include: function-call
+    - include: pointer-symbol
+    - include: match-variable
+    - include: omp
+
+  comments:
+    - match: '!(?![$])'
+      scope: punctuation.definition.comment.fortran
+      push:
+      - meta_scope: comment.line.fortran
+      - match: \n 
+        pop: true
+
+  types:
+    - match: '(?i)\b{{intrinsicType}}\b(?=.*(function))' # type of return value in function 
+      scope: storage.type.intrinsic.fortran
+    - match: '(?i){{firstOnLine}}\b{{intrinsicType}}\b(?=.*::)' # type declaration
+      scope: storage.type.intrinsic.fortran
+    - match: '(?i)\b(in|out|inout)\b' 
+      scope: keyword.other.intent.fortran 
+    - match: '(?<=::)\s*(\w+)'
+      scope: variable.other.fortran
+    - match: '(?i){{firstOnLine}}(type|class){{parenthesisStart}}\s*(\w*){{parenthesisEnd}}'
+      captures:
+        1: storage.type.class.fortran
+        2: entity.name.class.fortran
+
+  attribute:
+    - match: '(?i)\b{{intrinsicAttribute}}\b'
+      scope: storage.modifier.fortran 
+
+  pointer-symbol:
+    - match: (=>)
+      scope: keyword.operator.points-to.fortran    
+
+  operators:
+    - match: (==|/=|>=|<=|<|>)
+      scope: keyword.operator.logical.fortran 
+    - match: (?i)(\.and\.|\.or\.|\.ne\.|\.lt\.|\.le\.|\.gt\.|\.ge\.|\.eq\.|\.not\.)
+      scope: keyword.operator.word.fortran
+    - match: (?i)(?<=d|e)(\-|\+)(?=\d) # - and + is not arithmetic 
+                                       # in scientific notation (1.0d-2)
+      scope: constant.numeric.fortran
+    - match: (\*|\+|-)
+      scope: keyword.operator.arithmetic.fortran
+    - match: (\/)(?!/)
+      scope: keyword.operator.arithmetic.fortran # division, not string concatenation!
+    - match: (=)(?!>)
+      scope: keyword.operator.assignment.fortran
+
+  separators:
+    - match: (::)
+      scope: punctuation.separator.double-colon.fortran
+    - match: (:)
+      scope: punctuation.separator.single-colon.fortran
+    - match: ','
+      scope: punctuation.separator.comma.fortran 
+    - match: '\%'
+      scope: punctuation.accessor.fortran
+    - match: '\;'
+      scope: punctuation.terminator.fortran
+
+  control:
+    - include: comments
+    - match: (?i)\b(end)\b 
+      scope: keyword.control.fortran
+    - match: (?i)(?<=end)\s*(if|do|select)
+      scope: keyword.control.fortran 
+      push: seek-conditional-label
+    - match: (?i)(end)(?=if|do)
+      scope: keyword.control.fortran 
+    - match: (?i)\b(then|exit|cycle)
+      scope: keyword.control.fortran 
+      push: seek-conditional-label 
+    - match: (?i)(?<=else)(if)
+      scope: keyword.control.fortran
+    - match: (?i)(?<=else)(?!\s*if)
+      scope: keyword.control.fortran    
+      push: seek-conditional-label 
+    - match: (?i)(else)
+      scope: keyword.control.fortran
+    - match: (?i)\b(if|do|while)\b
+      scope: keyword.control.fortran
+    - match: (?i)(\w+)\s*(\:)\s*(?=do|if|select)
+      captures: 
+        1: entity.name.label.conditional.fortran
+        2: punctuation.separator.single-colon.fortran    
+    # do concurrent 
+    - match: (?i)(?<=do)\s+(concurrent)\b 
+      scope: keyword.control.fortran
+    - match: (?i)\b(concurrent|local|shared|local_init|default)\b 
+      scope: keyword.control.fortran
+    - match: (?i)\b(class)\s+(?=default)\b 
+      scope: keyword.control.fortran
+    - match: (?i)\b(select|case|default)\b
+      scope: keyword.control.fortran
+    - match: (?i)\b(exit|cycle|return)\b 
+      scope: keyword.control.fortran
+    - match: (?i)(?<=select)\s*(type|class)
+      scope: keyword.control.fortran
+    - match: (?i)(class\s+is)\b\s*\(\s*(\w+)\s*\)
+      captures: 
+        1: keyword.control.fortran
+        2: entity.name.class.fortran
+    - match: (?i)(type\s+is)\b\s*\(\s*(\w+)\s*\)
+      captures: 
+        1: keyword.control.fortran
+        2: entity.name.class.fortran
+
+  seek-conditional-label: # look for possible name label & pop
+    - include: comment-pop
+    - include: newline-pop
+    - match: \b(\w+)
+      scope: entity.name.label.conditional.fortran
+      pop: true    
+
+  newline-pop:
+    - match: '\n'
+      pop: true     
+
+  continuation:
+    - match: "&"
+      scope: punctuation.separator.continuation.fortran
+
+  strings:
+    - match: "//"
+      scope: keyword.operator.arithmetic.string-concatenation.fortran
+    - match: "'"
+      push: string.single 
+    - match: '"'
+      push: string.double
+
+  string.single:
+    - meta_scope: string.quoted.single.fortran
+    - include: string.continuation
+    - include: newline-pop
+    - match: "'"
+      pop: true
+
+  string.double:
+    - meta_scope: string.quoted.single.fortran
+    - include: string.continuation
+    - include: newline-pop 
+    - match: '"'
+      pop: true
+
+  string.continuation:
+    - match: "&"
+      scope: punctuation.separator.continuation.fortran
+      push: 
+        # locate continuation on next line and pop
+        - match: "&" 
+          scope: punctuation.separator.continuation.fortran 
+          pop: true 
+
+  procedures:
+    - match: (?i)\b({{intrinsicFunction}})\b\s*(?=\()
+      captures: 
+        1: variable.function.function.intrinsic.fortran
+
+    - match: (?i)\b({{intrinsicSubroutine}})\b\s*(?=\()
+      captures:
+        1: variable.function.subroutine.intrinsic.fortran
+
+    - match: (?i)\s*(result)\s*\( 
+      captures: 
+        1: keyword.control.function-result.fortran
+
+    - match: (?i)\b(impure|pure|elemental|non\_recursive|recursive)\b
+      scope: storage.modifier.function.prefix.fortran
+
+    - match: (?i)(implicit none)
+      scope: keyword.control.fortran
+
+    - match: '(?i)\b(module)\b\s+(?=function|subroutine|procedure)'
+      scope: storage.modifier.function.prefix.fortran
+
+    - match: (?i)\b(function|subroutine)\b 
+      scope: keyword.declaration.function.fortran
+
+    - match: (?i)\b(end)\b\s+(?=function|subroutine|procedure)
+      scope: keyword.declaration.function.fortran
+
+    - match: (?i)(?<=\bfunction|subroutine\b)\s+(\w+)
+      captures: 
+        1: entity.name.function.fortran 
+
+    - match: '(?i)\b(call)\b'
+      captures:
+        1: keyword.control.fortran 
+
+  io: 
+    - match: '(?i)\b({{intrinsicIO}})\b'
+      captures:
+        1: variable.function.subroutine.intrinsic.io.fortran
+    - match: '(?i)\b({{intrinsicIOArguments}})\b'
+      captures: 
+        1: variable.language.io.fortran
+
+  stop:
+    - match: (?i)\b(stop)\b
+      scope: keyword.control.fortran
+    - match: (?i)\b(error)\s+(?=stop)\b 
+      scope: keyword.control.fortran
+    - match: (?i)\b(quiet)\b 
+      scope: keyword.control.fortran
+
+  modules:
+    - match: (?i)\b(module)\b\s*(\w*)$
+      captures: 
+        1: keyword.declaration.interface.module.fortran
+        2: entity.name.interface.module.fortran
+    - match: (?i)\b(submodule)\b\s*\((\w*)\)\s*(\w*)
+      captures:
+        1: keyword.declaration.interface.submodule.fortran
+        2: entity.name.interface.inherited-module.fortran
+        3: entity.name.interface.submodule.fortran
+    - match: (?i)(end)\s+\b(submodule)\b\s+(\w*)
+      captures:
+        1: keyword.declaration.interface.submodule.fortran
+        2: keyword.declaration.interface.submodule.fortran
+        3: entity.name.interface.submodule.fortran
+    - match: (?i)\b(use)\b
+      scope: keyword.control.import.fortran
+      push: find-use-module
+    - match: (?i)\b(only)\b
+      scope: keyword.control.fortran
+    - match: (?i)\b(end)\b\s+(?=module)
+      scope: keyword.declaration.interface.module.fortran
+
+  find-use-module:
+    - include: separators
+    - include: attribute
+    - match: (\w+)
+      scope: entity.name.interface.module.fortran
+      pop: true
+
+  class-definitions:
+    - match: ^(?i)(?<!\bend\b)\s+\b(type)\b(?!\s*\(|\s*is\b) # not the end of type; not variable specification; 
+                                                             # not "type is" construct; must be beginning of declaration
+      scope: keyword.declaration.class.fortran 
+      push: class-name
+    - match: (?i)(procedure|generic|final)
+      scope: keyword.declaration.function.fortran
+      push: member-routine-declaration
+    - match: (?i)(contains)
+      scope: keyword.declaration.contains.fortran 
+    - match: '(?i)(end)\s+(type)\s+(\w+)'
+      captures:
+        1: keyword.declaration.class.fortran
+        2: keyword.declaration.class.fortran
+        3: entity.name.class.fortran
+    - match: '(?i)(end)\s+(type)'
+      captures:
+        1: keyword.declaration.class.fortran
+        2: keyword.declaration.class.fortran
+
+  member-routine-declaration:
+    - include: separators
+    - include: attribute
+    - include: pointer-symbol
+    - match: (\w+)
+      scope: entity.name.function.fortran.fortran
+    - match: \n 
+      pop: true
+    - match: \&
+      scope: punctuation.separator.continuation.fortran
+      push: continuation-context
+    - include: comment-pop
+    - match: \n 
+      pop: true
+
+  continuation-context: # continues until non-comment newline
+    - include: comments
+    - match: '^\s*(?!\!)'
+      pop: true  
+
+  comment-pop: # in "include" statements, this code will pop off and push into comment context (via "set") if it encounters "!"
+               # (useful when one needs to pop out of context at a newline, also in the case of an inline comment)
+    - match: \! 
+      scope: punctuation.definition.comment.fortran
+      set: # pop off and in
+      - meta_scope: comment.line.fortran
+      - match: \n 
+        pop: true    
+
+  class-name:
+    - include: newline-pop
+    - include: separators
+    - include: comment-pop
+    - match: (?i)\b(extends)\b\s*{{parenthesisStart}}\s*(\w*)\s*{{parenthesisEnd}}
+      captures:
+        1: keyword.control.extends.fortran
+        2: entity.other.inherited-class.fortran
+    - match: (?i)\b(abstract)\b
+      scope: storage.modifier.fortran
+    - match: (?<=::)\s*(\w*)
+      scope: entity.name.class.fortran
+    - match: (?i)(?<=type)\s+(\w*) # simple type definition (type myType)
+      scope: entity.name.class.fortran
+
+  numbers:
+    - match: '(\d+)'
+      scope: constant.numeric.fortran
+    - match: '(?i)(?<=\d)(d|e)'
+      scope: constant.numeric.fortran
+    - match: '(?<=\d)(\.)'
+      scope: constant.numeric.fortran
+    - match: '(?<=\d)(\_)(\w+)' # e.g. 1.123_dp, where dp=8
+      captures:
+        1: punctuation.separator.underscore.fortran 
+        2: variable.other.fortran 
+
+  constants:
+    - match: (?i)(\.true\.|\.false\.)
+      scope: constant.language.fortran
+
+  class-accessing:
+    - include: comments 
+    - match: '(\w+)\s*(?=\%|\[.*\]\(.*\)\%|\(.*\)\%|\[.*\]\%)'
+      scope: storage.type.class.fortran
+
+  function-call:
+    - match: '(\w*)\s*(?=\()'
+      captures:
+        1: variable.function.fortran
+
+  interfaces:
+    - match: (?i)(abstract)\s+(?=interface)
+      scope: storage.modifier.fortran
+    - match: (?i)\b(interface)\b
+      scope: keyword.declaration.interface.interface.fortran
+    - match: '(?i)(?<=interface)\s+(\w*)'
+      scope: entity.name.interface.interface.fortran
+    - match: (?i)\b(include)\b
+      scope: keyword.control.import.fortran
+    - match: (?i)\b(end)\b\s+(?=interface)
+      scope: keyword.declaration.interface.interface.fortran
+
+  omp:
+    - match: '{{firstOnLine}}(?i)(\!\$omp)'
+      scope: support.function.omp
+      push: omp-line 
+    - match: '{{firstOnLine}}(\!\$)'
+      scope: support.function.omp
+      push: omp-line 
+
+  omp-line:
+    - include: omp-continuation
+    - include: omp-directives
+    - include: omp-intrinsic
+    - include: omp-clauses
+    - include: separators
+    - include: operators
+    - match: (?i)(schedule)
+      scope: support.function.omp
+      push: omp-schedule
+    - include: match-variable
+    - match: '\n'
+      pop: true
+
+  omp-directives:
+    - match: (?i)({{ompDirectives}})
+      scope: support.function.omp
+
+  omp-intrinsic:
+    - match: (?i)({{ompIntrinsics}})
+      scope: support.function.omp
+
+  omp-clauses:
+    - include: omp-continuation
+    - match: (?i)({{ompClauses}})
+      scope: support.constant.omp
+
+  omp-schedule:
+    - include: omp-continuation
+    - match: (?i)(static|dynamic|guided|auto)
+      scope: support.constant.omp
+    - match: '{{parenthesisEnd}}'
+      pop: true
+
+
+  omp-continuation:
+    - match: "&" 
+      push:
+        - match: '{{firstOnLine}}(?i)(\!\$omp)'
+          scope: support.function.omp
+          pop: true
+
+  match-variable:
+    - match: ({{variableMatch}})
+      scope: variable.other.fortran
+
+  preprocessing:
+    - match: '{{firstOnLine}}(\#)'
+      scope: support.function.fpp
+    - match: '(?i)(?<=\#)({{fppCommands}})'
+      scope: support.function.fpp
+    
+  program:
+    - match: (?i)\b(program)\b 
+      scope: keyword.declaration.program.fortran 
+    - match: '(?i)(?<=program)\s+(\w*)'
+      scope: entity.name.program.fortran
+
+  coarray:
+    - match: (?i)\b(sync)\s+(all|images|memory)\b 
+      captures: 
+        1: keyword.control.fortran
+        2: keyword.control.fortran
+    - match: (?i)\b(lock|unlock)\b 
+      scope: keyword.control.fortran
+    - match: (?i)(event)\s+(post|wait)\s*(?=\()
+      captures:
+        1: keyword.control.fortran
+        2: keyword.control.fortran 
+
