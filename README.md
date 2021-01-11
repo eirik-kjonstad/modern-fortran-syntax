@@ -9,16 +9,18 @@ Open the terminal and navigate to the folder where Sublime Text packages are ins
 ```shell
 # Linux default location
 cd /home/username/.config/sublime-text-3/Packages
-# Mac OSX default location
+# Mac OS default location
 cd /Users/username/Library/Application\ Support/Sublime\ Text\ 3/Packages
 ```
-Download the repository using `git`:
+The location on your computer can be found by navigating to `Preferences -> Browse packages...` in Sublime.
+
+Next, download the repository using `git`:
 ```shell
 git clone https://github.com/eirik-kjonstad/modern-fortran-sublime.git
 ```
-(Alternatively, you can download the source code as a `.zip` and extract the contents in the Packages folder.) 
+Alternatively, you can download the source code as a `.zip` and extract the contents in the Packages folder.
 
-To enable the syntax, open any Fortran source file and do `ctrl+shift+p` (`command+shift+p` on Mac OSX) and type `Set syntax: BeautifulFortran`.
+To enable the syntax, open any Fortran source file and do `ctrl+shift+p` (`command+shift+p` on Mac OS) and type `Set syntax: Modern-Fortran`.
 
 ## Notice bugs, missing features, or other problems?
 Do not hesitate to post an issue in the `issues` tab on the repository. If you wish to contribute, we also welcome pull requests - please fork the repository and open a pull request to the development branch on the main repository.
