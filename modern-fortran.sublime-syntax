@@ -28,13 +28,13 @@ contexts:
     - include: types
     - include: attribute
     - include: operators
-    - include: control
-    - include: strings
-    - include: continuation
     - include: procedures
     - include: modules
     - include: interfaces 
     - include: class-definitions
+    - include: control
+    - include: strings
+    - include: continuation
     - include: coarray
     - include: separators
     - include: numbers
@@ -282,6 +282,9 @@ contexts:
     - match: (?i)\b(function|subroutine)\b 
       scope: keyword.declaration.function.fortran
 
+    - match: (?i)\b(end)\b\s+(?=function|subroutine|procedure)
+      scope: keyword.declaration.function.fortran
+
     - match: (?i)(?<=\bfunction|subroutine\b)\s+(\w+)
       captures: 
         1: entity.name.function.fortran 
@@ -316,15 +319,18 @@ contexts:
         1: keyword.declaration.interface.submodule.fortran
         2: entity.name.interface.inherited-module.fortran
         3: entity.name.interface.submodule.fortran
-    - match: (?i)(?<=end)\s*\b(submodule)\b\s*(\w*)
+    - match: (?i)(end)\s+\b(submodule)\b\s+(\w*)
       captures:
         1: keyword.declaration.interface.submodule.fortran
-        2: entity.name.interface.submodule.fortran
+        2: keyword.declaration.interface.submodule.fortran
+        3: entity.name.interface.submodule.fortran
     - match: (?i)\b(use)\b
       scope: keyword.control.import.fortran
       push: find-use-module
     - match: (?i)\b(only)\b
       scope: keyword.control.fortran
+    - match: (?i)\b(end)\b\s+(?=module)
+      scope: keyword.declaration.interface.module.fortran
 
   find-use-module:
     - include: separators
@@ -342,11 +348,16 @@ contexts:
       scope: keyword.declaration.function.fortran
       push: member-routine-declaration
     - match: (?i)(contains)
-      scope: keyword.other.fortran
-    - match: '(?i)(?<=end)\s+(type)\s+(\w*)'
+      scope: keyword.declaration.contains.fortran #keyword.other.fortran # This is the only keyword.other.fortran
+    - match: '(?i)(end)\s+(type)\s+(\w+)'
       captures:
         1: keyword.declaration.class.fortran
-        2: entity.name.class.fortran
+        2: keyword.declaration.class.fortran
+        3: entity.name.class.fortran
+    - match: '(?i)(end)\s+(type)'
+      captures:
+        1: keyword.declaration.class.fortran
+        2: keyword.declaration.class.fortran
 
   member-routine-declaration:
     - include: separators
@@ -427,6 +438,8 @@ contexts:
       scope: entity.name.interface.interface.fortran
     - match: (?i)\b(include)\b
       scope: keyword.control.import.fortran
+    - match: (?i)\b(end)\b\s+(?=interface)
+      scope: keyword.declaration.interface.interface.fortran
 
   omp:
     - match: '{{firstOnLine}}(?i)(\!\$omp)'
@@ -442,6 +455,7 @@ contexts:
     - include: omp-intrinsic
     - include: omp-clauses
     - include: separators
+    - include: operators
     - match: (?i)(schedule)
       scope: support.function.omp
       push: omp-schedule
