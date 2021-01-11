@@ -1,6 +1,6 @@
 # Modern Fortran Sublime
 
-`modern-fortran-sublime` is a Sublime Text 3 language syntax for modern Fortran that incorporates a wide range of features introduced in the more recent language standards (2003, 2008, 2018). 
+`modern-fortran-sublime` is a Sublime Text 3 language syntax for modern Fortran that incorporates features introduced in recent Fortran language standards (2003, 2008, 2018). 
 
 ## Installation
 
