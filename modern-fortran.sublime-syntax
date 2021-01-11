@@ -1,6 +1,12 @@
 %YAML 1.2
 ---
-name: BeautifulFortran
+#
+# Modern Fortran syntax - Sublime Text syntax highlighting for modern Fortran code
+#
+# Copyright (c) 2020-2021 by the authors 
+# Sarai D. Folkestad and Eirik F. Kjønstad
+#
+name: Modern-Fortran
 file_extensions: [F90,F08,F18,f90,f08,f18]
 scope: source.fortran
 
@@ -158,65 +164,6 @@ contexts:
     - match: \b(\w+)
       scope: entity.name.label.conditional.fortran
       pop: true    
-
-    #- match: (?i)\b(then)\b  
-    #  scope: keyword.control.fortran
-    #- match: (?i)(?<=end)(if|do)
-    #  scope: keyword.control.fortran
-    #- match: (?i)(?<=else)(if)
-    #  scope: keyword.control.fortran
-    #- match: (?i)^\s*(elseif|endif|enddo|else)
-    #  scope: keyword.control.fortran
-    #- match: (?i)(if|do|while)\b 
-    #  scope: keyword.control.fortran
-    ## do concurrent 
-    #- match: (?i)(?<=do)\s+(concurrent)\b 
-    #  scope: keyword.control.fortran
-    #- match: (?i)\b(concurrent|local|shared|local_init|default)\b 
-    #  scope: keyword.control.fortran
-    ## named do & if statements
-    #- match: (?i)(\w+)\s*(\:)\s*(?=do|if)
-    #  captures: 
-    #    1: entity.name.label.conditional.fortran
-    #    2: punctuation.separator.single-colon.fortran
-    #- match: (?i)(?<=then|else|exit|cycle)\s+(\w+)\b
-    #  scope: entity.name.label.conditional.fortran
-
-  #control:
-  #  - include: comments
-  #  - match: (?i)\b(end)\b
-  #    scope: keyword.control.fortran
-  #  - match: (?i)(?<=end)\s*(do)\s+(\w+)
-  #    captures: 
-  #      1: keyword.control.fortran
-  #      2: entity.name.label.conditional.fortran
-  #  - match: '(?i)\b(if|then|do|else)\b'
-  #    scope: keyword.control.fortran
-  #  #- match: '(?i)\b(if|then|do|else|elseif|endif)\b'
-  #  #  scope: keyword.control.fortran
-  #  - match: '(?i)(?<=else)\s+(if)'
-  #    scope: keyword.control.fortran
-  #  - match: '(?i)(?<=do)\s+(while)' 
-  #    scope: keyword.control.fortran
-  #  - match: (?i)\b(select|case|default)\b
-  #    scope: keyword.control.fortran
-  #  - match: (?i)\b(exit|cycle|return)\b 
-  #    scope: keyword.control.fortran
-  #  # do concurrent 
-  #  - match: (?i)(?<=do)\s+(concurrent)\b 
-  #    scope: keyword.control.fortran
-  #  - match: (?i)\b(concurrent|local|shared|local_init|default)\b 
-  #    scope: keyword.control.fortran
-  #  # named do & if statements
-  #  - match: (?i)(\w+)\s*(\:)\s*(?=do|if)
-  #    captures: 
-  #      1: entity.name.label.conditional.fortran
-  #      2: punctuation.separator.single-colon.fortran
-  #  #- match: (?i)(?<=then|else|if|do|exit|cycle)\s+(\w+)\s*
-  #  #  scope: entity.name.label.conditional.fortran
-  #  - match: (?i)(?<=then|else|exit|cycle)\s+(\w+)\b
-   #   scope: entity.name.label.conditional.fortran
-
 
   newline-pop:
     - match: '\n'
