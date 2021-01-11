@@ -1,6 +1,6 @@
 # Modern Fortran syntax
 
-The `modern-fortran-syntax` package is a Sublime Text 3 language syntax for highlighting of modern Fortran syntax. It incorporates features introduced in recent Fortran language standards (2003, 2008, 2018). 
+The `modern-fortran-syntax` package is a [Sublime Text 3](https://www.sublimetext.com/) language syntax for highlighting of modern Fortran code. It incorporates features introduced in recent Fortran language standards (2003, 2008, 2018). 
 
 ## Installation
 
