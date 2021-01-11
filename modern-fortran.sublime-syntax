@@ -1,13 +1,13 @@
 %YAML 1.2
 ---
 #
-# Modern Fortran Sublime - a syntax for modern Fortran standards
-# ==============================================================
+# Modern Fortran syntax - Sublime Text syntax highlighting for modern Fortran code
+# =================================================================================
 #
 # Copyright (c) 2020-2021 by the authors 
 # Sarai D. Folkestad and Eirik F. Kjønstad
 #
-name: BeautifulFortran
+name: Modern-Fortran
 file_extensions: [F90,F08,F18,f90,f08,f18]
 scope: source.fortran
 
