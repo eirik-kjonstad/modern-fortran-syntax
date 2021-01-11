@@ -7,8 +7,10 @@
 ### Installing from source
 Open the terminal and navigate to the folder where Sublime Text packages are installed:
 ```shell
-cd /home/username/.config/sublime-text-3/Packages # Linux default location
-cd /Users/username/Library/Application\ Support/Sublime\ Text\ 3/Packages # Mac OSX default location
+# Linux default location
+cd /home/username/.config/sublime-text-3/Packages
+# Mac OSX default location
+cd /Users/username/Library/Application\ Support/Sublime\ Text\ 3/Packages
 ```
 Download the repository using `git`:
 ```shell
