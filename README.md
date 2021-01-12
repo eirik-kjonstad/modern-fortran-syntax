@@ -16,7 +16,7 @@ The location on your computer can be found by navigating to `Preferences -> Brow
 
 Next, download the repository using `git`:
 ```shell
-git clone https://github.com/eirik-kjonstad/modern-fortran-sublime.git
+git clone https://github.com/eirik-kjonstad/modern-fortran-syntax.git
 ```
 Alternatively, you can download the source code as a `.zip` and extract the contents in the Packages folder.
 
