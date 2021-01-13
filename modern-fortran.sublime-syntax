@@ -86,7 +86,7 @@ contexts:
 
   operators:
     - match: (==|/=|>=|<=|<|>)
-      scope: keyword.operator.logical.fortran
+      scope: keyword.operator.comparison.fortran
     - match: (?i)(\.and\.|\.or\.|\.ne\.|\.lt\.|\.le\.|\.gt\.|\.ge\.|\.eq\.|\.not\.)
       scope: keyword.operator.word.fortran
     - match: (?i)(?<=d|e)(\-|\+)(?=\d) # - and + is not arithmetic

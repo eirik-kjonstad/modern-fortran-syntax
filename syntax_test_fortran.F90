@@ -17,7 +17,7 @@
 !  ^^^^ keyword.control.fortran
 !
    a == b .and. c
-!    ^^ keyword.operator.logical.fortran
+!    ^^ keyword.operator.comparison.fortran
 !         ^^^^^ keyword.operator.word.fortran
 !
    a => b
