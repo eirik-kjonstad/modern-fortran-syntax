@@ -3,16 +3,16 @@
    if (a == b) then
 !  ^^ keyword.control.fortran
 !              ^^^^ keyword.control.fortran
-   elseif (a == c) then 
+   elseif (a == c) then
 !  ^^^^^^ keyword.control.fortran
 !
-   else if (a == d) then 
+   else if (a == d) then
 !  ^^^^ keyword.control.fortran
 !       ^^ keyword.control.fortran
 !
-   else 
+   else
 !  ^^^^ keyword.control.fortran
-!  
+!
    endif
 !  ^^^^ keyword.control.fortran
 !
@@ -23,7 +23,7 @@
    a => b
 !    ^^ keyword.operator.points-to.fortran
 !
-   a = b 
+   a = b
 !    ^ keyword.operator.assignment.fortran
 !
    integer(kind=8), dimension(:,:), allocatable :: myInt
@@ -31,7 +31,7 @@
 !                   ^^^^^^^^^ storage.modifier.fortran
 !                                   ^^^^^^^^^^^ storage.modifier.fortran
 !
-   real(4) :: aNumber 
+   real(4) :: aNumber
 !  ^^^^ storage.type.intrinsic.fortran
 !          ^^ punctuation.separator.double-colon.fortran
 !             ^^^^^^^ variable.other.fortran
@@ -48,7 +48,7 @@
 !  ^^^^ storage.type.intrinsic.fortran
 !       ^^ variable.other.fortran
 !            ^^^^^^ storage.modifier.fortran
-!                   ^^ keyword.other.intent.fortran 
+!                   ^^ keyword.other.intent.fortran
 !                          ^^^^^^ variable.other.fortran
 !                                   ^^^^^^^^^^^^^^ comment.line.fortran
 
@@ -86,13 +86,13 @@
 !                        ^^ punctuation.separator.double-colon.fortran
 !                                        ^^ keyword.operator.points-to.fortran
 !              ^ punctuation.separator.comma.fortran
-!                ^^^^^^^ storage.modifier.fortran  
+!                ^^^^^^^ storage.modifier.fortran
 !                           ^^^^^^^^^^^^ entity.name.function.fortran
 !                                            ^^^^^^^^^^^^^^^^^^ entity.name.function.fortran
 !
       procedure, private :: aRatherLongFunctionNameIndeed &
 !                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ entity.name.function.fortran
-!                                                         ^ punctuation.separator.continuation.fortran                       
+!                                                         ^ punctuation.separator.continuation.fortran
                          => theImplementationNameOfTheRatherLongFunction
 !                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ entity.name.function.fortran
 !                        ^^ keyword.operator.points-to.fortran
@@ -103,7 +103,7 @@
 !           ^^^^^^^^ entity.name.class.fortran
 !
 !
-   type, abstract :: myClass2 
+   type, abstract :: myClass2
 !  ^^^^ keyword.declaration.class.fortran
 !      ^ punctuation.separator.comma.fortran
 !        ^^^^^^^^ storage.modifier.fortran
@@ -114,16 +114,16 @@
 !
    "This is a simple string,  &
    & but 'with' continuation, &
-   & and more continuation!" 
+   & and more continuation!"
 !
    'This is a simple string'
 !  ^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.single.fortran
    &
 !  ^ punctuation.separator.continuation.fortran
 !
-   'This is a simple string,  & 
+   'This is a simple string,  &
    & but "with" continuation, &
-   & and more continuation!' 
+   & and more continuation!'
 !  ^ punctuation.separator.continuation.fortran
 !
    'string' // ' contatenation!'
@@ -135,12 +135,12 @@
    pure function theFunction()
 !  ^^^^ storage.modifier.function.prefix.fortran
 !       ^^^^^^^^ keyword.declaration.function.fortran
-!                ^^^^^^^^^^^ entity.name.function.fortran 
+!                ^^^^^^^^^^^ entity.name.function.fortran
    recursive module function theFunction(a)
 !  ^^^^^^^^^ storage.modifier.function.prefix.fortran
 !            ^^^^^^ storage.modifier.function.prefix.fortran
 !                                        ^ variable.other.fortran
-   function theFunction(a, bee, cesium) 
+   function theFunction(a, bee, cesium)
 !                       ^ variable.other.fortran
 !                          ^^^ variable.other.fortran
 !                               ^^^^^^ variable.other.fortran
@@ -165,7 +165,7 @@
    module subroutine doStuff(a, b, c)
 !  ^^^^^^ storage.modifier.function.prefix.fortran
 !         ^^^^^^^^^^ keyword.declaration.function.fortran
-!                    ^^^^^^^ entity.name.function.fortran 
+!                    ^^^^^^^ entity.name.function.fortran
 !
       implicit none
 !     ^^^^^^^^^^^^^ keyword.control.fortran
@@ -201,7 +201,7 @@
    1.0d-12
 !  ^^^^^^^ constant.numeric.fortran
 !
-   1.2345E-10 
+   1.2345E-10
 !  ^^^^^^^^^^ constant.numeric.fortran
 !
    1.23_dp
@@ -222,7 +222,7 @@
       include "path/to/file.F90"
 !     ^^^^^^^ keyword.control.import.fortran
 !
-   end interface myInterface 
+   end interface myInterface
 !  ^^^ keyword.declaration.interface.interface.fortran
 !      ^^^^^^^^^ keyword.declaration.interface.interface.fortran
 !                ^^^^^^^^^^^ entity.name.interface.interface.fortran
@@ -231,12 +231,12 @@
 !  ^^^^^^^^ storage.modifier.fortran
 !           ^^^^^^^^^ keyword.declaration.interface.interface.fortran
 !
-   end interface 
+   end interface
 !  ^^^ keyword.declaration.interface.interface.fortran
 !      ^^^^^^^^^ keyword.declaration.interface.interface.fortran
 !
    if (thing == object%getThing('string', .true.)) call object%doStuff()
-!               ^^^^^^ storage.type.class.fortran 
+!               ^^^^^^ storage.type.class.fortran
 !                                       ^ punctuation.separator.comma.fortran
 !                      ^^^^^^^^ variable.function.fortran
 !                                ^^^^^^ string.quoted.single.fortran
@@ -278,7 +278,7 @@
 !                          ^^^^^^^^^^ storage.type.class.fortran
 !                                        ^^^^^^^^^ variable.function.fortran
 !
-   aRealNumber = real(anInteger) 
+   aRealNumber = real(anInteger)
 !                ^^^^ variable.function.function.intrinsic.fortran
 !                     ^^^^^^^^^ variable.other.fortran
 !  simple function call
@@ -288,23 +288,23 @@
 !
    myVar = object%objectVariable
 !  ^^^^^ variable.other.fortran
-!          ^^^^^^ storage.type.class.fortran 
+!          ^^^^^^ storage.type.class.fortran
 !                ^ punctuation.accessor.fortran
 !                 ^^^^^^^^^^^^^^ variable.other.fortran
 !
    myVar = object%objectVariable%getStuff(a, b)
-!          ^^^^^^ storage.type.class.fortran 
-!                 ^^^^^^^^^^^^^^ storage.type.class.fortran 
+!          ^^^^^^ storage.type.class.fortran
+!                 ^^^^^^^^^^^^^^ storage.type.class.fortran
 !                                ^^^^^^^^ variable.function.fortran
 !
    myVar = object%objectFunction(a, b, c, otherObject%variable)
-!          ^^^^^^ storage.type.class.fortran 
+!          ^^^^^^ storage.type.class.fortran
 !                 ^^^^^^^^^^^^^^ variable.function.fortran
-!                                         ^^^^^^^^^^^ storage.type.class.fortran 
+!                                         ^^^^^^^^^^^ storage.type.class.fortran
 !                                                     ^^^^^^^^ variable.other.fortran
 !
    call object%calculateStuff()
-!       ^^^^^^ storage.type.class.fortran 
+!       ^^^^^^ storage.type.class.fortran
 !              ^^^^^^^^^^^^^^ variable.function
 !
    if (a == b) call mySubroutine(a, b, c)
@@ -312,7 +312,7 @@
 !                   ^^^^^^^^^^^^ variable.function
 !
    call object%objectFunction(anotherObject%variable)
-!                             ^^^^^^^^^^^^^ storage.type.class.fortran 
+!                             ^^^^^^^^^^^^^ storage.type.class.fortran
 !                                           ^^^^^^^^ variable.other.fortran
 !
    call object%objectFunction(anotherObject%myFunction())
@@ -356,9 +356,9 @@
       f(I) = someThing(I)
 !
    enddo
-!$omp end parallel do 
+!$omp end parallel do
 
-   type1 = "hello!" ! should understand that 'type1' is a variable 
+   type1 = "hello!" ! should understand that 'type1' is a variable
 !  ^^^^^ variable.other.fortran
 !           ^^^^^^ string.quoted.single.fortran
 !                     ^^^^^^ comment.line.fortran
@@ -387,7 +387,7 @@ end program myProgram
 !  ^^ keyword.control.fortran
 !     ^ variable.other.fortran
 !
-   ENDDO 
+   ENDDO
 !  ^^^^^ keyword.control.fortran
 !
    TYPE simpleStruct
@@ -395,14 +395,14 @@ end program myProgram
 !       ^^^^^^^^^^^^ entity.name.class.fortran
 !
       integer :: x
-      integer :: y 
+      integer :: y
 !
    END TYPE simpleStruct
 !      ^^^^ keyword.declaration.class.fortran
 !           ^^^^^^^^^^^^ entity.name.class.fortran
    ALLOCATE(array(10))
 !  ^^^^^^^^ variable.function.subroutine.intrinsic.fortran
-   do I = 1, 10; array(I) = I; end do 
+   do I = 1, 10; array(I) = I; end do
 !              ^ punctuation.terminator.fortran
 !                            ^ punctuation.terminator.fortran
 !
@@ -419,7 +419,7 @@ end program myProgram
 !
       case ('Crito')
 !     ^^^^ keyword.control.fortran
-         ! do other stuff 
+         ! do other stuff
 !
       case default
 !     ^^^^ keyword.control.fortran
@@ -433,7 +433,7 @@ end program myProgram
    namedSelect: select case (myString)
 !  ^^^^^^^^^^^ entity.name.label.conditional.fortran
 !
-   end select namedSelect 
+   end select namedSelect
 !             ^^^^^^^^^^^ entity.name.label.conditional.fortran
 !
    select type (animal)
@@ -448,7 +448,7 @@ end program myProgram
 !     ^^^^^^^ keyword.control.fortran
 !              ^^^ entity.name.class.fortran
 !
-   end select 
+   end select
 !
    animalCasting: select class (animal)
 !  ^^^^^^^^^^^^^ entity.name.label.conditional.fortran
@@ -511,7 +511,7 @@ end program myProgram
    end do extraordinaryLoop
 !         ^^^^^^^^^^^^^^^^^ entity.name.label.conditional.fortran
 !
-   readingTime : if (.not. person%hasBooks()) then 
+   readingTime : if (.not. person%hasBooks()) then
 !              ^ punctuation.separator.single-colon.fortran
 !  ^^^^^^^^^^^ entity.name.label.conditional.fortran
 !
@@ -545,7 +545,7 @@ end program myProgram
 !  ^^^^ keyword.control.fortran
 !       ^^^^^^ keyword.control.fortran
 !
-   lock 
+   lock
 !  ^^^^ keyword.control.fortran
    unlock
 !  ^^^^^^ keyword.control.fortran
@@ -580,16 +580,16 @@ end program myProgram
 !
    type(t) :: myValue[*]
    if ( img .eq. num_images() ) myValue%i(1) = myValue[1]%i(1)
-!                               ^^^^^^^ storage.type.class.fortran 
-!                                              ^^^^^^^ storage.type.class.fortran 
+!                               ^^^^^^^ storage.type.class.fortran
+!                                              ^^^^^^^ storage.type.class.fortran
 !
    a = gei[i,k](j)%asd
-!      ^^^ storage.type.class.fortran 
+!      ^^^ storage.type.class.fortran
 !                 ^ punctuation.accessor.fortran
-!          ^ variable.other.fortran 
+!          ^ variable.other.fortran
 !           ^ punctuation.separator.comma.fortran
-!            ^ variable.other.fortran 
-!                  ^^^ variable.other.fortran 
+!            ^ variable.other.fortran
+!                  ^^^ variable.other.fortran
 !
    a = this_image()
 !      ^^^^^^^^^^ variable.function.function.intrinsic.fortran
@@ -632,10 +632,10 @@ end program myProgram
                                 specificRoutineB    ! just a side comment
 !                               ^^^^^^^^^^^^^^^^ entity.name.function.fortran
 !
-   generic :: genericRoutine     & 
+   generic :: genericRoutine     &
 !             ^^^^^^^^^^^^^^ entity.name.function.fortran
            => specificRoutineA,  &
-!          ^^ keyword.operator.points-to.fortran 
+!          ^^ keyword.operator.points-to.fortran
 !             ^^^^^^^^^^^^^^^^ entity.name.function.fortran
               specificRoutineB ! just a side comment
 !             ^^^^^^^^^^^^^^^^ entity.name.function.fortran
@@ -678,7 +678,7 @@ end program myProgram
 !  ^^^^^ keyword.control.fortran
 !        ^^^^ keyword.control.fortran
 !
-   error stop 1, quiet=(a .eq. b) 
+   error stop 1, quiet=(a .eq. b)
 !             ^ constant.numeric.fortran
 !                ^^^^^ keyword.control.fortran
 !  ^^^^^ keyword.control.fortran
