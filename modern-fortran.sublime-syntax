@@ -177,31 +177,37 @@ contexts:
     - match: "//"
       scope: keyword.operator.arithmetic.string-concatenation.fortran
     - match: "'"
-      push: string.single
+      scope: punctuation.definition.string.begin.fortran
+      push: string-single
     - match: '"'
-      push: string.double
+      scope: punctuation.definition.string.begin.fortran
+      push: string-double
 
-  string.single:
+  string-single:
     - meta_scope: string.quoted.single.fortran
-    - include: string.continuation
+    - include: string-continuation
     - include: newline-pop
     - match: "'"
+      scope: punctuation.definition.string.end.fortran
       pop: true
 
-  string.double:
-    - meta_scope: string.quoted.single.fortran
-    - include: string.continuation
+  string-double:
+    - meta_scope: string.quoted.double.fortran
+    - include: string-continuation
     - include: newline-pop
     - match: '"'
+      scope: punctuation.definition.string.end.fortran
       pop: true
 
-  string.continuation:
+  string-continuation:
     - match: "&"
       scope: punctuation.separator.continuation.fortran
       push:
         # locate continuation on next line and pop
         - match: "&"
           scope: punctuation.separator.continuation.fortran
+          pop: true
+        - match: (?=\S)
           pop: true
 
   procedures:

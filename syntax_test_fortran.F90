@@ -118,6 +118,8 @@
 !
    'This is a simple string'
 !  ^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.single.fortran
+!  ^ punctuation.definition.string.begin.fortran
+!                          ^ punctuation.definition.string.end.fortran
    &
 !  ^ punctuation.separator.continuation.fortran
 !
@@ -125,6 +127,11 @@
    & but "with" continuation, &
    & and more continuation!'
 !  ^ punctuation.separator.continuation.fortran
+!
+   'Line continuation character missing on the next line, &
+      but highlighting of the rest of the file is still not messed up.'
+    x = 1
+!   ^^^^^ - string
 !
    'string' // ' contatenation!'
 !           ^^ keyword.operator.arithmetic.string-concatenation.fortran
@@ -342,7 +349,9 @@
 !^^^^^ support.function.fpp
 
 #include "someFile.F08"
-!         ^^^^^^^^^^^^ string.quoted.single.fortran
+!        ^^^^^^^^^^^^^^ string.quoted.double.fortran
+!        ^ punctuation.definition.string.begin.fortran
+!                     ^ punctuation.definition.string.end.fortran
 
 !$omp parallel do private(I) schedule(dynamic)
 !^ support.function.omp
@@ -360,7 +369,9 @@
 
    type1 = "hello!" ! should understand that 'type1' is a variable
 !  ^^^^^ variable.other.fortran
-!           ^^^^^^ string.quoted.single.fortran
+!          ^^^^^^^^ string.quoted.double.fortran
+!          ^ punctuation.definition.string.begin.fortran
+!                 ^ punctuation.definition.string.end.fortran
 !                     ^^^^^^ comment.line.fortran
 !
    used_diag(j) = 5 ! should not recognize "use" as keyword
@@ -674,7 +685,7 @@ end program myProgram
 !        ^^^^ keyword.control.fortran
 !
    error stop "Something went wrong!"
-!             ^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.single.fortran
+!             ^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.double.fortran
 !  ^^^^^ keyword.control.fortran
 !        ^^^^ keyword.control.fortran
 !
