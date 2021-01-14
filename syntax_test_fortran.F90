@@ -128,7 +128,7 @@
    & and more continuation!'
 !  ^ punctuation.separator.continuation.fortran
 !
-   'Line continuation character missing on the next line, &
+   'Line continuation character missing on the next line, & ! comment
       but highlighting of the rest of the file is still not messed up.'
     x = 1
 !   ^^^^^ - string

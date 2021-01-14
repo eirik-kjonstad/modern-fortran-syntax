@@ -200,13 +200,17 @@ contexts:
       pop: true
 
   string-continuation:
-    - match: "&"
-      scope: punctuation.separator.continuation.fortran
+    - match: (\&)(?:\s*((!).*$))?
+      captures:
+        1: punctuation.separator.continuation.fortran
+        2: comment.line.fortran
+        3: punctuation.definition.comment.fortran
       push:
         # locate continuation on next line and pop
         - match: "&"
           scope: punctuation.separator.continuation.fortran
           pop: true
+        - include: comments
         - match: (?=\S)
           pop: true
 
