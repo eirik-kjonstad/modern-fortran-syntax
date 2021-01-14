@@ -1,0 +1,26 @@
+name: Syntax Tests
+
+on:
+  push:
+    paths:
+      - '.github/workflows/ci.yml'
+      - '**.sublime-syntax'
+      - '**/syntax_test*'
+      - '**.tmPreferences'
+  pull_request:
+    paths:
+      - '.github/workflows/ci.yml'
+      - '**.sublime-syntax'
+      - '**/syntax_test*'
+      - '**.tmPreferences'
+
+jobs:
+  main:
+    name: Run Syntax Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: SublimeText/syntax-test-action@v2
+        with:
+          build: 'latest'
+          package_name: ModernFortran
