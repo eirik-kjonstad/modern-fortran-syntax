@@ -291,10 +291,10 @@ contexts:
                                                              # not "type is" construct; must be beginning of declaration
       scope: keyword.declaration.class.fortran
       push: class-name
-    - match: (?i)(procedure|generic|final)
+    - match: (?i)\b(procedure|generic|final)\b
       scope: keyword.declaration.function.fortran
       push: member-routine-declaration
-    - match: (?i)(contains)
+    - match: (?i)\b(contains)\b
       scope: keyword.declaration.contains.fortran
     - match: '(?i)(end)\s+(type)\s+(\w+)'
       captures:
