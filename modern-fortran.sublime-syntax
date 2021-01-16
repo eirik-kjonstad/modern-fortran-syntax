@@ -200,11 +200,9 @@ contexts:
       pop: true
 
   string-continuation:
-    - match: (\&)(?:\s*((!).*$))?
+    - match: (\&)\s*$\n?
       captures:
         1: punctuation.separator.continuation.fortran
-        2: comment.line.fortran
-        3: punctuation.definition.comment.fortran
       push:
         # locate continuation on next line and pop
         - match: "&"
