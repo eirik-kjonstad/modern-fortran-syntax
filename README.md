@@ -5,9 +5,9 @@ The `modern-fortran-syntax` package is a [Sublime Text 3](https://www.sublimetex
 ## Installation
 
 ### Package Control
-The easiest way to get the syntax is with Packagec Control. Open a sublime window, do `ctrl+shift+p` (`command+shift+p` on Mac) and type `Package Control: Install Package`. Then type the name of the package, `ModernFortran`, and hit enter.
+The easiest way to get the syntax is to install the package ModernFortran with Package Control. 
 
-To enable the syntax, open a Fortran source file and do `ctrl+shift+p` (`command+shift+p` on Mac OS) and type `Set syntax: Modern-Fortran`.
+After installation, you can enable the syntax by opening a Fortran source file and typing `ctrl+shift+p` (`command+shift+p` on Mac OS) followed by `Set syntax: Modern-Fortran`.
 
 ### Manual installation from source
 Open the terminal and navigate to the folder where Sublime Text packages are installed:
