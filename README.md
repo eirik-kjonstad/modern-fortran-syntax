@@ -13,7 +13,7 @@ Open the terminal and navigate to the folder where packages are installed:
 ```shell
 cd /home/username/.config/sublime-text-3/Packages # Default location on Ubuntu
 ```
-The location on your computer can be found via `Preferences -> Browse packages...`. Next, clone the repository using `git`:
+The location on your computer can be found via `Preferences -> Browse packages...`. Next, clone the repository:
 ```shell
 git clone https://github.com/eirik-kjonstad/modern-fortran-syntax.git
 ```
