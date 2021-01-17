@@ -9,15 +9,11 @@ After installation, you can enable the syntax by opening a Fortran source file a
 
 ## Manual installation from source
 The syntax can also be installed manually.
-Open the terminal and navigate to the folder where Sublime Text packages are installed:
+Open the terminal and navigate to the folder where packages are installed:
 ```shell
-# Default locations on Mac OS and Ubuntu, respectively
-cd /home/username/.config/sublime-text-3/Packages
-cd /Users/username/Library/Application\ Support/Sublime\ Text\ 3/Packages
+cd /home/username/.config/sublime-text-3/Packages # Default location on Ubuntu
 ```
-The location on your computer can be found by navigating to `Preferences -> Browse packages...` in Sublime Text.
-
-Next, download the repository using `git`:
+The location on your computer can be found via `Preferences -> Browse packages...`. Next, clone the repository using `git`:
 ```shell
 git clone https://github.com/eirik-kjonstad/modern-fortran-syntax.git
 ```
