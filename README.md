@@ -9,7 +9,7 @@ After installation, you can enable the syntax with `ctrl+shift+p` (`command+shif
 
 ## Manual installation from source
 The syntax can also be installed manually.
-Open the terminal and navigate to the folder where packages are installed:
+Open the terminal and navigate to where packages are installed:
 ```shell
 cd /home/username/.config/sublime-text-3/Packages # Default location on Ubuntu
 ```
