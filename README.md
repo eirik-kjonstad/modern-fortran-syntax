@@ -3,7 +3,7 @@
 Modern-Fortran is a [Sublime Text 3](https://www.sublimetext.com/) language syntax for highlighting of Fortran code. It highlights modern Fortran code (Fortran 90 and newer) and incorporates features introduced in Fortran 2003, 2008, and 2018. 
 
 ## Installation via Package Control
-The easiest way to get the syntax is to install the package ModernFortran with Package Control. 
+The easiest way to get the syntax is to install the package *ModernFortran* with Package Control. 
 
 After installation, you can enable the syntax by opening a Fortran source file and typing `ctrl+shift+p` (`command+shift+p` on Mac OS) followed by `Set syntax: Modern-Fortran`.
 
