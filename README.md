@@ -3,13 +3,11 @@
 The `modern-fortran-syntax` package is a [Sublime Text 3](https://www.sublimetext.com/) language syntax plugin for highlighting of modern Fortran code. It incorporates features introduced in recent Fortran language standards (2003, 2008, 2018). 
 
 ## Installation
-
-### Package Control
 The easiest way to get the syntax is to install the package ModernFortran with Package Control. 
 
 After installation, you can enable the syntax by opening a Fortran source file and typing `ctrl+shift+p` (`command+shift+p` on Mac OS) followed by `Set syntax: Modern-Fortran`.
 
-### Manual installation from source
+### Alternative installation: from source
 Open the terminal and navigate to the folder where Sublime Text packages are installed:
 ```shell
 # Default locations on Mac OS and Ubuntu, respectively
