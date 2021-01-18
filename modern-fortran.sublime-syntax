@@ -234,15 +234,18 @@ contexts:
     - match: '(?i)\b(module)\b\s+(?=function|subroutine|procedure)'
       scope: storage.modifier.function.prefix.fortran
 
-    - match: (?i)\b(function|subroutine)\b
-      scope: keyword.declaration.function.fortran
-
-    - match: (?i)\b(end)\b\s+(?=function|subroutine|procedure)
-      scope: keyword.declaration.function.fortran
-
-    - match: (?i)(?<=\bfunction|subroutine\b)\s+(\w+)
+    - match: (?i)\b(function|subroutine)(?:\s+(\w+))?\b
+      scope: meta.function.declaration.fortran
       captures:
-        1: entity.name.function.fortran
+        1: keyword.declaration.function.fortran
+        2: entity.name.function.fortran
+
+    - match: (?i)\b(end)\s+(?:(function|subroutine)(?:\s+(\w+))?|(procedure))\b
+      captures:
+        1: keyword.declaration.function.fortran
+        2: keyword.declaration.function.fortran
+        3: entity.name.function.fortran
+        4: keyword.declaration.function.fortran
 
     - match: '(?i)\b(call)\b'
       captures:
@@ -318,8 +321,8 @@ contexts:
     - include: separators
     - include: attribute
     - include: pointer-symbol
-    - match: (\w+)
-      scope: entity.name.function.fortran.fortran
+    - match: \w+
+      scope: entity.name.function.fortran
     - match: \n
       pop: true
     - match: \&

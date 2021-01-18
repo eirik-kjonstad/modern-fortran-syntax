@@ -145,10 +145,12 @@
 !           ^^ keyword.operator.arithmetic.string-concatenation.fortran
 !
    function theFunction()
+!  ^^^^^^^^^^^^^^^^^^^^ meta.function.declaration.fortran
 !  ^^^^^^^^ keyword.declaration.function.fortran
 !           ^^^^^^^^^^^ entity.name.function.fortran
    pure function theFunction()
 !  ^^^^ storage.modifier.function.prefix.fortran
+!       ^^^^^^^^^^^^^^^^^^^^ meta.function.declaration.fortran
 !       ^^^^^^^^ keyword.declaration.function.fortran
 !                ^^^^^^^^^^^ entity.name.function.fortran
    recursive module function theFunction(a)
@@ -167,8 +169,9 @@
 !
    end function getStuff
 !  ^^^ keyword.declaration.function.fortran
+!     ^ - keyword
 !      ^^^^^^^^ keyword.declaration.function.fortran
-!               ^^^^^^^^ entity.name.function.fortran
+!               ^^^^^^^^ entity.name.function.fortran - meta.function.declaration
 !
    real(dp) function myFunction(a, b, c)
 !  ^^^^ storage.type.intrinsic.fortran
@@ -179,6 +182,7 @@
 !
    module subroutine doStuff(a, b, c)
 !  ^^^^^^ storage.modifier.function.prefix.fortran
+!         ^^^^^^^^^^^^^^^^^^ meta.function.declaration.fortran
 !         ^^^^^^^^^^ keyword.declaration.function.fortran
 !                    ^^^^^^^ entity.name.function.fortran
 !
