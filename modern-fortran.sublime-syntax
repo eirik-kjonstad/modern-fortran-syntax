@@ -360,8 +360,9 @@ contexts:
     - match: (?<=::)\s*(\w+)
       captures: 
         1: entity.name.class.fortran
-    - match: (?i)(?<=type)\b(\w+) # simple type definition (type myType)
-      scope: entity.name.class.fortran
+    - match: (?i)(?<=type)\s+(\w+) # simple type definition (type myType)
+      captures: 
+        1: entity.name.class.fortran
 
   numbers:
     - match: '(\d+)'

@@ -417,6 +417,7 @@ end program myProgram
    TYPE simpleStruct
 !  ^^^^ keyword.declaration.class.fortran
 !       ^^^^^^^^^^^^ entity.name.class.fortran
+!  ^^^^^^^^^^^^^^^^^ meta.class.declaration.fortran
 !
       integer :: x
       integer :: y
