@@ -347,6 +347,7 @@ contexts:
         pop: true
 
   class-name:
+    - meta_scope: meta.class.declaration.fortran
     - include: newline-pop
     - include: separators
     - include: comment-pop
@@ -356,9 +357,10 @@ contexts:
         2: entity.other.inherited-class.fortran
     - match: (?i)\b(abstract)\b
       scope: storage.modifier.fortran
-    - match: (?<=::)\s*(\w*)
-      scope: entity.name.class.fortran
-    - match: (?i)(?<=type)\s+(\w*) # simple type definition (type myType)
+    - match: (?<=::)\s*(\w+)
+      captures: 
+        1: entity.name.class.fortran
+    - match: (?i)(?<=type)\b(\w+) # simple type definition (type myType)
       scope: entity.name.class.fortran
 
   numbers:

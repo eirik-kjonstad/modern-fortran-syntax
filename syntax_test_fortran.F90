@@ -61,6 +61,7 @@
 !  ^^^^ keyword.declaration.class.fortran
 !       ^^ punctuation.separator.double-colon.fortran
 !          ^^^^^^^^ entity.name.class.fortran
+!  ^^^^^^^^^^^^^^^^ meta.class.declaration.fortran
 !
       class(abstractClass), allocatable :: polymorphicStrategy
 !     ^^^^^ storage.type.class.fortran
@@ -100,7 +101,7 @@
    end type myClass1
 !  ^^^ keyword.declaration.class.fortran
 !      ^^^^ keyword.declaration.class.fortran
-!           ^^^^^^^^ entity.name.class.fortran
+!           ^^^^^^^^ entity.name.class.fortran - meta.class.declaration.fortran
 !
 !
    type, abstract :: myClass2
