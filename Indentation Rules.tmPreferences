@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plist version="1.0">
+<dict>
+   <key>scope</key>
+   <string>source.fortran</string>
+   <key>settings</key>
+   <dict>
+      <key>decreaseIndentPattern</key>
+      <string>^\s*(elseif|else|end\s*do|end\s*if)\b.*$</string>
+      <key>increaseIndentPattern</key>
+      <string>^\s*(else|if|do|while)\b.*$</string>
+      <key>disableIndentNextLinePattern</key>
+      <string></string>
+   </dict>
+</dict>
+</plist>
