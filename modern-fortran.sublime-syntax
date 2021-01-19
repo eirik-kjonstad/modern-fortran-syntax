@@ -52,7 +52,6 @@ contexts:
     - include: stop
     - include: function-call
     - include: pointer-symbol
-    - include: unmatched-control
     - include: match-variable
     - include: omp
 
