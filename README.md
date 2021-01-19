@@ -1,3 +1,5 @@
+![Syntax Tests](https://github.com/eirik-kjonstad/modern-fortran-syntax/workflows/Syntax%20Tests/badge.svg)
+
 # Modern-Fortran syntax
 
 Modern-Fortran is a [Sublime Text 3](https://www.sublimetext.com/) language syntax for highlighting of Fortran code. It highlights modern Fortran code (Fortran 90 and newer) and incorporates features introduced in Fortran 2003, 2008, and 2018. 
