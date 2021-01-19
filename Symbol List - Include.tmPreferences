@@ -3,8 +3,7 @@
 <dict>
    <key>scope</key>
    <string>
-      entity.name.function.fortran,
-      entity.name.class.fortran
+      meta.class.declaration.fortran entity.name.class.fortran 
    </string>
    <key>settings</key>
    <dict>

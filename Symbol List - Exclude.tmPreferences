@@ -4,13 +4,14 @@
     <key>scope</key>
     <string>
         <!-- 
-             In Fortran, we can write 'type :: myType' and 'end type myType', 
-             and similarly for other entities. This file avoids counting both 
-             instances in the symbol list, so that you are only directed to the 
-             declaration line, e.g. 'type :: myType'.
+             Excludes "entity.name.function" if it does not have the meta-scope "meta.function.declaration".
+             This meta-scope is reserved for declarations, e.g. "subroutine mySubroutine", and not for procedure
+             pointers, "end subroutine mySubroutine", or other places where the subroutine name appears. 
+
+             This makes sure we don't get duplicates in the symbol list that refer to things other than
+             the subroutine definition.
          -->
-        source.fortran entity.name.function.fortran - meta.function.declaration.fortran,
-        source.fortran entity.name.class.fortran - meta.class.declaration.fortran
+        source.fortran entity.name.function.fortran - meta.function.declaration.fortran
     </string>
     <key>settings</key>
     <dict>
