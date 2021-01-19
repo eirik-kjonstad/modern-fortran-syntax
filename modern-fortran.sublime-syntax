@@ -22,6 +22,7 @@ variables:
   parenthesisStart: '\(\s*'
   parenthesisEnd: '\s*\)'
   variableMatch: '[A-Za-z_][A-Za-z_0-9]*'
+  s: '[^\S\r\n]' # blank but not newline
   ompDirectives: '(end|parallel|do|simd|single|target|update|workshare|declare|sections|distribute|teams|task|taskyield|master|critical|barrier|taskwait|taskgroup|atomic|flush|ordered|cancel|cancellation point|reduction)'
   ompIntrinsics: (omp_set_num_threads|omp_get_num_threads|omp_get_max_threads|omp_get_thread_num|omp_get_num_procs|omp_in_parallel|omp_set_dynamic|omp_get_dynamic|omp_get_cancellation|omp_set_nested|omp_get_nested|omp_set_schedule|omp_get_schedule|omp_get_thread_limit|omp_set_max_active_levels|omp_get_max_active_levels|omp_get_level|omp_get_ancestor_thread_num|omp_get_team_size|omp_get_active_level|omp_in_final|omp_get_proc_bind|omp_set_default_device|omp_get_default_device|omp_get_num_devices|omp_get_num_teams|omp_get_team_num|omp_is_initial_device|omp_init_lock|omp_init_nest_lock|omp_destroy_lock|omp_destroy_nest_lock|omp_set_lock|omp_set_nest_lock|omp_unset_lock|omp_unset_nest_lock|omp_test_lock|omp_test_nest_lock|omp_get_wtime|omp_get_wtick)
   ompClauses: (default|shared|private|firstprivate|lastprivate|linear|reduction|copyin|copyprivate|map|tofrom|safelen|collapse|simdlen|aligned|uniform|Inbrach|notinbranch)
@@ -268,10 +269,16 @@ contexts:
       scope: keyword.control.fortran
 
   modules:
-    - match: (?i)\b(module)\b\s*(\w*)$
+    - match: (?i)^{{s}}*\b(module)\b{{s}}+(\w+)\b{{s}}*$
+      scope: meta.module.declaration.fortran
       captures:
         1: keyword.declaration.interface.module.fortran
         2: entity.name.interface.module.fortran
+    - match: (?i)^{{s}}*\b(end)\b{{s}}+\b(module)\b{{s}}+(\w*)
+      captures:
+        1: keyword.declaration.interface.module.fortran
+        2: keyword.declaration.interface.module.fortran
+        3: entity.name.interface.module.fortran
     - match: (?i)\b(submodule)\b\s*\((\w*)\)\s*(\w*)
       captures:
         1: keyword.declaration.interface.submodule.fortran
@@ -287,8 +294,6 @@ contexts:
       push: find-use-module
     - match: (?i)\b(only)\b
       scope: keyword.control.fortran
-    - match: (?i)\b(end)\b\s+(?=module)
-      scope: keyword.declaration.interface.module.fortran
 
   find-use-module:
     - include: separators

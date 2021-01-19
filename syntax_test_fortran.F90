@@ -200,6 +200,12 @@
    module myModule
 !  ^^^^^^ keyword.declaration.interface.module.fortran
 !         ^^^^^^^^ entity.name.interface.module.fortran
+!  ^^^^^^^^^^^^^^^ meta.module.declaration.fortran
+!
+   end module myModule 
+!  ^^^ keyword.declaration.interface.module.fortran
+!      ^^^^^^ keyword.declaration.interface.module.fortran
+!             ^^^^^^^^ entity.name.interface.module.fortran - meta.module.declaration.fortran
 !
    submodule (moduleName) submoduleName
 !  ^^^^^^^^^ keyword.declaration.interface.submodule.fortran
