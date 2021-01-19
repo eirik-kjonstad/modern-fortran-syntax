@@ -52,6 +52,7 @@ contexts:
     - include: stop
     - include: function-call
     - include: pointer-symbol
+    - include: unmatched-control
     - include: match-variable
     - include: omp
 
@@ -114,10 +115,10 @@ contexts:
 
   control:
     - include: comments
-    - match: (?i)\b(end)\b
-      scope: keyword.control.fortran
-    - match: (?i)(?<=end)\s*(if|do|select)
-      scope: keyword.control.fortran
+    - match: (?i)^{{s}}*\b(end){{s}}*(if|do|select)
+      captures: 
+        1: keyword.control.fortran
+        2: keyword.control.fortran
       push: seek-conditional-label
     - match: (?i)(end)(?=if|do)
       scope: keyword.control.fortran
@@ -469,10 +470,16 @@ contexts:
       scope: support.function.fpp
 
   program:
-    - match: (?i)\b(program)\b
-      scope: keyword.declaration.program.fortran
-    - match: '(?i)(?<=program)\s+(\w*)'
-      scope: entity.name.program.fortran
+    - match: (?i)^{{s}}*\b(program)\b{{s}}+(\w+)\b{{s}}*$
+      scope: meta.program.declaration.fortran 
+      captures:
+        1: keyword.declaration.program.fortran
+        2: entity.name.program.fortran
+    - match: (?i)^{{s}}*(end)\b{{s}}+\b(program)\b{{s}}+(\w*)\b{{s}}*$
+      captures:
+        1: keyword.declaration.program.fortran
+        2: keyword.declaration.program.fortran
+        3: entity.name.program.fortran
 
   coarray:
     - match: (?i)\b(sync)\s+(all|images|memory)\b
@@ -485,4 +492,3 @@ contexts:
       captures:
         1: keyword.control.fortran
         2: keyword.control.fortran
-

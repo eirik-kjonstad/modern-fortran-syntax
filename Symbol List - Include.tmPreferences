@@ -3,9 +3,13 @@
 <dict>
    <key>scope</key>
    <string>
+      <!-- 
+         Included in symbol list: class, module, submodule, program
+      -->
       meta.class.declaration.fortran entity.name.class.fortran,
       meta.module.declaration.fortran entity.name.interface.module.fortran,
-      meta.submodule.declaration.fortran entity.name.interface.submodule.fortran
+      meta.submodule.declaration.fortran entity.name.interface.submodule.fortran,
+      meta.program.declaration.fortran entity.name.program.fortran
    </string>
    <key>settings</key>
    <dict>

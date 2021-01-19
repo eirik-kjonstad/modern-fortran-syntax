@@ -407,12 +407,14 @@
 program myProgram
 !<-^^^^ keyword.declaration.program.fortran
 !       ^^^^^^^^^ entity.name.program.fortran
+!<-^^^^^^^^^^^^^^ meta.program.declaration.fortran 
 !
 !  Program contents
 !
 end program myProgram
+!<- keyword.declaration.program.fortran
 !   ^^^^^^^ keyword.declaration.program.fortran
-!           ^^^^^^^^^ entity.name.program.fortran
+!           ^^^^^^^^^ entity.name.program.fortran - meta.program.declaration.fortran 
 !
    DO I = 1, 10
 !  ^^ keyword.control.fortran
@@ -500,7 +502,8 @@ end program myProgram
 !
    end select animalCasting
 !             ^^^^^^^^^^^^^ entity.name.label.conditional.fortran
-!  ^^^^^^^^^^ keyword.control.fortran
+!  ^^^ keyword.control.fortran
+!      ^^^^^^ keyword.control.fortran
 !
 !
    type, abstract, extends(cat) :: superCat
