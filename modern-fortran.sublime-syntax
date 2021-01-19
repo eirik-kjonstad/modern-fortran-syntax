@@ -279,12 +279,13 @@ contexts:
         1: keyword.declaration.interface.module.fortran
         2: keyword.declaration.interface.module.fortran
         3: entity.name.interface.module.fortran
-    - match: (?i)\b(submodule)\b\s*\((\w*)\)\s*(\w*)
+    - match: (?i)^{{s}}*\b(submodule)\b{{s}}+\((\w+)\){{s}}+(\w+){{s}}*$
+      scope: meta.submodule.declaration.fortran
       captures:
         1: keyword.declaration.interface.submodule.fortran
         2: entity.name.interface.inherited-module.fortran
         3: entity.name.interface.submodule.fortran
-    - match: (?i)(end)\s+\b(submodule)\b\s+(\w*)
+    - match: (?i)^{{s}}*\b(end)\b{{s}}+\b(submodule)\b{{s}}+(\w*)
       captures:
         1: keyword.declaration.interface.submodule.fortran
         2: keyword.declaration.interface.submodule.fortran
