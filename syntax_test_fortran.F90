@@ -43,7 +43,11 @@
 !
    enddo
 !  ^^^^^ keyword.control.fortran
-
+!
+   elsei ! should not recognize 'else' in 'elsei'
+!  ^^^^ - keyword.control.fortran
+!
+!
    real(dp), intent(in) :: myReal ! a side-comment
 !  ^^^^ storage.type.intrinsic.fortran
 !       ^^ variable.other.fortran
