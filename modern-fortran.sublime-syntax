@@ -124,12 +124,10 @@ contexts:
     - match: (?i)\b(then|exit|cycle)
       scope: keyword.control.fortran
       push: seek-conditional-label
-    - match: (?i)(?<=else)(if)
-      scope: keyword.control.fortran
     - match: (?i)(?<=else)(?!\s*if)
       scope: keyword.control.fortran
       push: seek-conditional-label
-    - match: (?i)(else)
+    - match: (?i)\b(else|elseif)\b
       scope: keyword.control.fortran
     - match: (?i)\b(if|do|while)\b
       scope: keyword.control.fortran
