@@ -4,7 +4,8 @@
    <key>scope</key>
    <string>
       meta.class.declaration.fortran entity.name.class.fortran,
-      meta.module.declaration.fortran entity.name.interface.module.fortran
+      meta.module.declaration.fortran entity.name.interface.module.fortran,
+      meta.submodule.declaration.fortran entity.name.interface.submodule.fortran
    </string>
    <key>settings</key>
    <dict>

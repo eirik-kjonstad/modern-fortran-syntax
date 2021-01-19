@@ -211,10 +211,11 @@
 !  ^^^^^^^^^ keyword.declaration.interface.submodule.fortran
 !             ^^^^^^^^^^ entity.name.interface.inherited-module.fortran
 !                         ^^^^^^^^^^^^^ entity.name.interface.submodule.fortran
+!  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.submodule.declaration.fortran
 !
    end submodule submoduleName
 !      ^^^^^^^^^ keyword.declaration.interface.submodule.fortran
-!                ^^^^^^^^^^^^^ entity.name.interface.submodule.fortran
+!                ^^^^^^^^^^^^^ entity.name.interface.submodule.fortran - meta.submodule.declaration.fortran
 !
    end submodule ! just empty end-name also allowed
 !      ^^^^^^^^^ keyword.declaration.interface.submodule.fortran
