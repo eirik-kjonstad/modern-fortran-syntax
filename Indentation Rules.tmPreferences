@@ -6,9 +6,9 @@
    <key>settings</key>
    <dict>
       <key>decreaseIndentPattern</key>
-      <string>^\s*(elseif|else|end\s*do|end\s*if)\b.*$</string>
+      <string>^\s*(elseif|elsei|else|end\s*do|end\s*if)\b.*$</string>
       <key>increaseIndentPattern</key>
-      <string>^\s*(else|if|do|while)\b.*$</string>
+      <string>^\s*(if|do|while)\b.*$</string>
       <key>disableIndentNextLinePattern</key>
       <string></string>
    </dict>
