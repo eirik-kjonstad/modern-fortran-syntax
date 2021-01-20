@@ -86,7 +86,8 @@ contexts:
     - match: '(?i)\b(in|out|inout)\b'
       scope: keyword.other.intent.fortran
     - match: '(?<=::)\s*(\w+)'
-      scope: variable.other.fortran
+      captures: 
+        1: variable.other.fortran
     - match: '(?i){{firstOnLine}}(type|class){{parenthesisStart}}\s*(\w*){{parenthesisEnd}}'
       captures:
         1: storage.type.class.fortran

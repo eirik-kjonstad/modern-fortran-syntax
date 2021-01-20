@@ -27,6 +27,8 @@
 !    ^ keyword.operator.assignment.fortran
 !
    integer(kind=8), dimension(:,:), allocatable :: myInt
+!                                                  ^^^^^ variable.other.fortran
+!                                                 ^ - variable.other.fortran
 !  ^^^^^^^ storage.type.intrinsic.fortran
 !                   ^^^^^^^^^ storage.modifier.fortran
 !                                   ^^^^^^^^^^^ storage.modifier.fortran
