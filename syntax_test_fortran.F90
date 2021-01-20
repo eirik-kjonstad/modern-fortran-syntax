@@ -27,6 +27,8 @@
 !    ^ keyword.operator.assignment.fortran
 !
    integer(kind=8), dimension(:,:), allocatable :: myInt
+!                                                  ^^^^^ variable.other.fortran
+!                                                 ^ - variable.other.fortran
 !  ^^^^^^^ storage.type.intrinsic.fortran
 !                   ^^^^^^^^^ storage.modifier.fortran
 !                                   ^^^^^^^^^^^ storage.modifier.fortran
@@ -279,6 +281,8 @@
    interface myInterface
 !  ^^^^^^^^^ keyword.declaration.interface.interface.fortran
 !            ^^^^^^^^^^^ entity.name.interface.interface.fortran
+!           ^ - entity.name.interface.interface.fortran
+!                       ^^^ - entity.name.interface.interface.fortran
 !
       include "path/to/file.F90"
 !     ^^^^^^^ keyword.control.import.fortran
@@ -580,7 +584,7 @@ end program myProgram
    end do extraordinaryLoop
 !         ^^^^^^^^^^^^^^^^^ entity.name.label.conditional.fortran
 !
-   readingTime : if (.not. person%hasBooks()) then
+   readingTime : if (person%hasBooks()) then
 !              ^ punctuation.separator.single-colon.fortran
 !  ^^^^^^^^^^^ entity.name.label.conditional.fortran
 !

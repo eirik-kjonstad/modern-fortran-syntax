@@ -86,7 +86,8 @@ contexts:
     - match: '(?i)\b(in|out|inout)\b'
       scope: keyword.other.intent.fortran
     - match: '(?<=::)\s*(\w+)'
-      scope: variable.other.fortran
+      captures: 
+        1: variable.other.fortran
     - match: '(?i){{firstOnLine}}(type|class){{parenthesisStart}}\s*(\w*){{parenthesisEnd}}'
       captures:
         1: storage.type.class.fortran
@@ -471,7 +472,8 @@ contexts:
     - match: (?i)\b(interface)\b
       scope: keyword.declaration.interface.interface.fortran
     - match: '(?i)(?<=interface)\s+(\w*)'
-      scope: entity.name.interface.interface.fortran
+      captures: 
+        1: entity.name.interface.interface.fortran
     - match: (?i)\b(include)\b
       scope: keyword.control.import.fortran
     - match: (?i)\b(end)\b\s+(?=interface)
