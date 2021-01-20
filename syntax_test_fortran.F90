@@ -584,7 +584,7 @@ end program myProgram
    end do extraordinaryLoop
 !         ^^^^^^^^^^^^^^^^^ entity.name.label.conditional.fortran
 !
-   readingTime : if (.not. person%hasBooks()) then
+   readingTime : if (person%hasBooks()) then
 !              ^ punctuation.separator.single-colon.fortran
 !  ^^^^^^^^^^^ entity.name.label.conditional.fortran
 !
