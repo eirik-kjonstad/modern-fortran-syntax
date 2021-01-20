@@ -303,7 +303,6 @@ contexts:
             - meta_scope: meta.function.parameters.fortran
             - include: line-continuation
             - include: eol-pop
-            - include: class-accessing
             - match: \w+
               scope: variable.parameter.fortran
             - match: \,

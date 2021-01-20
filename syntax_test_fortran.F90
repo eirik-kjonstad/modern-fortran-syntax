@@ -547,7 +547,7 @@ end program myProgram
 !                ^ punctuation.separator.comma.fortran
 !                               ^^ punctuation.separator.double-colon.fortran
 !
-   MODULE SUBROUTINE MY_SUBROUTINE(A, B, Cee%Dee)
+   MODULE SUBROUTINE MY_SUBROUTINE(A, B, C)
 !  ^^^^^^ storage.modifier.function.prefix.fortran
 !         ^^^^^^^^^^ keyword.declaration.function.fortran
 !                    ^^^^^^^^^^^^^ entity.name.function.fortran
@@ -555,8 +555,8 @@ end program myProgram
 !                                   ^ punctuation.separator.comma.fortran
 !                                      ^ punctuation.separator.comma.fortran
 !                                     ^ variable.parameter.fortran
-!                                            ^^^ variable.parameter.fortran
-!                                        ^^^ storage.type.class.fortran
+!                                        ^ variable.parameter.fortran
+
 
    read(unit=fileUnit, *) myVariable
 !  ^^^^ variable.function.subroutine.intrinsic.io.fortran
