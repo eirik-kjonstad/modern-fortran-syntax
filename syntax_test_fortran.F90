@@ -151,26 +151,56 @@
 !
    function theFunction()
 !  ^^^^^^^^^^^^^^^^^^^^ meta.function.declaration.fortran
+!                      ^^ meta.function.parameters.fortran
 !  ^^^^^^^^ keyword.declaration.function.fortran
 !           ^^^^^^^^^^^ entity.name.function.fortran
    pure function theFunction()
 !  ^^^^ storage.modifier.function.prefix.fortran
 !       ^^^^^^^^^^^^^^^^^^^^ meta.function.declaration.fortran
+!                           ^^ meta.function.parameters.fortran
 !       ^^^^^^^^ keyword.declaration.function.fortran
 !                ^^^^^^^^^^^ entity.name.function.fortran
    recursive module function theFunction(a)
 !  ^^^^^^^^^ storage.modifier.function.prefix.fortran
 !            ^^^^^^ storage.modifier.function.prefix.fortran
-!                                        ^ variable.other.fortran
+!                                       ^^^ meta.function.parameters.fortran
+!                                       ^ punctuation.section.parens.begin.fortran
+!                                        ^ variable.parameter.input.fortran
+!                                         ^ punctuation.section.parens.end.fortran
    function theFunction(a, bee, cesium)
-!                       ^ variable.other.fortran
-!                          ^^^ variable.other.fortran
-!                               ^^^^^^ variable.other.fortran
+!                      ^^^^^^^^^^^^^^^^ meta.function.parameters.fortran
+!                      ^ punctuation.section.parens.begin.fortran
+!                       ^ variable.parameter.input.fortran
 !                        ^ punctuation.separator.comma.fortran
+!                          ^^^ variable.parameter.input.fortran
+!                             ^ punctuation.separator.comma.fortran
+!                               ^^^^^^ variable.parameter.input.fortran
+!                                     ^ punctuation.section.parens.end.fortran
+   function theFunction(a, & ! comment
+!                      ^^^^^^^^^^^^^^^^ meta.function.parameters.fortran
+!                          ^ punctuation.separator.continuation.fortran
+!                            ^^^^^^^^^^ comment.line.fortran
+
+      b, c)
+!^^^^^^^^^^ meta.function.parameters.fortran
+!     ^ variable.parameter.input.fortran
+!
+   function result(a)
+!           ^^^^^^ entity.name.function.fortran - keyword
 !
    pure function getStuff(a) result(theStuff)
+!       ^^^^^^^^^^^^^^^^^ meta.function.declaration.fortran - meta.function meta.function
+!                        ^^^ meta.function.parameters.fortran - meta.function meta.function
+!                           ^^^^^^^ meta.function.declaration.fortran - meta.function meta.function
+!                                  ^^^^^^^^^^ meta.function.parameters.fortran - meta.function meta.function
+!                                            ^ - meta.function.parameters
+!                        ^ punctuation.section.parens.begin.fortran
+!                         ^ variable.parameter.input.fortran
+!                          ^ punctuation.section.parens.end.fortran
 !                            ^^^^^^ keyword.control.function-result.fortran
-!                                   ^^^^^^^^ variable.other.fortran
+!                                  ^ punctuation.section.parens.begin.fortran
+!                                   ^^^^^^^^ variable.parameter.output.fortran
+!                                           ^ punctuation.section.parens.end.fortran
 !
    end function getStuff
 !  ^^^ keyword.declaration.function.fortran
@@ -199,14 +229,14 @@
    module subroutine doStuff(ace, bees, cees, & ! a comment
 !                                             ^ punctuation.separator.continuation.fortran
                              dees, ees, fsss)
-!                            ^^^^ variable.other.fortran
+!                            ^^^^ variable.parameter.fortran
 !
    module myModule
 !  ^^^^^^ keyword.declaration.interface.module.fortran
 !         ^^^^^^^^ entity.name.interface.module.fortran
 !  ^^^^^^^^^^^^^^^ meta.module.declaration.fortran
 !
-   end module myModule 
+   end module myModule
 !  ^^^ keyword.declaration.interface.module.fortran
 !      ^^^^^^ keyword.declaration.interface.module.fortran
 !             ^^^^^^^^ entity.name.interface.module.fortran - meta.module.declaration.fortran
@@ -404,21 +434,21 @@
    real(dp) function myFunction(a, b, c) result(someResult)
 !  ^^^^ storage.type.intrinsic.fortran
 !       ^^ variable.other.fortran
-!                                               ^^^^^^^^^^ variable.other.fortran
+!                                               ^^^^^^^^^^ variable.parameter.output.fortran
 !           ^^^^^^^^ keyword.declaration.function.fortran
 !                    ^^^^^^^^^^ entity.name.function.fortran
 !
 program myProgram
 !<-^^^^ keyword.declaration.program.fortran
 !       ^^^^^^^^^ entity.name.program.fortran
-!<-^^^^^^^^^^^^^^ meta.program.declaration.fortran 
+!<-^^^^^^^^^^^^^^ meta.program.declaration.fortran
 !
 !  Program contents
 !
 end program myProgram
 !<- keyword.declaration.program.fortran
 !   ^^^^^^^ keyword.declaration.program.fortran
-!           ^^^^^^^^^ entity.name.program.fortran - meta.program.declaration.fortran 
+!           ^^^^^^^^^ entity.name.program.fortran - meta.program.declaration.fortran
 !
    DO I = 1, 10
 !  ^^ keyword.control.fortran
@@ -521,11 +551,11 @@ end program myProgram
 !  ^^^^^^ storage.modifier.function.prefix.fortran
 !         ^^^^^^^^^^ keyword.declaration.function.fortran
 !                    ^^^^^^^^^^^^^ entity.name.function.fortran
-!                                  ^ variable.other.fortran
+!                                  ^ variable.parameter.fortran
 !                                   ^ punctuation.separator.comma.fortran
 !                                      ^ punctuation.separator.comma.fortran
-!                                     ^ variable.other.fortran
-!                                            ^^^ variable.other.fortran
+!                                     ^ variable.parameter.fortran
+!                                            ^^^ variable.parameter.fortran
 !                                        ^^^ storage.type.class.fortran
 
    read(unit=fileUnit, *) myVariable
