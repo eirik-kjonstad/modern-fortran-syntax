@@ -281,6 +281,8 @@
    interface myInterface
 !  ^^^^^^^^^ keyword.declaration.interface.interface.fortran
 !            ^^^^^^^^^^^ entity.name.interface.interface.fortran
+!           ^ - entity.name.interface.interface.fortran
+!                       ^^^ - entity.name.interface.interface.fortran
 !
       include "path/to/file.F90"
 !     ^^^^^^^ keyword.control.import.fortran
