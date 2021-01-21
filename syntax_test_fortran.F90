@@ -272,7 +272,7 @@
 !       ^^ variable.other.fortran
 !
    a = minval(b)
-!      ^^^^^^ variable.function.function.intrinsic.fortran
+!      ^^^^^^ support.function.intrinsic.fortran
 !
 !  type casting versus variable declaration
    real(8) :: aRealNumber
@@ -344,7 +344,7 @@
 !                                        ^^^^^^^^^ variable.function.fortran
 !
    aRealNumber = real(anInteger)
-!                ^^^^ variable.function.function.intrinsic.fortran
+!                ^^^^ support.function.intrinsic.fortran
 !                     ^^^^^^^^^ variable.other.fortran
 !  simple function call
    call mySubroutine(a, b, c)
@@ -385,7 +385,7 @@
 !
    if (present(myArgument)) call doThing(myArgument)
 !  ^^ keyword.control.fortran
-!      ^^^^^^^ variable.function.function.intrinsic.fortran
+!      ^^^^^^^ support.function.intrinsic.fortran
 !                                ^^^^^^^ variable.function.fortran
 !
    real(dp), dimension(wf%n_ao**2, wf%n_densities), intent(in), optional :: prev_ao_density
@@ -473,13 +473,14 @@ end program myProgram
 !      ^^^^ keyword.declaration.class.fortran
 !           ^^^^^^^^^^^^ entity.name.class.fortran
    ALLOCATE(array(10))
-!  ^^^^^^^^ variable.function.subroutine.intrinsic.fortran
+!  ^^^^^^^^ support.function.subroutine.fortran
+!
    do I = 1, 10; array(I) = I; end do
 !              ^ punctuation.terminator.fortran
 !                            ^ punctuation.terminator.fortran
 !
    DEALLOCATE(array)
-!  ^^^^^^^^^^ variable.function.subroutine.intrinsic.fortran
+!  ^^^^^^^^^^ support.function.subroutine.fortran
 !
    select case (myString)
 !  ^^^^^^ keyword.control.fortran
@@ -645,7 +646,7 @@ end program myProgram
 !               ^ keyword.operator.arithmetic.fortran
 !
    if ( this_image() .eq. 2 ) sync images( 3 )
-!       ^^^^^^^^^^ variable.function.function.intrinsic.fortran
+!       ^^^^^^^^^^ support.function.intrinsic.fortran
 !                             ^^^^ keyword.control.fortran
 !                                  ^^^^^^ keyword.control.fortran
 !                                          ^ constant.numeric.fortran
@@ -665,11 +666,11 @@ end program myProgram
 !                  ^^^ variable.other.fortran
 !
    a = this_image()
-!      ^^^^^^^^^^ variable.function.function.intrinsic.fortran
+!      ^^^^^^^^^^ support.function.intrinsic.fortran
 !
    allocate (co % data (10 * this_image()))
-!                            ^^^^^^^^^^ variable.function.function.intrinsic.fortran
-!  ^^^^^^^^ variable.function.subroutine.intrinsic.fortran
+!                            ^^^^^^^^^^ support.function.intrinsic.fortran
+!  ^^^^^^^^ support.function.subroutine.fortran
 !            ^^ storage.type.class.fortran
 !                 ^^^^ variable.function.fortran
 !                       ^^ constant.numeric.fortran
