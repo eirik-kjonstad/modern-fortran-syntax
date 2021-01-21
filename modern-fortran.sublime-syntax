@@ -535,9 +535,9 @@ contexts:
 
   preprocessing:
     - match: '{{firstOnLine}}(\#)'
-      scope: support.function.fpp
+      scope: keyword.control.directive.fortran
     - match: '(?i)(?<=\#)({{fppCommands}})'
-      scope: support.function.fpp
+      scope: keyword.control.directive.fortran
 
   program:
     - match: (?i)^{{s}}*\b(program)\b{{s}}+(\w+)\b{{s}}*$
