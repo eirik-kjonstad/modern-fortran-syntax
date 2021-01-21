@@ -7,7 +7,7 @@ Modern-Fortran is a [Sublime Text 3](https://www.sublimetext.com/) language synt
 ## Installation via Package Control
 The easiest way to get the syntax is to install the package *ModernFortran* with [Package Control](https://packagecontrol.io/). 
 
-After installation, you can enable the syntax with `ctrl+shift+p` (`cmd+shift+p` on Mac OS) followed by `Set syntax: Modern-Fortran`.
+After installation, you can enable the syntax with `ctrl+shift+p` (`cmd+shift+p` on Mac) followed by `Set syntax: Modern-Fortran`.
 
 ## Manual installation from source
 The syntax can also be installed manually.
