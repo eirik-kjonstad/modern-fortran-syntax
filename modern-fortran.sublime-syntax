@@ -481,10 +481,10 @@ contexts:
 
   omp:
     - match: '{{firstOnLine}}(?i)(\!\$omp)'
-      scope: support.function.omp
+      scope: keyword.control.directive.fortran
       push: omp-line
     - match: '{{firstOnLine}}(\!\$)'
-      scope: support.function.omp
+      scope: keyword.control.directive.fortran
       push: omp-line
 
   omp-line:
@@ -495,7 +495,7 @@ contexts:
     - include: separators
     - include: operators
     - match: (?i)(schedule)
-      scope: support.function.omp
+      scope: keyword.control.directive.fortran
       push: omp-schedule
     - include: match-variable
     - match: '\n'
@@ -503,7 +503,7 @@ contexts:
 
   omp-directives:
     - match: (?i)({{ompDirectives}})
-      scope: support.function.omp
+      scope: keyword.control.directive.fortran
 
   omp-intrinsic:
     - match: (?i)({{ompIntrinsics}})
@@ -512,7 +512,7 @@ contexts:
   omp-clauses:
     - include: omp-continuation
     - match: (?i)({{ompClauses}})
-      scope: support.constant.omp
+      scope: keyword.control.directive.fortran
 
   omp-schedule:
     - include: omp-continuation
@@ -526,7 +526,7 @@ contexts:
     - match: "&"
       push:
         - match: '{{firstOnLine}}(?i)(\!\$omp)'
-          scope: support.function.omp
+          scope: keyword.control.directive.fortran
           pop: true
 
   match-variable:
