@@ -27,6 +27,8 @@
 !    ^ keyword.operator.assignment.fortran
 !
    integer(kind=8), dimension(:,:), allocatable :: myInt
+!                                                  ^^^^^ variable.other.fortran
+!                                                 ^ - variable.other.fortran
 !  ^^^^^^^ storage.type.intrinsic.fortran
 !                   ^^^^^^^^^ storage.modifier.fortran
 !                                   ^^^^^^^^^^^ storage.modifier.fortran
@@ -43,7 +45,11 @@
 !
    enddo
 !  ^^^^^ keyword.control.fortran
-
+!
+   elsei ! should not recognize 'else' in 'elsei'
+!  ^^^^ - keyword.control.fortran
+!
+!
    real(dp), intent(in) :: myReal ! a side-comment
 !  ^^^^ storage.type.intrinsic.fortran
 !       ^^ variable.other.fortran
@@ -147,26 +153,56 @@
 !
    function theFunction()
 !  ^^^^^^^^^^^^^^^^^^^^ meta.function.declaration.fortran
+!                      ^^ meta.function.parameters.fortran
 !  ^^^^^^^^ keyword.declaration.function.fortran
 !           ^^^^^^^^^^^ entity.name.function.fortran
    pure function theFunction()
 !  ^^^^ storage.modifier.function.prefix.fortran
 !       ^^^^^^^^^^^^^^^^^^^^ meta.function.declaration.fortran
+!                           ^^ meta.function.parameters.fortran
 !       ^^^^^^^^ keyword.declaration.function.fortran
 !                ^^^^^^^^^^^ entity.name.function.fortran
    recursive module function theFunction(a)
 !  ^^^^^^^^^ storage.modifier.function.prefix.fortran
 !            ^^^^^^ storage.modifier.function.prefix.fortran
-!                                        ^ variable.other.fortran
+!                                       ^^^ meta.function.parameters.fortran
+!                                       ^ punctuation.section.parens.begin.fortran
+!                                        ^ variable.parameter.input.fortran
+!                                         ^ punctuation.section.parens.end.fortran
    function theFunction(a, bee, cesium)
-!                       ^ variable.other.fortran
-!                          ^^^ variable.other.fortran
-!                               ^^^^^^ variable.other.fortran
+!                      ^^^^^^^^^^^^^^^^ meta.function.parameters.fortran
+!                      ^ punctuation.section.parens.begin.fortran
+!                       ^ variable.parameter.input.fortran
 !                        ^ punctuation.separator.comma.fortran
+!                          ^^^ variable.parameter.input.fortran
+!                             ^ punctuation.separator.comma.fortran
+!                               ^^^^^^ variable.parameter.input.fortran
+!                                     ^ punctuation.section.parens.end.fortran
+   function theFunction(a, & ! comment
+!                      ^^^^^^^^^^^^^^^^ meta.function.parameters.fortran
+!                          ^ punctuation.separator.continuation.fortran
+!                            ^^^^^^^^^^ comment.line.fortran
+
+      b, c)
+!^^^^^^^^^^ meta.function.parameters.fortran
+!     ^ variable.parameter.input.fortran
+!
+   function result(a)
+!           ^^^^^^ entity.name.function.fortran - keyword
 !
    pure function getStuff(a) result(theStuff)
+!       ^^^^^^^^^^^^^^^^^ meta.function.declaration.fortran - meta.function meta.function
+!                        ^^^ meta.function.parameters.fortran - meta.function meta.function
+!                           ^^^^^^^ meta.function.declaration.fortran - meta.function meta.function
+!                                  ^^^^^^^^^^ meta.function.parameters.fortran - meta.function meta.function
+!                                            ^ - meta.function.parameters
+!                        ^ punctuation.section.parens.begin.fortran
+!                         ^ variable.parameter.input.fortran
+!                          ^ punctuation.section.parens.end.fortran
 !                            ^^^^^^ keyword.control.function-result.fortran
-!                                   ^^^^^^^^ variable.other.fortran
+!                                  ^ punctuation.section.parens.begin.fortran
+!                                   ^^^^^^^^ variable.parameter.output.fortran
+!                                           ^ punctuation.section.parens.end.fortran
 !
    end function getStuff
 !  ^^^ keyword.declaration.function.fortran
@@ -195,20 +231,27 @@
    module subroutine doStuff(ace, bees, cees, & ! a comment
 !                                             ^ punctuation.separator.continuation.fortran
                              dees, ees, fsss)
-!                            ^^^^ variable.other.fortran
+!                            ^^^^ variable.parameter.fortran
 !
    module myModule
 !  ^^^^^^ keyword.declaration.interface.module.fortran
 !         ^^^^^^^^ entity.name.interface.module.fortran
+!  ^^^^^^^^^^^^^^^ meta.module.declaration.fortran
+!
+   end module myModule
+!  ^^^ keyword.declaration.interface.module.fortran
+!      ^^^^^^ keyword.declaration.interface.module.fortran
+!             ^^^^^^^^ entity.name.interface.module.fortran - meta.module.declaration.fortran
 !
    submodule (moduleName) submoduleName
 !  ^^^^^^^^^ keyword.declaration.interface.submodule.fortran
 !             ^^^^^^^^^^ entity.name.interface.inherited-module.fortran
 !                         ^^^^^^^^^^^^^ entity.name.interface.submodule.fortran
+!  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.submodule.declaration.fortran
 !
    end submodule submoduleName
 !      ^^^^^^^^^ keyword.declaration.interface.submodule.fortran
-!                ^^^^^^^^^^^^^ entity.name.interface.submodule.fortran
+!                ^^^^^^^^^^^^^ entity.name.interface.submodule.fortran - meta.submodule.declaration.fortran
 !
    end submodule ! just empty end-name also allowed
 !      ^^^^^^^^^ keyword.declaration.interface.submodule.fortran
@@ -229,7 +272,7 @@
 !       ^^ variable.other.fortran
 !
    a = minval(b)
-!      ^^^^^^ variable.function.function.intrinsic.fortran
+!      ^^^^^^ support.function.intrinsic.fortran
 !
 !  type casting versus variable declaration
    real(8) :: aRealNumber
@@ -238,6 +281,8 @@
    interface myInterface
 !  ^^^^^^^^^ keyword.declaration.interface.interface.fortran
 !            ^^^^^^^^^^^ entity.name.interface.interface.fortran
+!           ^ - entity.name.interface.interface.fortran
+!                       ^^^ - entity.name.interface.interface.fortran
 !
       include "path/to/file.F90"
 !     ^^^^^^^ keyword.control.import.fortran
@@ -299,7 +344,7 @@
 !                                        ^^^^^^^^^ variable.function.fortran
 !
    aRealNumber = real(anInteger)
-!                ^^^^ variable.function.function.intrinsic.fortran
+!                ^^^^ support.function.intrinsic.fortran
 !                     ^^^^^^^^^ variable.other.fortran
 !  simple function call
    call mySubroutine(a, b, c)
@@ -340,7 +385,7 @@
 !
    if (present(myArgument)) call doThing(myArgument)
 !  ^^ keyword.control.fortran
-!      ^^^^^^^ variable.function.function.intrinsic.fortran
+!      ^^^^^^^ support.function.intrinsic.fortran
 !                                ^^^^^^^ variable.function.fortran
 !
    real(dp), dimension(wf%n_ao**2, wf%n_densities), intent(in), optional :: prev_ao_density
@@ -353,13 +398,15 @@
 !                         ^^^ variable.other.fortran
 !
 #ifdef myVar
+!<-^^^ keyword.control.directive.fortran
 !      ^^^^^ variable.other.fortran
    integer, parameter :: p = 1
 #else
+!<-^^ keyword.control.directive.fortran
    integer, parameter :: p = 2
 #endif
-!<- support.function.fpp
-!^^^^^ support.function.fpp
+!<- keyword.control.directive.fortran
+!^^^^^ keyword.control.directive.fortran
 
 #include "someFile.F08"
 !        ^^^^^^^^^^^^^^ string.quoted.double.fortran
@@ -393,19 +440,21 @@
    real(dp) function myFunction(a, b, c) result(someResult)
 !  ^^^^ storage.type.intrinsic.fortran
 !       ^^ variable.other.fortran
-!                                               ^^^^^^^^^^ variable.other.fortran
+!                                               ^^^^^^^^^^ variable.parameter.output.fortran
 !           ^^^^^^^^ keyword.declaration.function.fortran
 !                    ^^^^^^^^^^ entity.name.function.fortran
 !
 program myProgram
 !<-^^^^ keyword.declaration.program.fortran
 !       ^^^^^^^^^ entity.name.program.fortran
+!<-^^^^^^^^^^^^^^ meta.program.declaration.fortran
 !
 !  Program contents
 !
 end program myProgram
+!<- keyword.declaration.program.fortran
 !   ^^^^^^^ keyword.declaration.program.fortran
-!           ^^^^^^^^^ entity.name.program.fortran
+!           ^^^^^^^^^ entity.name.program.fortran - meta.program.declaration.fortran
 !
    DO I = 1, 10
 !  ^^ keyword.control.fortran
@@ -426,13 +475,14 @@ end program myProgram
 !      ^^^^ keyword.declaration.class.fortran
 !           ^^^^^^^^^^^^ entity.name.class.fortran
    ALLOCATE(array(10))
-!  ^^^^^^^^ variable.function.subroutine.intrinsic.fortran
+!  ^^^^^^^^ support.function.subroutine.fortran
+!
    do I = 1, 10; array(I) = I; end do
 !              ^ punctuation.terminator.fortran
 !                            ^ punctuation.terminator.fortran
 !
    DEALLOCATE(array)
-!  ^^^^^^^^^^ variable.function.subroutine.intrinsic.fortran
+!  ^^^^^^^^^^ support.function.subroutine.fortran
 !
    select case (myString)
 !  ^^^^^^ keyword.control.fortran
@@ -493,7 +543,8 @@ end program myProgram
 !
    end select animalCasting
 !             ^^^^^^^^^^^^^ entity.name.label.conditional.fortran
-!  ^^^^^^^^^^ keyword.control.fortran
+!  ^^^ keyword.control.fortran
+!      ^^^^^^ keyword.control.fortran
 !
 !
    type, abstract, extends(cat) :: superCat
@@ -503,16 +554,16 @@ end program myProgram
 !                ^ punctuation.separator.comma.fortran
 !                               ^^ punctuation.separator.double-colon.fortran
 !
-   MODULE SUBROUTINE MY_SUBROUTINE(A, B, Cee%Dee)
+   MODULE SUBROUTINE MY_SUBROUTINE(A, B, C)
 !  ^^^^^^ storage.modifier.function.prefix.fortran
 !         ^^^^^^^^^^ keyword.declaration.function.fortran
 !                    ^^^^^^^^^^^^^ entity.name.function.fortran
-!                                  ^ variable.other.fortran
+!                                  ^ variable.parameter.fortran
 !                                   ^ punctuation.separator.comma.fortran
 !                                      ^ punctuation.separator.comma.fortran
-!                                     ^ variable.other.fortran
-!                                            ^^^ variable.other.fortran
-!                                        ^^^ storage.type.class.fortran
+!                                     ^ variable.parameter.fortran
+!                                        ^ variable.parameter.fortran
+
 
    read(unit=fileUnit, *) myVariable
 !  ^^^^ variable.function.subroutine.intrinsic.io.fortran
@@ -536,7 +587,7 @@ end program myProgram
    end do extraordinaryLoop
 !         ^^^^^^^^^^^^^^^^^ entity.name.label.conditional.fortran
 !
-   readingTime : if (.not. person%hasBooks()) then
+   readingTime : if (person%hasBooks()) then
 !              ^ punctuation.separator.single-colon.fortran
 !  ^^^^^^^^^^^ entity.name.label.conditional.fortran
 !
@@ -597,7 +648,7 @@ end program myProgram
 !               ^ keyword.operator.arithmetic.fortran
 !
    if ( this_image() .eq. 2 ) sync images( 3 )
-!       ^^^^^^^^^^ variable.function.function.intrinsic.fortran
+!       ^^^^^^^^^^ support.function.intrinsic.fortran
 !                             ^^^^ keyword.control.fortran
 !                                  ^^^^^^ keyword.control.fortran
 !                                          ^ constant.numeric.fortran
@@ -617,11 +668,11 @@ end program myProgram
 !                  ^^^ variable.other.fortran
 !
    a = this_image()
-!      ^^^^^^^^^^ variable.function.function.intrinsic.fortran
+!      ^^^^^^^^^^ support.function.intrinsic.fortran
 !
    allocate (co % data (10 * this_image()))
-!                            ^^^^^^^^^^ variable.function.function.intrinsic.fortran
-!  ^^^^^^^^ variable.function.subroutine.intrinsic.fortran
+!                            ^^^^^^^^^^ support.function.intrinsic.fortran
+!  ^^^^^^^^ support.function.subroutine.fortran
 !            ^^ storage.type.class.fortran
 !                 ^^^^ variable.function.fortran
 !                       ^^ constant.numeric.fortran
