@@ -1,4 +1,4 @@
-![Syntax Tests](https://github.com/eirik-kjonstad/modern-fortran-syntax/workflows/Syntax%20Tests/badge.svg)  ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/eirik-kjonstad/modern-fortran-syntax)  ![Package Control](https://img.shields.io/packagecontrol/dt/ModernFortran)
+![Syntax Tests](https://github.com/eirik-kjonstad/modern-fortran-syntax/workflows/Syntax%20Tests/badge.svg)  ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/eirik-kjonstad/modern-fortran-syntax)  ![Package Control](https://img.shields.io/packagecontrol/dt/ModernFortran?label=Package%20Control)
 
 # Modern-Fortran syntax
 
