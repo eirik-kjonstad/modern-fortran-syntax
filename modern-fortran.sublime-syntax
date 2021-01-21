@@ -230,11 +230,11 @@ contexts:
   procedures:
     - match: (?i)\b({{intrinsicFunction}})\b\s*(?=\()
       captures:
-        1: variable.function.function.intrinsic.fortran
+        1: support.function.intrinsic.fortran
 
     - match: (?i)\b({{intrinsicSubroutine}})\b\s*(?=\()
       captures:
-        1: variable.function.subroutine.intrinsic.fortran
+        1: support.function.subroutine.fortran
 
     - match: (?i)\b(impure|pure|elemental|non\_recursive|recursive)\b
       scope: storage.modifier.function.prefix.fortran
