@@ -414,18 +414,28 @@
 !                     ^ punctuation.definition.string.end.fortran
 
 !$omp parallel do private(I) schedule(dynamic)
-!^ support.function.omp
-!                            ^^^^^^^^ support.function.omp
+!<^^^ keyword.control.directive.fortran
+!                            ^^^^^^^^ keyword.control.directive.fortran
+!     ^^^^^^^^ keyword.control.directive.fortran
+!              ^^ keyword.control.directive.fortran
+!                 ^^^^^^^ keyword.control.directive.fortran
+!                            ^^^^^^^^ keyword.control.directive.fortran
 !                         ^ variable.other.fortran
 !                                     ^^^^^^^ support.constant.omp
-!                 ^^^^^^^ support.constant.omp
-! ^^^ support.function.omp
    do I = 1, 10
+!
+!$    thread = omp_get_num_threads()
+!^ keyword.control.directive.fortran
+!              ^^^^^^^^^^^^^^^^^^^ support.function.omp
 !
       f(I) = someThing(I)
 !
    enddo
 !$omp end parallel do
+!<^^^ keyword.control.directive.fortran
+!                  ^^ keyword.control.directive.fortran
+!     ^^^ keyword.control.directive.fortran
+!         ^^^^^^^^ keyword.control.directive.fortran
 
    type1 = "hello!" ! should understand that 'type1' is a variable
 !  ^^^^^ variable.other.fortran
