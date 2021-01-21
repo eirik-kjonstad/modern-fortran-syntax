@@ -398,13 +398,15 @@
 !                         ^^^ variable.other.fortran
 !
 #ifdef myVar
+!<-^^^ keyword.control.directive.fortran
 !      ^^^^^ variable.other.fortran
    integer, parameter :: p = 1
 #else
+!<-^^ keyword.control.directive.fortran
    integer, parameter :: p = 2
 #endif
-!<- support.function.fpp
-!^^^^^ support.function.fpp
+!<- keyword.control.directive.fortran
+!^^^^^ keyword.control.directive.fortran
 
 #include "someFile.F08"
 !        ^^^^^^^^^^^^^^ string.quoted.double.fortran
