@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plist version="1.0">
+<dict>
+    <key>scope</key>
+    <string>
+        <!-- 
+             Excludes "entity.name.function" if it does not have the meta-scope "meta.function.declaration".
+             This meta-scope is reserved for declarations, e.g. "subroutine mySubroutine", and not for procedure
+             pointers, "end subroutine mySubroutine", or other places where the subroutine name appears. 
+
+             This makes sure we don't get duplicates in the symbol list that refer to things other than
+             the subroutine definition.
+         -->
+        source.fortran entity.name.function.fortran - meta.function.declaration.fortran
+    </string>
+    <key>settings</key>
+    <dict>
+        <key>showInIndexedSymbolList</key>
+        <integer>0</integer>
+        <key>showInSymbolList</key>
+        <integer>0</integer>
+    </dict>
+</dict>
+</plist>

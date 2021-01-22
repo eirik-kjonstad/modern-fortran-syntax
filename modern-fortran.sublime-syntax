@@ -7,7 +7,7 @@
 # Sarai D. Folkestad and Eirik F. Kjønstad
 #
 name: Modern-Fortran
-file_extensions: [F90,F08,F18,f90,f08,f18]
+file_extensions: [F90,F95,F03,F08,F18,f90,f95,f03,f08,f18]
 scope: source.fortran
 
 variables:
@@ -22,6 +22,7 @@ variables:
   parenthesisStart: '\(\s*'
   parenthesisEnd: '\s*\)'
   variableMatch: '[A-Za-z_][A-Za-z_0-9]*'
+  s: '[^\S\r\n]' # blank but not newline
   ompDirectives: '(end|parallel|do|simd|single|target|update|workshare|declare|sections|distribute|teams|task|taskyield|master|critical|barrier|taskwait|taskgroup|atomic|flush|ordered|cancel|cancellation point|reduction)'
   ompIntrinsics: (omp_set_num_threads|omp_get_num_threads|omp_get_max_threads|omp_get_thread_num|omp_get_num_procs|omp_in_parallel|omp_set_dynamic|omp_get_dynamic|omp_get_cancellation|omp_set_nested|omp_get_nested|omp_set_schedule|omp_get_schedule|omp_get_thread_limit|omp_set_max_active_levels|omp_get_max_active_levels|omp_get_level|omp_get_ancestor_thread_num|omp_get_team_size|omp_get_active_level|omp_in_final|omp_get_proc_bind|omp_set_default_device|omp_get_default_device|omp_get_num_devices|omp_get_num_teams|omp_get_team_num|omp_is_initial_device|omp_init_lock|omp_init_nest_lock|omp_destroy_lock|omp_destroy_nest_lock|omp_set_lock|omp_set_nest_lock|omp_unset_lock|omp_unset_nest_lock|omp_test_lock|omp_test_nest_lock|omp_get_wtime|omp_get_wtick)
   ompClauses: (default|shared|private|firstprivate|lastprivate|linear|reduction|copyin|copyprivate|map|tofrom|safelen|collapse|simdlen|aligned|uniform|Inbrach|notinbranch)
@@ -54,6 +55,21 @@ contexts:
     - include: match-variable
     - include: omp
 
+  eol-pop:
+    - match: (?=\s*[!\n])
+      pop: true
+
+  line-continuation:
+    - match: (\&)\s*(?:((!).*$\n?)|$\n?)
+      captures:
+        1: punctuation.separator.continuation.fortran
+        2: comment.line.fortran
+        3: punctuation.definition.comment.fortran
+      push:
+        - include: comments
+        - match: (?=\S)
+          pop: true
+
   comments:
     - match: '!(?![$])'
       scope: punctuation.definition.comment.fortran
@@ -70,7 +86,8 @@ contexts:
     - match: '(?i)\b(in|out|inout)\b'
       scope: keyword.other.intent.fortran
     - match: '(?<=::)\s*(\w+)'
-      scope: variable.other.fortran
+      captures: 
+        1: variable.other.fortran
     - match: '(?i){{firstOnLine}}(type|class){{parenthesisStart}}\s*(\w*){{parenthesisEnd}}'
       captures:
         1: storage.type.class.fortran
@@ -113,22 +130,20 @@ contexts:
 
   control:
     - include: comments
-    - match: (?i)\b(end)\b
-      scope: keyword.control.fortran
-    - match: (?i)(?<=end)\s*(if|do|select)
-      scope: keyword.control.fortran
+    - match: (?i)^{{s}}*\b(end){{s}}*(if|do|select)
+      captures:
+        1: keyword.control.fortran
+        2: keyword.control.fortran
       push: seek-conditional-label
     - match: (?i)(end)(?=if|do)
       scope: keyword.control.fortran
     - match: (?i)\b(then|exit|cycle)
       scope: keyword.control.fortran
       push: seek-conditional-label
-    - match: (?i)(?<=else)(if)
-      scope: keyword.control.fortran
     - match: (?i)(?<=else)(?!\s*if)
       scope: keyword.control.fortran
       push: seek-conditional-label
-    - match: (?i)(else)
+    - match: (?i)\b(else|elseif)\b
       scope: keyword.control.fortran
     - match: (?i)\b(if|do|while)\b
       scope: keyword.control.fortran
@@ -215,15 +230,11 @@ contexts:
   procedures:
     - match: (?i)\b({{intrinsicFunction}})\b\s*(?=\()
       captures:
-        1: variable.function.function.intrinsic.fortran
+        1: support.function.intrinsic.fortran
 
     - match: (?i)\b({{intrinsicSubroutine}})\b\s*(?=\()
       captures:
-        1: variable.function.subroutine.intrinsic.fortran
-
-    - match: (?i)\s*(result)\s*\(
-      captures:
-        1: keyword.control.function-result.fortran
+        1: support.function.subroutine.fortran
 
     - match: (?i)\b(impure|pure|elemental|non\_recursive|recursive)\b
       scope: storage.modifier.function.prefix.fortran
@@ -234,15 +245,79 @@ contexts:
     - match: '(?i)\b(module)\b\s+(?=function|subroutine|procedure)'
       scope: storage.modifier.function.prefix.fortran
 
-    - match: (?i)\b(function|subroutine)\b
-      scope: keyword.declaration.function.fortran
+    - match: (?i)\bfunction\b
+      scope: meta.function.declaration.fortran keyword.declaration.function.fortran
+      push:
+        - meta_content_scope: meta.function.declaration.fortran
+        - include: line-continuation
+        - include: eol-pop
+        - match: \w+
+          scope: entity.name.function.fortran
+        - match: \(
+          scope: punctuation.section.parens.begin.fortran
+          push:
+            - clear_scopes: 1
+            - meta_scope: meta.function.parameters.fortran
+            - include: line-continuation
+            - include: eol-pop
+            - match: \w+
+              scope: variable.parameter.input.fortran
+            - match: \,
+              scope: punctuation.separator.comma.fortran
+            - match: \)
+              scope: punctuation.section.parens.end.fortran
+              set:
+                - include: line-continuation
+                - include: eol-pop
+                - match: (?i)\bresult\b
+                  scope: keyword.control.function-result.fortran
+                - match: (?=\()
+                  set:
+                    - clear_scopes: 1
+                    - match: \(
+                      scope: punctuation.section.parens.begin.fortran
+                      set:
+                        - clear_scopes: 1
+                        - meta_scope: meta.function.parameters.fortran
+                        - include: line-continuation
+                        - include: eol-pop
+                        - match: \w+
+                          scope: variable.parameter.output.fortran
+                        - match: \,
+                          scope: punctuation.separator.comma.fortran
+                        - match: \)
+                          scope: punctuation.section.parens.end.fortran
+                          pop: true
 
-    - match: (?i)\b(end)\b\s+(?=function|subroutine|procedure)
+    - match: (?i)\bsubroutine\b
       scope: keyword.declaration.function.fortran
+      push:
+        - meta_scope: meta.function.declaration.fortran
+        - include: line-continuation
+        - include: eol-pop
+        - match: \w+
+          scope: entity.name.function.fortran
+        - match: \(
+          scope: punctuation.section.parens.begin.fortran
+          push:
+            - clear_scopes: 1
+            - meta_scope: meta.function.parameters.fortran
+            - include: line-continuation
+            - include: eol-pop
+            - match: \w+
+              scope: variable.parameter.fortran
+            - match: \,
+              scope: punctuation.separator.comma.fortran
+            - match: \)
+              scope: punctuation.section.parens.end.fortran
+              pop: true
 
-    - match: (?i)(?<=\bfunction|subroutine\b)\s+(\w+)
+    - match: (?i)\b(end)\s+(?:(function|subroutine)(?:\s+(\w+))?|(procedure))\b
       captures:
-        1: entity.name.function.fortran
+        1: keyword.declaration.function.fortran
+        2: keyword.declaration.function.fortran
+        3: entity.name.function.fortran
+        4: keyword.declaration.function.fortran
 
     - match: '(?i)\b(call)\b'
       captures:
@@ -265,16 +340,23 @@ contexts:
       scope: keyword.control.fortran
 
   modules:
-    - match: (?i)\b(module)\b\s*(\w*)$
+    - match: (?i)^{{s}}*\b(module)\b{{s}}+(\w+)\b{{s}}*$
+      scope: meta.module.declaration.fortran
       captures:
         1: keyword.declaration.interface.module.fortran
         2: entity.name.interface.module.fortran
-    - match: (?i)\b(submodule)\b\s*\((\w*)\)\s*(\w*)
+    - match: (?i)^{{s}}*\b(end)\b{{s}}+\b(module)\b{{s}}+(\w*)
+      captures:
+        1: keyword.declaration.interface.module.fortran
+        2: keyword.declaration.interface.module.fortran
+        3: entity.name.interface.module.fortran
+    - match: (?i)^{{s}}*\b(submodule)\b{{s}}+\((\w+)\){{s}}+(\w+){{s}}*$
+      scope: meta.submodule.declaration.fortran
       captures:
         1: keyword.declaration.interface.submodule.fortran
         2: entity.name.interface.inherited-module.fortran
         3: entity.name.interface.submodule.fortran
-    - match: (?i)(end)\s+\b(submodule)\b\s+(\w*)
+    - match: (?i)^{{s}}*\b(end)\b{{s}}+\b(submodule)\b{{s}}+(\w*)
       captures:
         1: keyword.declaration.interface.submodule.fortran
         2: keyword.declaration.interface.submodule.fortran
@@ -284,8 +366,6 @@ contexts:
       push: find-use-module
     - match: (?i)\b(only)\b
       scope: keyword.control.fortran
-    - match: (?i)\b(end)\b\s+(?=module)
-      scope: keyword.declaration.interface.module.fortran
 
   find-use-module:
     - include: separators
@@ -318,8 +398,8 @@ contexts:
     - include: separators
     - include: attribute
     - include: pointer-symbol
-    - match: (\w+)
-      scope: entity.name.function.fortran.fortran
+    - match: \w+
+      scope: entity.name.function.fortran
     - match: \n
       pop: true
     - match: \&
@@ -344,6 +424,7 @@ contexts:
         pop: true
 
   class-name:
+    - meta_scope: meta.class.declaration.fortran
     - include: newline-pop
     - include: separators
     - include: comment-pop
@@ -353,10 +434,12 @@ contexts:
         2: entity.other.inherited-class.fortran
     - match: (?i)\b(abstract)\b
       scope: storage.modifier.fortran
-    - match: (?<=::)\s*(\w*)
-      scope: entity.name.class.fortran
-    - match: (?i)(?<=type)\s+(\w*) # simple type definition (type myType)
-      scope: entity.name.class.fortran
+    - match: (?<=::)\s*(\w+)
+      captures:
+        1: entity.name.class.fortran
+    - match: (?i)(?<=type)\s+(\w+) # simple type definition (type myType)
+      captures:
+        1: entity.name.class.fortran
 
   numbers:
     - match: '(\d+)'
@@ -375,7 +458,6 @@ contexts:
       scope: constant.language.fortran
 
   class-accessing:
-    - include: comments
     - match: '(\w+)\s*(?=\%|\[.*\]\(.*\)\%|\(.*\)\%|\[.*\]\%)'
       scope: storage.type.class.fortran
 
@@ -390,7 +472,8 @@ contexts:
     - match: (?i)\b(interface)\b
       scope: keyword.declaration.interface.interface.fortran
     - match: '(?i)(?<=interface)\s+(\w*)'
-      scope: entity.name.interface.interface.fortran
+      captures: 
+        1: entity.name.interface.interface.fortran
     - match: (?i)\b(include)\b
       scope: keyword.control.import.fortran
     - match: (?i)\b(end)\b\s+(?=interface)
@@ -398,10 +481,10 @@ contexts:
 
   omp:
     - match: '{{firstOnLine}}(?i)(\!\$omp)'
-      scope: support.function.omp
+      scope: keyword.control.directive.fortran
       push: omp-line
     - match: '{{firstOnLine}}(\!\$)'
-      scope: support.function.omp
+      scope: keyword.control.directive.fortran
       push: omp-line
 
   omp-line:
@@ -412,7 +495,7 @@ contexts:
     - include: separators
     - include: operators
     - match: (?i)(schedule)
-      scope: support.function.omp
+      scope: keyword.control.directive.fortran
       push: omp-schedule
     - include: match-variable
     - match: '\n'
@@ -420,7 +503,7 @@ contexts:
 
   omp-directives:
     - match: (?i)({{ompDirectives}})
-      scope: support.function.omp
+      scope: keyword.control.directive.fortran
 
   omp-intrinsic:
     - match: (?i)({{ompIntrinsics}})
@@ -429,7 +512,7 @@ contexts:
   omp-clauses:
     - include: omp-continuation
     - match: (?i)({{ompClauses}})
-      scope: support.constant.omp
+      scope: keyword.control.directive.fortran
 
   omp-schedule:
     - include: omp-continuation
@@ -443,7 +526,7 @@ contexts:
     - match: "&"
       push:
         - match: '{{firstOnLine}}(?i)(\!\$omp)'
-          scope: support.function.omp
+          scope: keyword.control.directive.fortran
           pop: true
 
   match-variable:
@@ -452,15 +535,21 @@ contexts:
 
   preprocessing:
     - match: '{{firstOnLine}}(\#)'
-      scope: support.function.fpp
+      scope: keyword.control.directive.fortran
     - match: '(?i)(?<=\#)({{fppCommands}})'
-      scope: support.function.fpp
+      scope: keyword.control.directive.fortran
 
   program:
-    - match: (?i)\b(program)\b
-      scope: keyword.declaration.program.fortran
-    - match: '(?i)(?<=program)\s+(\w*)'
-      scope: entity.name.program.fortran
+    - match: (?i)^{{s}}*\b(program)\b{{s}}+(\w+)\b{{s}}*$
+      scope: meta.program.declaration.fortran
+      captures:
+        1: keyword.declaration.program.fortran
+        2: entity.name.program.fortran
+    - match: (?i)^{{s}}*(end)\b{{s}}+\b(program)\b{{s}}+(\w*)\b{{s}}*$
+      captures:
+        1: keyword.declaration.program.fortran
+        2: keyword.declaration.program.fortran
+        3: entity.name.program.fortran
 
   coarray:
     - match: (?i)\b(sync)\s+(all|images|memory)\b
@@ -473,4 +562,3 @@ contexts:
       captures:
         1: keyword.control.fortran
         2: keyword.control.fortran
-
