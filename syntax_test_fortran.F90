@@ -9,6 +9,9 @@
    else if (a == d) then
 !  ^^^^ keyword.control.fortran
 !       ^^ keyword.control.fortran
+!          ^^^^^^^^ meta.parens.fortran
+!          ^ punctuation.section.parens.begin.fortran
+!                 ^ punctuation.section.parens.end.fortran
 !
    else
 !  ^^^^ keyword.control.fortran
@@ -25,6 +28,16 @@
 !
    a = b
 !    ^ keyword.operator.assignment.fortran
+!
+   a = [1, 2, 3]
+!      ^^^^^^^^^ meta.brackets.fortran
+!      ^ punctuation.section.brackets.begin.fortran
+!              ^ punctuation.section.brackets.end.fortran
+!
+   a = (/1, 2, 3/)
+!      ^^^^^^^^^^^ meta.parens.fortran
+!      ^^ punctuation.section.parens.begin.fortran - keyword
+!               ^^ punctuation.section.parens.end.fortran - keyword
 !
    integer(kind=8), dimension(:,:), allocatable :: myInt
 !                                                  ^^^^^ variable.other.fortran

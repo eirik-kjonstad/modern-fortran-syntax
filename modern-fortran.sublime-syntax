@@ -30,30 +30,35 @@ variables:
 
 contexts:
   main:
-    - include: preprocessing
-    - include: comments
-    - include: types
     - include: attribute
-    - include: operators
-    - include: procedures
     - include: modules
     - include: interfaces
     - include: class-definitions
     - include: control
+    - include: coarray
+    - include: program
+    - include: stop
+    - include: omp
+    - include: expressions
+
+  expressions:
+    - include: comments
+    - include: preprocessing
+    - include: types
+    - include: operators
+    - include: procedures
     - include: strings
     - include: continuation
-    - include: coarray
     - include: separators
     - include: numbers
     - include: constants
-    - include: program
     - include: class-accessing
     - include: io
-    - include: stop
     - include: function-call
     - include: pointer-symbol
     - include: match-variable
-    - include: omp
+    - include: parens
+    - include: brackets
 
   eol-pop:
     - match: (?=\s*[!\n])
@@ -78,6 +83,40 @@ contexts:
       - match: \n
         pop: true
 
+  parens:
+    - match: \(/
+      scope: punctuation.section.parens.begin.fortran
+      push:
+        - meta_scope: meta.parens.fortran
+        - include: line-continuation
+        - include: eol-pop
+        - match: /\)
+          scope: punctuation.section.parens.end.fortran
+          pop: true
+        - include: expressions
+    - match: \(
+      scope: punctuation.section.parens.begin.fortran
+      push:
+        - meta_scope: meta.parens.fortran
+        - include: line-continuation
+        - include: eol-pop
+        - match: \)
+          scope: punctuation.section.parens.end.fortran
+          pop: true
+        - include: expressions
+
+  brackets:
+    - match: \[
+      scope: punctuation.section.brackets.begin.fortran
+      push:
+        - meta_scope: meta.brackets.fortran
+        - include: line-continuation
+        - include: eol-pop
+        - match: \]
+          scope: punctuation.section.brackets.end.fortran
+          pop: true
+        - include: expressions
+
   types:
     - match: '(?i)\b{{intrinsicType}}\b(?=.*(function))' # type of return value in function
       scope: storage.type.intrinsic.fortran
@@ -86,7 +125,7 @@ contexts:
     - match: '(?i)\b(in|out|inout)\b'
       scope: keyword.other.intent.fortran
     - match: '(?<=::)\s*(\w+)'
-      captures: 
+      captures:
         1: variable.other.fortran
     - match: '(?i){{firstOnLine}}(type|class){{parenthesisStart}}\s*(\w*){{parenthesisEnd}}'
       captures:
@@ -472,7 +511,7 @@ contexts:
     - match: (?i)\b(interface)\b
       scope: keyword.declaration.interface.interface.fortran
     - match: '(?i)(?<=interface)\s+(\w*)'
-      captures: 
+      captures:
         1: entity.name.interface.interface.fortran
     - match: (?i)\b(include)\b
       scope: keyword.control.import.fortran
@@ -534,10 +573,9 @@ contexts:
       scope: variable.other.fortran
 
   preprocessing:
-    - match: '{{firstOnLine}}(\#)'
-      scope: keyword.control.directive.fortran
-    - match: '(?i)(?<=\#)({{fppCommands}})'
-      scope: keyword.control.directive.fortran
+    - match: '(?i){{firstOnLine}}(\#{{fppCommands}})'
+      captures:
+        1: keyword.control.directive.fortran
 
   program:
     - match: (?i)^{{s}}*\b(program)\b{{s}}+(\w+)\b{{s}}*$
