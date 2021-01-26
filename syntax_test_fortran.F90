@@ -238,10 +238,19 @@
 !         ^^^^^^^^ entity.name.interface.module.fortran
 !  ^^^^^^^^^^^^^^^ meta.module.declaration.fortran
 !
+   module myModule ! comment
+!  ^^^^^^ keyword.declaration.interface.module.fortran
+!         ^^^^^^^^ entity.name.interface.module.fortran
+!  ^^^^^^^^^^^^^^^ meta.module.declaration.fortran
+!
    end module myModule
 !  ^^^ keyword.declaration.interface.module.fortran
 !      ^^^^^^ keyword.declaration.interface.module.fortran
 !             ^^^^^^^^ entity.name.interface.module.fortran - meta.module.declaration.fortran
+!
+   end module
+!  ^^^ keyword.declaration.interface.module.fortran
+!      ^^^^^^ keyword.declaration.interface.module.fortran
 !
    submodule (moduleName) submoduleName
 !  ^^^^^^^^^ keyword.declaration.interface.submodule.fortran
@@ -255,6 +264,11 @@
 !
    end submodule ! just empty end-name also allowed
 !      ^^^^^^^^^ keyword.declaration.interface.submodule.fortran
+!
+   end submodule
+!  ^^^ keyword.declaration.interface.submodule.fortran
+!      ^^^^^^^^^keyword.declaration.interface.submodule.fortran
+!
    8
 !  ^ constant.numeric.fortran
 !
