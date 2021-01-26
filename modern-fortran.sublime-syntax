@@ -52,7 +52,8 @@ contexts:
     - include: stop
     - include: function-call
     - include: pointer-symbol
-    - include: match-variable
+    - include: match-end 
+    - include: match-variable 
     - include: omp
 
   eol-pop:
@@ -327,7 +328,7 @@ contexts:
     - match: '(?i)\b({{intrinsicIO}})\b'
       captures:
         1: variable.function.subroutine.intrinsic.io.fortran
-    - match: '(?i)\b({{intrinsicIOArguments}})\b'
+    - match: '(?i)\b({{intrinsicIOArguments}})\b\s*(?=\=)'
       captures:
         1: variable.language.io.fortran
 
@@ -528,6 +529,10 @@ contexts:
         - match: '{{firstOnLine}}(?i)(\!\$omp)'
           scope: keyword.control.directive.fortran
           pop: true
+
+  match-end:
+    - match: \bend\b
+      scope: keyword.control.fortran
 
   match-variable:
     - match: ({{variableMatch}})
