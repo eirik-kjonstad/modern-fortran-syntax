@@ -16,6 +16,13 @@
    endif
 !  ^^^^ keyword.control.fortran
 !
+   end 
+!  ^^^ keyword.control.fortran 
+!
+   read(unit=myUnit, end=200) byte ! Read until end of file, then go to 200
+!       ^^^^ variable.language.io.fortran
+!                    ^^^ variable.language.io.fortran
+!
    a == b .and. c
 !    ^^ keyword.operator.comparison.fortran
 !         ^^^^^ keyword.operator.word.fortran
