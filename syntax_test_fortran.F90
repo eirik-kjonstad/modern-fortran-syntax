@@ -16,8 +16,8 @@
    endif
 !  ^^^^ keyword.control.fortran
 !
-   end 
-!  ^^^ keyword.control.fortran 
+   end
+!  ^^^ keyword.control.fortran
 !
    read(unit=myUnit, end=200) byte ! Read until end of file, then go to 200
 !       ^^^^ variable.language.io.fortran
@@ -66,8 +66,11 @@
 !                                   ^^^^^^^^^^^^^^ comment.line.fortran
 
    class(myClass), allocatable :: myClassInstance
-!  ^^^^^ storage.type.class.fortran
-!        ^^^^^^^ entity.name.class.fortran
+!  ^^^^^ keyword.other.fortran
+!       ^^^^^^^^^ meta.parens.fortran
+!       ^ punctuation.section.parens.begin.fortran
+!        ^^^^^^^ storage.type.class.fortran
+!               ^ punctuation.section.parens.end.fortran
 !                  ^^^^^^^^^^^ storage.modifier.fortran
 !
    type :: myClass1
@@ -77,10 +80,13 @@
 !  ^^^^^^^^^^^^^^^^ meta.class.declaration.fortran
 !
       class(abstractClass), allocatable :: polymorphicStrategy
-!     ^^^^^ storage.type.class.fortran
+!     ^^^^^ keyword.other.fortran
+!          ^^^^^^^^^^^^^^^ meta.parens.fortran
+!          ^ punctuation.section.parens.begin.fortran
+!           ^^^^^^^^^^^^^ storage.type.class.fortran
+!                        ^ punctuation.section.parens.end.fortran
 !                                          ^^^^^^^^^^^^^^^^^^^ variable.other.fortran
 !                                       ^^ punctuation.separator.double-colon.fortran
-!           ^^^^^^^^^^^^^ entity.name.class.fortran
 !                           ^^^^^^^^^^^ storage.modifier.fortran
 !
 !     ...
