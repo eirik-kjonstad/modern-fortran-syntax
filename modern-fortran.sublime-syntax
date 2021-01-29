@@ -456,11 +456,16 @@ contexts:
         2: punctuation.separator.decimal.fortran
         3: punctuation.separator.decimal.fortran
         4: constant.numeric.suffix.fortran
-    - match: \b(\d+)(_\w+)?\b
+    - match: (?i)\b(\d+[de]\d+)(_\w+)?
+      scope: meta.number.float.decimal.fortran
+      captures:
+        1: constant.numeric.value.fortran
+        2: constant.numeric.suffix.fortran
+    - match: \b(\d+)(_\w+)?
       scope: meta.number.integer.decimal.fortran
       captures:
-         1: constant.numeric.value.fortran
-         2: constant.numeric.suffix.fortran
+        1: constant.numeric.value.fortran
+        2: constant.numeric.suffix.fortran
 
   constants:
     - match: (?i)(\.true\.|\.false\.)

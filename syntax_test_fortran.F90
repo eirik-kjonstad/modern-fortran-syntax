@@ -295,6 +295,8 @@
    1.2345E-10
 !  ^^^^^^^^^^ meta.number.float.decimal.fortran constant.numeric.value.fortran
 !   ^ punctuation.separator.decimal.fortran
+   1e2
+!  ^^^ meta.number.float.decimal.fortran constant.numeric.value.fortran
    1.23_dp
 !  ^^^^^^^ meta.number.float.decimal.fortran
 !  ^^^^ constant.numeric.value.fortran
