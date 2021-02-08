@@ -51,8 +51,8 @@ contexts:
     - include: stop
     - include: function-call
     - include: pointer-symbol
-    - include: match-end 
-    - include: match-variable 
+    - include: match-end
+    - include: match-variable
     - include: omp
 
   eol-pop:
@@ -449,16 +449,18 @@ contexts:
         1: entity.name.class.fortran
 
   numbers:
-    - match: '(\d+)'
-      scope: constant.numeric.fortran
-    - match: '(?i)(?<=\d)(d|e)'
-      scope: constant.numeric.fortran
-    - match: '(?<=\d)(\.)'
-      scope: constant.numeric.fortran
-    - match: '(?<=\d)(\_)(\w+)' # e.g. 1.123_dp, where dp=8
+    - match: (?i)((?:\b\d+(\.)\d*|(\.)\d+)(?:[de][-+]?\d+)?|\b\d+[de][-+]?\d+)(_\w+)?
+      scope: meta.number.float.decimal.fortran
       captures:
-        1: punctuation.separator.underscore.fortran
-        2: variable.other.fortran
+        1: constant.numeric.value.fortran
+        2: punctuation.separator.decimal.fortran
+        3: punctuation.separator.decimal.fortran
+        4: constant.numeric.suffix.fortran
+    - match: \b(\d+)(_\w+)?
+      scope: meta.number.integer.decimal.fortran
+      captures:
+        1: constant.numeric.value.fortran
+        2: constant.numeric.suffix.fortran
 
   constants:
     - match: (?i)(\.true\.|\.false\.)
