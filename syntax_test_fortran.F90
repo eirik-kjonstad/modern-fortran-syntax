@@ -303,6 +303,9 @@
 !      ^^^ constant.numeric.suffix.fortran
 !   ^ punctuation.separator.decimal.fortran
 !
+   dplusone = d+1
+!              ^ keyword.operator.arithmetic.fortran - constant.numeric
+!
    a = minval(b)
 !      ^^^^^^ support.function.intrinsic.fortran
 !
