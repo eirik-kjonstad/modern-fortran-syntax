@@ -130,14 +130,18 @@ contexts:
 
   control:
     - include: comments
-    - match: (?i)^\s*\b(end)\s*(if|do|select)
+    - match: (?i){{firstOnLine}}(end)\s*(if|do|select)\b
       captures:
         1: keyword.control.fortran
         2: keyword.control.fortran
       push: seek-conditional-label
-    - match: (?i)(end)(?=if|do)
-      scope: keyword.control.fortran
-    - match: (?i)\b(then|exit|cycle)
+    - match: (?i)(;)\s*(end)\s*(if|do)\b
+      captures:
+        1: punctuation.terminator.fortran
+        2: keyword.control.fortran
+        3: keyword.control.fortran
+      push: seek-conditional-label
+    - match: (?i)\b(then|exit|cycle)\b
       scope: keyword.control.fortran
       push: seek-conditional-label
     - match: (?i)(?<=else)(?!\s*if)
@@ -239,8 +243,10 @@ contexts:
     - match: (?i)\b(impure|pure|elemental|non\_recursive|recursive)\b
       scope: storage.modifier.function.prefix.fortran
 
-    - match: (?i)(implicit none)
-      scope: keyword.control.fortran
+    - match: (?i)\b(implicit)(?:\s+(none))?\b
+      captures:
+        1: keyword.control.fortran
+        2: keyword.control.fortran
 
     - match: '(?i)\b(module)(?=\s+procedure\b)'
       scope: storage.modifier.function.prefix.fortran

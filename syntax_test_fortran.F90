@@ -53,9 +53,18 @@
    enddo
 !  ^^^^^ keyword.control.fortran
 !
+   enddoo
+!  ^^^^^ - keyword
+!
    elsei ! should not recognize 'else' in 'elsei'
 !  ^^^^ - keyword.control.fortran
 !
+   exitflag = 0
+!  ^^^^ - keyword
+!
+   if (.true.) then
+      print*, 'test'; endif
+!                     ^^^^^ keyword.control.fortran
 !
    real(dp), intent(in) :: myReal ! a side-comment
 !  ^^^^ storage.type.intrinsic.fortran
@@ -231,7 +240,8 @@
 !                    ^^^^^^^ entity.name.function.fortran
 !
       implicit none
-!     ^^^^^^^^^^^^^ keyword.control.fortran
+!     ^^^^^^^^ keyword.control.fortran
+!              ^^^^ keyword.control.fortran
 !
    end subroutine doStuff
 !
