@@ -4,7 +4,6 @@
 # Modern Fortran syntax - Sublime Text syntax highlighting for modern Fortran code
 #
 # Copyright (c) 2020-2021 by the authors
-# Sarai D. Folkestad and Eirik F. Kjønstad
 #
 name: Modern-Fortran
 file_extensions: [F90,F95,F03,F08,F18,f90,f95,f03,f08,f18]
