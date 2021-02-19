@@ -512,7 +512,7 @@ contexts:
       scope: constant.language.fortran
 
   class-accessing:
-    - match: '(\w+)\s*(?=\%|\[.*\]\(.*\)\%|\(.*\)\%|\[.*\]\%)'
+    - match: '\w+(?=(?:\s*\[.*\])?(?:\s*\([^(]*\))?\s*\%)'
       scope: storage.type.class.fortran
 
   function-call:
