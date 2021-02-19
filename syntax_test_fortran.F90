@@ -437,6 +437,12 @@
 !                ^ punctuation.accessor.fortran
 !                 ^^^^^^^^^^^^^^ variable.other.fortran
 !
+   myVar = object % objectVariable
+!          ^^^^^^ storage.type.class.fortran
+!                ^ - storage.type
+!                 ^ punctuation.accessor.fortran
+!                   ^^^^^^^^^^^^^^ variable.other.fortran
+!
    myVar = object%objectVariable%getStuff(a, b)
 !          ^^^^^^ storage.type.class.fortran
 !                 ^^^^^^^^^^^^^^ storage.type.class.fortran
@@ -447,6 +453,17 @@
 !                 ^^^^^^^^^^^^^^ variable.function.fortran
 !                                         ^^^^^^^^^^^ storage.type.class.fortran
 !                                                     ^^^^^^^^ variable.other.fortran
+!
+   result = foo(object%member)
+!           ^^^ variable.function.fortran
+!               ^^^^^^ storage.type.class.fortran
+!                      ^^^^^^ variable.other.fortran
+!
+   result = foo(object(k)%member)
+!           ^^^ variable.function.fortran
+!               ^^^^^^ storage.type.class.fortran
+!                      ^ variable.other.fortran
+!                         ^^^^^^ variable.other.fortran
 !
    call object%calculateStuff()
 !       ^^^^^^ storage.type.class.fortran
