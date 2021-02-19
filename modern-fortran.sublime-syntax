@@ -124,13 +124,17 @@ contexts:
       scope: storage.type.intrinsic.fortran
     - match: '(?i)\b(in|out|inout)\b'
       scope: keyword.other.intent.fortran
-    - match: '(?<=::)\s*(\w+)'
+    - match: (::)\s*(\w+)
       captures:
-        1: variable.other.fortran
-    - match: '(?i){{firstOnLine}}(type|class){{parenthesisStart}}\s*(\w*){{parenthesisEnd}}'
+        1: punctuation.separator.double-colon.fortran
+        2: variable.other.fortran
+    - match: (?i){{firstOnLine}}(type|class)\s*((\()\s*(\w*)\s*(\)))
       captures:
-        1: storage.type.class.fortran
-        2: entity.name.class.fortran
+        1: keyword.other.fortran
+        2: meta.parens.fortran
+        3: punctuation.section.parens.begin.fortran
+        4: storage.type.class.fortran
+        5: punctuation.section.parens.end.fortran
 
   attribute:
     - match: '(?i)\b{{intrinsicAttribute}}\b'
@@ -424,8 +428,7 @@ contexts:
       pop: true
 
   class-definitions:
-    - match: ^(?i)(?<!\bend\b)\s+\b(type)\b(?!\s*\(|\s*is\b) # not the end of type; not variable specification;
-                                                             # not "type is" construct; must be beginning of declaration
+    - match: ^(?i){{firstOnLine}}\b(type)\b(?!\s*is\b)
       scope: keyword.declaration.class.fortran
       push: class-name
     - match: (?i)\b(procedure|generic|final)\b
