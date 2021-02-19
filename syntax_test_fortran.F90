@@ -9,12 +9,22 @@
    else if (a == d) then
 !  ^^^^ keyword.control.fortran
 !       ^^ keyword.control.fortran
+!          ^^^^^^^^ meta.parens.fortran
+!          ^ punctuation.section.parens.begin.fortran
+!                 ^ punctuation.section.parens.end.fortran
 !
    else
 !  ^^^^ keyword.control.fortran
 !
    endif
 !  ^^^^ keyword.control.fortran
+!
+   end
+!  ^^^ keyword.control.fortran
+!
+   read(unit=myUnit, end=200) byte ! Read until end of file, then go to 200
+!       ^^^^ variable.language.io.fortran
+!                    ^^^ variable.language.io.fortran
 !
    a == b .and. c
 !    ^^ keyword.operator.comparison.fortran
@@ -25,6 +35,16 @@
 !
    a = b
 !    ^ keyword.operator.assignment.fortran
+!
+   a = [1, 2, 3]
+!      ^^^^^^^^^ meta.brackets.fortran
+!      ^ punctuation.section.brackets.begin.fortran
+!              ^ punctuation.section.brackets.end.fortran
+!
+   a = (/1, 2, 3/)
+!      ^^^^^^^^^^^ meta.parens.fortran
+!      ^^ punctuation.section.parens.begin.fortran - keyword
+!               ^^ punctuation.section.parens.end.fortran - keyword
 !
    integer(kind=8), dimension(:,:), allocatable :: myInt
 !                                                  ^^^^^ variable.other.fortran
@@ -43,12 +63,37 @@
 !     ^^^^^ keyword.control.fortran
 !                        ^^^^^^^^^^^^^^ comment.line.fortran
 !
+   type(interval) :: myInterval ! object instance declaration, not type definition
+!  ^^^^ keyword.other.fortran
+!      ^ meta.parens.fortran punctuation.section.parens.begin.fortran
+!       ^^^^^^^^ meta.parens.fortran storage.type.class.fortran
+!               ^ meta.parens.fortran punctuation.section.parens.end.fortran
+!                 ^^ punctuation.separator.double-colon.fortran
+!                    ^^^^^^^^^^ variable.other.fortran
+!
+   type (interval) :: myInterval ! object instance declaration, not type definition
+!  ^^^^ keyword.other.fortran
+!       ^ meta.parens.fortran punctuation.section.parens.begin.fortran
+!        ^^^^^^^^ meta.parens.fortran storage.type.class.fortran
+!                ^ meta.parens.fortran punctuation.section.parens.end.fortran
+!                  ^^ punctuation.separator.double-colon.fortran
+!                     ^^^^^^^^^^ variable.other.fortran
+!
    enddo
 !  ^^^^^ keyword.control.fortran
+!
+   enddoo
+!  ^^^^^ - keyword
 !
    elsei ! should not recognize 'else' in 'elsei'
 !  ^^^^ - keyword.control.fortran
 !
+   exitflag = 0
+!  ^^^^ - keyword
+!
+   if (.true.) then
+      print*, 'test'; endif
+!                     ^^^^^ keyword.control.fortran
 !
    real(dp), intent(in) :: myReal ! a side-comment
 !  ^^^^ storage.type.intrinsic.fortran
@@ -59,8 +104,11 @@
 !                                   ^^^^^^^^^^^^^^ comment.line.fortran
 
    class(myClass), allocatable :: myClassInstance
-!  ^^^^^ storage.type.class.fortran
-!        ^^^^^^^ entity.name.class.fortran
+!  ^^^^^ keyword.other.fortran
+!       ^^^^^^^^^ meta.parens.fortran
+!       ^ punctuation.section.parens.begin.fortran
+!        ^^^^^^^ storage.type.class.fortran
+!               ^ punctuation.section.parens.end.fortran
 !                  ^^^^^^^^^^^ storage.modifier.fortran
 !
    type :: myClass1
@@ -70,10 +118,13 @@
 !  ^^^^^^^^^^^^^^^^ meta.class.declaration.fortran
 !
       class(abstractClass), allocatable :: polymorphicStrategy
-!     ^^^^^ storage.type.class.fortran
+!     ^^^^^ keyword.other.fortran
+!          ^^^^^^^^^^^^^^^ meta.parens.fortran
+!          ^ punctuation.section.parens.begin.fortran
+!           ^^^^^^^^^^^^^ storage.type.class.fortran
+!                        ^ punctuation.section.parens.end.fortran
 !                                          ^^^^^^^^^^^^^^^^^^^ variable.other.fortran
 !                                       ^^ punctuation.separator.double-colon.fortran
-!           ^^^^^^^^^^^^^ entity.name.class.fortran
 !                           ^^^^^^^^^^^ storage.modifier.fortran
 !
 !     ...
@@ -224,7 +275,8 @@
 !                    ^^^^^^^ entity.name.function.fortran
 !
       implicit none
-!     ^^^^^^^^^^^^^ keyword.control.fortran
+!     ^^^^^^^^ keyword.control.fortran
+!              ^^^^ keyword.control.fortran
 !
    end subroutine doStuff
 !
@@ -238,10 +290,19 @@
 !         ^^^^^^^^ entity.name.interface.module.fortran
 !  ^^^^^^^^^^^^^^^ meta.module.declaration.fortran
 !
+   module myModule ! comment
+!  ^^^^^^ keyword.declaration.interface.module.fortran
+!         ^^^^^^^^ entity.name.interface.module.fortran
+!  ^^^^^^^^^^^^^^^ meta.module.declaration.fortran
+!
    end module myModule
 !  ^^^ keyword.declaration.interface.module.fortran
 !      ^^^^^^ keyword.declaration.interface.module.fortran
 !             ^^^^^^^^ entity.name.interface.module.fortran - meta.module.declaration.fortran
+!
+   end module
+!  ^^^ keyword.declaration.interface.module.fortran
+!      ^^^^^^ keyword.declaration.interface.module.fortran
 !
    submodule (moduleName) submoduleName
 !  ^^^^^^^^^ keyword.declaration.interface.submodule.fortran
@@ -255,21 +316,40 @@
 !
    end submodule ! just empty end-name also allowed
 !      ^^^^^^^^^ keyword.declaration.interface.submodule.fortran
+!
+   end submodule
+!  ^^^ keyword.declaration.interface.submodule.fortran
+!      ^^^^^^^^^keyword.declaration.interface.submodule.fortran
+!
    8
-!  ^ constant.numeric.fortran
-!
+!  ^ meta.number.integer.decimal.fortran constant.numeric.value.fortran
    123
-!  ^^^ constant.numeric.fortran
-!
+!  ^^^ meta.number.integer.decimal.fortran constant.numeric.value.fortran
+   1_8
+!  ^ meta.number.integer.decimal.fortran constant.numeric.value.fortran
+!   ^^ meta.number.integer.decimal.fortran constant.numeric.suffix.fortran
+   123.
+!  ^^^^ meta.number.float.decimal.fortran constant.numeric.value.fortran
+!     ^ punctuation.separator.decimal.fortran
+   .123
+!  ^^^^ meta.number.float.decimal.fortran constant.numeric.value.fortran
+!  ^ punctuation.separator.decimal.fortran
    1.0d-12
-!  ^^^^^^^ constant.numeric.fortran
-!
+!  ^^^^^^^ meta.number.float.decimal.fortran constant.numeric.value.fortran
+!   ^ punctuation.separator.decimal.fortran
    1.2345E-10
-!  ^^^^^^^^^^ constant.numeric.fortran
-!
+!  ^^^^^^^^^^ meta.number.float.decimal.fortran constant.numeric.value.fortran
+!   ^ punctuation.separator.decimal.fortran
+   1e2
+!  ^^^ meta.number.float.decimal.fortran constant.numeric.value.fortran
    1.23_dp
-!      ^ punctuation.separator.underscore.fortran
-!       ^^ variable.other.fortran
+!  ^^^^^^^ meta.number.float.decimal.fortran
+!  ^^^^ constant.numeric.value.fortran
+!      ^^^ constant.numeric.suffix.fortran
+!   ^ punctuation.separator.decimal.fortran
+!
+   dplusone = d+1
+!              ^ keyword.operator.arithmetic.fortran - constant.numeric
 !
    a = minval(b)
 !      ^^^^^^ support.function.intrinsic.fortran
@@ -323,15 +403,15 @@
    do I = 1, 10
 !  ^^ keyword.control.fortran
 !     ^ variable.other.fortran
-!         ^ constant.numeric.fortran
+!         ^ constant.numeric.value.fortran
 !          ^ punctuation.separator.comma.fortran
-!            ^^ constant.numeric.fortran
+!            ^^ constant.numeric.value.fortran
 !
       evenNumber = evenNumber + 2*I
 !     ^^^^^^^^^^ variable.other.fortran
 !                  ^^^^^^^^^^ variable.other.fortran
 !                                 ^ variable.other.fortran
-!                               ^ constant.numeric.fortran
+!                               ^ constant.numeric.value.fortran
    enddo
 !  ^^^^^ keyword.control.fortran
 !
@@ -357,6 +437,12 @@
 !                ^ punctuation.accessor.fortran
 !                 ^^^^^^^^^^^^^^ variable.other.fortran
 !
+   myVar = object % objectVariable
+!          ^^^^^^ storage.type.class.fortran
+!                ^ - storage.type
+!                 ^ punctuation.accessor.fortran
+!                   ^^^^^^^^^^^^^^ variable.other.fortran
+!
    myVar = object%objectVariable%getStuff(a, b)
 !          ^^^^^^ storage.type.class.fortran
 !                 ^^^^^^^^^^^^^^ storage.type.class.fortran
@@ -367,6 +453,17 @@
 !                 ^^^^^^^^^^^^^^ variable.function.fortran
 !                                         ^^^^^^^^^^^ storage.type.class.fortran
 !                                                     ^^^^^^^^ variable.other.fortran
+!
+   result = foo(object%member)
+!           ^^^ variable.function.fortran
+!               ^^^^^^ storage.type.class.fortran
+!                      ^^^^^^ variable.other.fortran
+!
+   result = foo(object(k)%member)
+!           ^^^ variable.function.fortran
+!               ^^^^^^ storage.type.class.fortran
+!                      ^ variable.other.fortran
+!                         ^^^^^^ variable.other.fortran
 !
    call object%calculateStuff()
 !       ^^^^^^ storage.type.class.fortran
@@ -640,13 +737,13 @@ end program myProgram
 !  ^^^^^^^ storage.type.intrinsic.fortran
 !             ^ variable.other.fortran
 !                        ^ keyword.operator.arithmetic.fortran
-!                         ^ constant.numeric.fortran
+!                         ^ constant.numeric.value.fortran
 !                          ^ punctuation.separator.single-colon.fortran
-!                           ^ constant.numeric.fortran
+!                           ^ constant.numeric.value.fortran
 !                            ^ punctuation.separator.comma.fortran
-!               ^ constant.numeric.fortran
-!                 ^ constant.numeric.fortran
-!                   ^^ constant.numeric.fortran
+!               ^ constant.numeric.value.fortran
+!                 ^ constant.numeric.value.fortran
+!                   ^^ constant.numeric.value.fortran
 !                ^ punctuation.separator.comma.fortran
 !                  ^ punctuation.separator.single-colon.fortran
 !
@@ -661,7 +758,7 @@ end program myProgram
 !       ^^^^^^^^^^ support.function.intrinsic.fortran
 !                             ^^^^ keyword.control.fortran
 !                                  ^^^^^^ keyword.control.fortran
-!                                          ^ constant.numeric.fortran
+!                                          ^ constant.numeric.value.fortran
 !
 !
    type(t) :: myValue[*]
@@ -685,7 +782,7 @@ end program myProgram
 !  ^^^^^^^^ support.function.subroutine.fortran
 !            ^^ storage.type.class.fortran
 !                 ^^^^ variable.function.fortran
-!                       ^^ constant.numeric.fortran
+!                       ^^ constant.numeric.value.fortran
 !
    result = thisFunction ()
 !  ^^^^^^ variable.other.fortran
@@ -751,11 +848,11 @@ end program myProgram
 !         ^^^^^^^^ entity.name.interface.module.fortran
 !
    stop 98
-!       ^^ constant.numeric.fortran
+!       ^^ constant.numeric.value.fortran
 !  ^^^^ keyword.control.fortran
 !
    error stop 1
-!             ^ constant.numeric.fortran
+!             ^ constant.numeric.value.fortran
 !  ^^^^^ keyword.control.fortran
 !        ^^^^ keyword.control.fortran
 !
@@ -765,7 +862,7 @@ end program myProgram
 !        ^^^^ keyword.control.fortran
 !
    error stop 1, quiet=(a .eq. b)
-!             ^ constant.numeric.fortran
+!             ^ constant.numeric.value.fortran
 !                ^^^^^ keyword.control.fortran
 !  ^^^^^ keyword.control.fortran
 !        ^^^^ keyword.control.fortran
