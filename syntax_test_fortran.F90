@@ -63,6 +63,22 @@
 !     ^^^^^ keyword.control.fortran
 !                        ^^^^^^^^^^^^^^ comment.line.fortran
 !
+   type(interval) :: myInterval ! object instance declaration, not type definition
+!  ^^^^ keyword.other.fortran
+!      ^ meta.parens.fortran punctuation.section.parens.begin.fortran
+!       ^^^^^^^^ meta.parens.fortran storage.type.class.fortran
+!               ^ meta.parens.fortran punctuation.section.parens.end.fortran
+!                 ^^ punctuation.separator.double-colon.fortran
+!                    ^^^^^^^^^^ variable.other.fortran
+!
+   type (interval) :: myInterval ! object instance declaration, not type definition
+!  ^^^^ keyword.other.fortran
+!       ^ meta.parens.fortran punctuation.section.parens.begin.fortran
+!        ^^^^^^^^ meta.parens.fortran storage.type.class.fortran
+!                ^ meta.parens.fortran punctuation.section.parens.end.fortran
+!                  ^^ punctuation.separator.double-colon.fortran
+!                     ^^^^^^^^^^ variable.other.fortran
+!
    enddo
 !  ^^^^^ keyword.control.fortran
 !
