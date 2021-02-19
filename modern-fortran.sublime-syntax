@@ -30,7 +30,6 @@ variables:
 contexts:
   main:
     - include: attribute
-    - include: modules
     - include: interfaces
     - include: class-definitions
     - include: control
@@ -46,6 +45,7 @@ contexts:
     - include: types
     - include: operators
     - include: procedures
+    - include: modules
     - include: strings
     - include: continuation
     - include: separators
