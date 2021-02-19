@@ -29,31 +29,36 @@ variables:
 
 contexts:
   main:
-    - include: preprocessing
-    - include: comments
-    - include: types
     - include: attribute
-    - include: operators
-    - include: procedures
     - include: modules
     - include: interfaces
     - include: class-definitions
     - include: control
+    - include: coarray
+    - include: program
+    - include: stop
+    - include: omp
+    - include: expressions
+
+  expressions:
+    - include: comments
+    - include: preprocessing
+    - include: types
+    - include: operators
+    - include: procedures
     - include: strings
     - include: continuation
-    - include: coarray
     - include: separators
     - include: numbers
     - include: constants
-    - include: program
     - include: class-accessing
     - include: io
-    - include: stop
     - include: function-call
     - include: pointer-symbol
     - include: match-end
     - include: match-variable
-    - include: omp
+    - include: parens
+    - include: brackets
 
   eol-pop:
     - match: (?=\s*[!\n])
@@ -77,6 +82,40 @@ contexts:
       - meta_scope: comment.line.fortran
       - match: \n
         pop: true
+
+  parens:
+    - match: \(/
+      scope: punctuation.section.parens.begin.fortran
+      push:
+        - meta_scope: meta.parens.fortran
+        - include: line-continuation
+        - include: eol-pop
+        - match: /\)
+          scope: punctuation.section.parens.end.fortran
+          pop: true
+        - include: expressions
+    - match: \(
+      scope: punctuation.section.parens.begin.fortran
+      push:
+        - meta_scope: meta.parens.fortran
+        - include: line-continuation
+        - include: eol-pop
+        - match: \)
+          scope: punctuation.section.parens.end.fortran
+          pop: true
+        - include: expressions
+
+  brackets:
+    - match: \[
+      scope: punctuation.section.brackets.begin.fortran
+      push:
+        - meta_scope: meta.brackets.fortran
+        - include: line-continuation
+        - include: eol-pop
+        - match: \]
+          scope: punctuation.section.brackets.end.fortran
+          pop: true
+        - include: expressions
 
   types:
     - match: '(?i)\b{{intrinsicType}}\b(?=.*(function))' # type of return value in function
@@ -110,9 +149,6 @@ contexts:
       scope: keyword.operator.comparison.fortran
     - match: (?i)(\.and\.|\.or\.|\.ne\.|\.lt\.|\.le\.|\.gt\.|\.ge\.|\.eq\.|\.not\.)
       scope: keyword.operator.word.fortran
-    - match: (?i)(?<=d|e)(\-|\+)(?=\d) # - and + is not arithmetic
-                                       # in scientific notation (1.0d-2)
-      scope: constant.numeric.fortran
     - match: (\*|\+|-)
       scope: keyword.operator.arithmetic.fortran
     - match: (\/)(?!/)
@@ -134,14 +170,18 @@ contexts:
 
   control:
     - include: comments
-    - match: (?i)^\s*\b(end)\s*(if|do|select)
+    - match: (?i){{firstOnLine}}(end)\s*(if|do|select)\b
       captures:
         1: keyword.control.fortran
         2: keyword.control.fortran
       push: seek-conditional-label
-    - match: (?i)(end)(?=if|do)
-      scope: keyword.control.fortran
-    - match: (?i)\b(then|exit|cycle)
+    - match: (?i)(;)\s*(end)\s*(if|do)\b
+      captures:
+        1: punctuation.terminator.fortran
+        2: keyword.control.fortran
+        3: keyword.control.fortran
+      push: seek-conditional-label
+    - match: (?i)\b(then|exit|cycle)\b
       scope: keyword.control.fortran
       push: seek-conditional-label
     - match: (?i)(?<=else)(?!\s*if)
@@ -243,8 +283,10 @@ contexts:
     - match: (?i)\b(impure|pure|elemental|non\_recursive|recursive)\b
       scope: storage.modifier.function.prefix.fortran
 
-    - match: (?i)(implicit none)
-      scope: keyword.control.fortran
+    - match: (?i)\b(implicit)(?:\s+(none))?\b
+      captures:
+        1: keyword.control.fortran
+        2: keyword.control.fortran
 
     - match: '(?i)\b(module)(?=\s+procedure\b)'
       scope: storage.modifier.function.prefix.fortran
@@ -452,16 +494,18 @@ contexts:
         1: entity.name.class.fortran
 
   numbers:
-    - match: '(\d+)'
-      scope: constant.numeric.fortran
-    - match: '(?i)(?<=\d)(d|e)'
-      scope: constant.numeric.fortran
-    - match: '(?<=\d)(\.)'
-      scope: constant.numeric.fortran
-    - match: '(?<=\d)(\_)(\w+)' # e.g. 1.123_dp, where dp=8
+    - match: (?i)((?:\b\d+(\.)\d*|(\.)\d+)(?:[de][-+]?\d+)?|\b\d+[de][-+]?\d+)(_\w+)?
+      scope: meta.number.float.decimal.fortran
       captures:
-        1: punctuation.separator.underscore.fortran
-        2: variable.other.fortran
+        1: constant.numeric.value.fortran
+        2: punctuation.separator.decimal.fortran
+        3: punctuation.separator.decimal.fortran
+        4: constant.numeric.suffix.fortran
+    - match: \b(\d+)(_\w+)?
+      scope: meta.number.integer.decimal.fortran
+      captures:
+        1: constant.numeric.value.fortran
+        2: constant.numeric.suffix.fortran
 
   constants:
     - match: (?i)(\.true\.|\.false\.)
@@ -548,10 +592,9 @@ contexts:
       scope: variable.other.fortran
 
   preprocessing:
-    - match: '{{firstOnLine}}(\#)'
-      scope: keyword.control.directive.fortran
-    - match: '(?i)(?<=\#)({{fppCommands}})'
-      scope: keyword.control.directive.fortran
+    - match: '(?i){{firstOnLine}}(\#{{fppCommands}})'
+      captures:
+        1: keyword.control.directive.fortran
 
   program:
     - match: (?i){{firstOnLine}}(program)(?:\s+(\w+))?\b

@@ -9,6 +9,9 @@
    else if (a == d) then
 !  ^^^^ keyword.control.fortran
 !       ^^ keyword.control.fortran
+!          ^^^^^^^^ meta.parens.fortran
+!          ^ punctuation.section.parens.begin.fortran
+!                 ^ punctuation.section.parens.end.fortran
 !
    else
 !  ^^^^ keyword.control.fortran
@@ -33,6 +36,16 @@
    a = b
 !    ^ keyword.operator.assignment.fortran
 !
+   a = [1, 2, 3]
+!      ^^^^^^^^^ meta.brackets.fortran
+!      ^ punctuation.section.brackets.begin.fortran
+!              ^ punctuation.section.brackets.end.fortran
+!
+   a = (/1, 2, 3/)
+!      ^^^^^^^^^^^ meta.parens.fortran
+!      ^^ punctuation.section.parens.begin.fortran - keyword
+!               ^^ punctuation.section.parens.end.fortran - keyword
+!
    integer(kind=8), dimension(:,:), allocatable :: myInt
 !                                                  ^^^^^ variable.other.fortran
 !                                                 ^ - variable.other.fortran
@@ -53,9 +66,18 @@
    enddo
 !  ^^^^^ keyword.control.fortran
 !
+   enddoo
+!  ^^^^^ - keyword
+!
    elsei ! should not recognize 'else' in 'elsei'
 !  ^^^^ - keyword.control.fortran
 !
+   exitflag = 0
+!  ^^^^ - keyword
+!
+   if (.true.) then
+      print*, 'test'; endif
+!                     ^^^^^ keyword.control.fortran
 !
    real(dp), intent(in) :: myReal ! a side-comment
 !  ^^^^ storage.type.intrinsic.fortran
@@ -237,7 +259,8 @@
 !                    ^^^^^^^ entity.name.function.fortran
 !
       implicit none
-!     ^^^^^^^^^^^^^ keyword.control.fortran
+!     ^^^^^^^^ keyword.control.fortran
+!              ^^^^ keyword.control.fortran
 !
    end subroutine doStuff
 !
@@ -283,20 +306,34 @@
 !      ^^^^^^^^^keyword.declaration.interface.submodule.fortran
 !
    8
-!  ^ constant.numeric.fortran
-!
+!  ^ meta.number.integer.decimal.fortran constant.numeric.value.fortran
    123
-!  ^^^ constant.numeric.fortran
-!
+!  ^^^ meta.number.integer.decimal.fortran constant.numeric.value.fortran
+   1_8
+!  ^ meta.number.integer.decimal.fortran constant.numeric.value.fortran
+!   ^^ meta.number.integer.decimal.fortran constant.numeric.suffix.fortran
+   123.
+!  ^^^^ meta.number.float.decimal.fortran constant.numeric.value.fortran
+!     ^ punctuation.separator.decimal.fortran
+   .123
+!  ^^^^ meta.number.float.decimal.fortran constant.numeric.value.fortran
+!  ^ punctuation.separator.decimal.fortran
    1.0d-12
-!  ^^^^^^^ constant.numeric.fortran
-!
+!  ^^^^^^^ meta.number.float.decimal.fortran constant.numeric.value.fortran
+!   ^ punctuation.separator.decimal.fortran
    1.2345E-10
-!  ^^^^^^^^^^ constant.numeric.fortran
-!
+!  ^^^^^^^^^^ meta.number.float.decimal.fortran constant.numeric.value.fortran
+!   ^ punctuation.separator.decimal.fortran
+   1e2
+!  ^^^ meta.number.float.decimal.fortran constant.numeric.value.fortran
    1.23_dp
-!      ^ punctuation.separator.underscore.fortran
-!       ^^ variable.other.fortran
+!  ^^^^^^^ meta.number.float.decimal.fortran
+!  ^^^^ constant.numeric.value.fortran
+!      ^^^ constant.numeric.suffix.fortran
+!   ^ punctuation.separator.decimal.fortran
+!
+   dplusone = d+1
+!              ^ keyword.operator.arithmetic.fortran - constant.numeric
 !
    a = minval(b)
 !      ^^^^^^ support.function.intrinsic.fortran
@@ -350,15 +387,15 @@
    do I = 1, 10
 !  ^^ keyword.control.fortran
 !     ^ variable.other.fortran
-!         ^ constant.numeric.fortran
+!         ^ constant.numeric.value.fortran
 !          ^ punctuation.separator.comma.fortran
-!            ^^ constant.numeric.fortran
+!            ^^ constant.numeric.value.fortran
 !
       evenNumber = evenNumber + 2*I
 !     ^^^^^^^^^^ variable.other.fortran
 !                  ^^^^^^^^^^ variable.other.fortran
 !                                 ^ variable.other.fortran
-!                               ^ constant.numeric.fortran
+!                               ^ constant.numeric.value.fortran
    enddo
 !  ^^^^^ keyword.control.fortran
 !
@@ -667,13 +704,13 @@ end program myProgram
 !  ^^^^^^^ storage.type.intrinsic.fortran
 !             ^ variable.other.fortran
 !                        ^ keyword.operator.arithmetic.fortran
-!                         ^ constant.numeric.fortran
+!                         ^ constant.numeric.value.fortran
 !                          ^ punctuation.separator.single-colon.fortran
-!                           ^ constant.numeric.fortran
+!                           ^ constant.numeric.value.fortran
 !                            ^ punctuation.separator.comma.fortran
-!               ^ constant.numeric.fortran
-!                 ^ constant.numeric.fortran
-!                   ^^ constant.numeric.fortran
+!               ^ constant.numeric.value.fortran
+!                 ^ constant.numeric.value.fortran
+!                   ^^ constant.numeric.value.fortran
 !                ^ punctuation.separator.comma.fortran
 !                  ^ punctuation.separator.single-colon.fortran
 !
@@ -688,7 +725,7 @@ end program myProgram
 !       ^^^^^^^^^^ support.function.intrinsic.fortran
 !                             ^^^^ keyword.control.fortran
 !                                  ^^^^^^ keyword.control.fortran
-!                                          ^ constant.numeric.fortran
+!                                          ^ constant.numeric.value.fortran
 !
 !
    type(t) :: myValue[*]
@@ -712,7 +749,7 @@ end program myProgram
 !  ^^^^^^^^ support.function.subroutine.fortran
 !            ^^ storage.type.class.fortran
 !                 ^^^^ variable.function.fortran
-!                       ^^ constant.numeric.fortran
+!                       ^^ constant.numeric.value.fortran
 !
    result = thisFunction ()
 !  ^^^^^^ variable.other.fortran
@@ -778,11 +815,11 @@ end program myProgram
 !         ^^^^^^^^ entity.name.interface.module.fortran
 !
    stop 98
-!       ^^ constant.numeric.fortran
+!       ^^ constant.numeric.value.fortran
 !  ^^^^ keyword.control.fortran
 !
    error stop 1
-!             ^ constant.numeric.fortran
+!             ^ constant.numeric.value.fortran
 !  ^^^^^ keyword.control.fortran
 !        ^^^^ keyword.control.fortran
 !
@@ -792,7 +829,7 @@ end program myProgram
 !        ^^^^ keyword.control.fortran
 !
    error stop 1, quiet=(a .eq. b)
-!             ^ constant.numeric.fortran
+!             ^ constant.numeric.value.fortran
 !                ^^^^^ keyword.control.fortran
 !  ^^^^^ keyword.control.fortran
 !        ^^^^ keyword.control.fortran
