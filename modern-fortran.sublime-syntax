@@ -427,7 +427,7 @@ contexts:
       pop: true
 
   class-definitions:
-    - match: ^(?i){{firstOnLine}}\b(type)\b(?!\s*is\b)
+    - match: ^(?i){{firstOnLine}}\b(type)\b(?!\s*\(|\s*is\b)
       scope: keyword.declaration.class.fortran
       push: class-name
     - match: (?i)\b(procedure|generic|final)\b
