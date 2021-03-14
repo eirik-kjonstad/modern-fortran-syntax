@@ -420,6 +420,7 @@ contexts:
       scope: keyword.control.fortran
 
   find-use-module:
+    - include: eol-pop
     - include: separators
     - include: attribute
     - match: (\w+)
