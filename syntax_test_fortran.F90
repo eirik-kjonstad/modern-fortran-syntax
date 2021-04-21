@@ -881,3 +881,7 @@ end program myProgram
    END DO LOOP_A
 !         ^^^^^^ entity.name.label.conditional.fortran
 !
+   import someClass
+!  ^^^^^^ keyword.control.import.fortran
+!         ^^^^^^^^^ variable.other.fortran
+!
