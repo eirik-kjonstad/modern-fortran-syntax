@@ -398,7 +398,12 @@
                            otherModuleRoutine, anotherModuleObject
 !                          ^^^^^^^^^^^^^^^^^^ variable.other.fortran
 !                                            ^ punctuation.separator.comma.fortran
+!
+   use ! incomplete use statement
+!  ^^^ keyword.control.import.fortran
+!      ^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line.fortran
    evenNumber = 0
+!  ^^^^^^^^^^ variable.other.fortran
 !
    do I = 1, 10
 !  ^^ keyword.control.fortran
@@ -875,4 +880,8 @@ end program myProgram
 !
    END DO LOOP_A
 !         ^^^^^^ entity.name.label.conditional.fortran
+!
+   import someClass
+!  ^^^^^^ keyword.control.import.fortran
+!         ^^^^^^^^^ variable.other.fortran
 !
