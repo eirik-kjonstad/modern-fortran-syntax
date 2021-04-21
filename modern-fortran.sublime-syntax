@@ -416,6 +416,8 @@ contexts:
     - match: (?i)\b(use)\b
       scope: keyword.control.import.fortran
       push: find-use-module
+    - match: (?i)\b(import)\b
+      scope: keyword.control.import.fortran
     - match: (?i)\b(only)\b
       scope: keyword.control.fortran
 
