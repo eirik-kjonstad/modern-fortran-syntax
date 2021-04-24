@@ -885,3 +885,43 @@ end program myProgram
 !  ^^^^^^ keyword.control.import.fortran
 !         ^^^^^^^^^ variable.other.fortran
 !
+      procedure, private :: myProcedure & 
+
+   end type myProcedure
+!  ^^^ keyword.declaration.class.fortran
+!      ^^^^ keyword.declaration.class.fortran
+!           ^^^^^^^^^^^ entity.name.class.fortran
+!
+      procedure, private :: myProcedure & 
+!     ^^^^^^^^^ keyword.declaration.function.fortran
+!              ^ punctuation.separator.comma.fortran
+!                ^^^^^^^ storage.modifier.fortran
+!                        ^^ punctuation.separator.double-colon.fortran
+!                           ^^^^^^^^^^^ entity.name.function.fortran
+
+      procedure :: otherProcedure
+!               ^^ punctuation.separator.double-colon.fortran
+!     ^^^^^^^^^ keyword.declaration.function.fortran
+!                  ^^^^^^^^^^^^^^ entity.name.function.fortran
+
+   end type myProcedure
+!  ^^^ keyword.declaration.class.fortran
+!      ^^^^ keyword.declaration.class.fortran
+!           ^^^^^^^^^^^ entity.name.class.fortran
+      procedure, private :: myProcedure & 
+!     ^^^^^^^^^ keyword.declaration.function.fortran
+!              ^ punctuation.separator.comma.fortran
+!                ^^^^^^^ storage.modifier.fortran
+!                        ^^ punctuation.separator.double-colon.fortran
+!                           ^^^^^^^^^^^ entity.name.function.fortran
+
+      final :: otherProcedure &
+!     ^^^^^ keyword.declaration.function.fortran
+!           ^^ punctuation.separator.double-colon.fortran
+!              ^^^^^^^^^^^^^^ entity.name.function.fortran
+!
+   end type myProcedure
+!  ^^^ keyword.declaration.class.fortran
+!      ^^^^ keyword.declaration.class.fortran
+!           ^^^^^^^^^^^ entity.name.class.fortran
+!
