@@ -452,6 +452,10 @@ contexts:
     - include: separators
     - include: attribute
     - include: pointer-symbol
+    - match: (?=\b(end|procedure|final|generic)\b)
+      pop: true
+      # this pop makes sure we don't recognize the "end type" or the next routine declaration
+      # as a function name when typing "procedure :: myProcedure &"
     - match: \w+
       scope: entity.name.function.fortran
     - match: \n
