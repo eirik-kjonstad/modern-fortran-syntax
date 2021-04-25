@@ -924,4 +924,3 @@ end program myProgram
 !  ^^^ keyword.declaration.class.fortran
 !      ^^^^ keyword.declaration.class.fortran
 !           ^^^^^^^^^^^ entity.name.class.fortran
-!
