@@ -924,3 +924,32 @@ end program myProgram
 !  ^^^ keyword.declaration.class.fortran
 !      ^^^^ keyword.declaration.class.fortran
 !           ^^^^^^^^^^^ entity.name.class.fortran
+   real(54)
+!  ^^^^ support.function.intrinsic.fortran
+!      ^ meta.parens.fortran punctuation.section.parens.begin.fortran
+!       ^^ meta.parens.fortran meta.number.integer.decimal.fortran constant.numeric.value.fortran
+!         ^ meta.parens.fortran punctuation.section.parens.end.fortran
+!
+   real(dp),
+!  ^^^^ storage.type.intrinsic.fortran
+!      ^ meta.parens.fortran punctuation.section.parens.begin.fortran
+!       ^^ meta.parens.fortran variable.other.fortran
+!         ^ meta.parens.fortran punctuation.section.parens.end.fortran
+!          ^ punctuation.separator.comma.fortran
+!
+   real(dp) ::
+!  ^^^^ storage.type.intrinsic.fortran
+!      ^ meta.parens.fortran punctuation.section.parens.begin.fortran
+!       ^^ meta.parens.fortran variable.other.fortran
+!         ^ meta.parens.fortran punctuation.section.parens.end.fortran
+!           ^^ punctuation.separator.double-colon.fortran
+!
+   real, dimension 
+!  ^^^^ storage.type.intrinsic.fortran
+!      ^ punctuation.separator.comma.fortran
+!        ^^^^^^^^^ storage.modifier.fortran
+!
+   integer, dimension
+!  ^^^^ storage.type.intrinsic.fortran
+
+
