@@ -4,14 +4,14 @@
     <key>scope</key>
     <string>
         <!-- 
-             Excludes "entity.name.function" if it does not have the meta-scope "meta.function.declaration".
-             This meta-scope is reserved for declarations, e.g. "subroutine mySubroutine", and not for procedure
-             pointers, "end subroutine mySubroutine", or other places where the subroutine name appears. 
+             Excludes "entity.name.function" if it does not have the meta-scope "meta.function.declaration",
+             and similarly for other types of declarations that are in the symbol list.
 
              This makes sure we don't get duplicates in the symbol list that refer to things other than
              the subroutine definition.
          -->
-        source.fortran entity.name.function.fortran - meta.function.declaration.fortran
+        source.fortran entity.name.function.fortran - meta.function.declaration.fortran,
+        source.fortran entity.name.class.fortran - meta.class.declaration.fortran 
     </string>
     <key>settings</key>
     <dict>
