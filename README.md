@@ -2,7 +2,7 @@
 
 # Modern-Fortran syntax
 
-Modern-Fortran is a [Sublime Text 3](https://www.sublimetext.com/) language syntax for highlighting of Fortran code. It highlights modern Fortran (Fortran 90 and newer) and incorporates features introduced in Fortran 2003, 2008, and 2018. 
+Modern-Fortran is a [Sublime Text](https://www.sublimetext.com/) language syntax for highlighting of Fortran code. It highlights modern Fortran (Fortran 90 and newer) and incorporates features introduced in Fortran 2003, 2008, and 2018. 
 
 ## Installation via Package Control
 The easiest way to get the syntax is to install the package *ModernFortran* with [Package Control](https://packagecontrol.io/). 
@@ -14,7 +14,7 @@ The syntax can also be installed manually.
 Open the terminal and navigate to where packages are installed:
 ```shell
 # Default location on Ubuntu
-cd /home/username/.config/sublime-text-3/Packages 
+cd /home/username/.config/sublime-text/Packages 
 ```
 The location on your computer can be found via `Preferences -> Browse packages...`. Next, clone the repository:
 ```shell
