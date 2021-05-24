@@ -15,8 +15,17 @@ on:
       - '**.tmPreferences'
 
 jobs:
-  main:
-    name: Run Syntax Tests
+  sublime-text-3:
+    name: Syntax tests (ST3)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: SublimeText/syntax-test-action@v2
+        with:
+          build: 3211
+          package_name: ModernFortran
+  sublime-text-4:
+    name: Syntax tests (ST4)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
