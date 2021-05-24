@@ -539,13 +539,12 @@ contexts:
         1: variable.function.fortran
 
   interfaces:
-    - match: (?i)(abstract)\s+(?=interface)
+    - match: (?i)(abstract)\b
       scope: storage.modifier.fortran
-    - match: (?i)\b(interface)\b
-      scope: keyword.declaration.interface.interface.fortran
-    - match: '(?i)(?<=interface)\s+(\w*)'
+    - match: (?i)\b(interface)\b\s*(?:(\w+))?
       captures:
-        1: entity.name.interface.interface.fortran
+        1: keyword.declaration.interface.interface.fortran
+        2: entity.name.interface.interface.fortran
     - match: (?i)\b(include)\b
       scope: keyword.control.import.fortran
     - match: (?i)\b(end)\b\s+(?=interface)
