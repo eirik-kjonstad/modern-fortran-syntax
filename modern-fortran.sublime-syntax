@@ -192,9 +192,7 @@ contexts:
       push: seek-conditional-label
     - match: (?i)\b(elseif)\b
       scope: keyword.control.fortran
-    - match: (?i)\b(else|if)\b
-      scope: keyword.control.fortran
-    - match: (?i)\b(if|do|while)\b
+    - match: (?i)\b(else|if|do|while)\b
       scope: keyword.control.fortran
     - match: (?i)(\w+)\s*(\:)\s*(?=do|if|select)
       captures:
