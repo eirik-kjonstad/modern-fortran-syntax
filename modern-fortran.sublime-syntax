@@ -200,9 +200,6 @@ contexts:
       captures:
         1: entity.name.label.conditional.fortran
         2: punctuation.separator.single-colon.fortran
-    # do concurrent
-    - match: (?i)(?<=do)\s+(concurrent)\b
-      scope: keyword.control.fortran
     - match: (?i)\b(concurrent|local|shared|local_init|default)\b
       scope: keyword.control.fortran
     - match: (?i)\b(class)\s+(?=default)\b
