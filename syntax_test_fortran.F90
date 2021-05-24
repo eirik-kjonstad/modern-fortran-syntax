@@ -628,7 +628,8 @@ end program myProgram
 !             ^^^^^^^^^^^ entity.name.label.conditional.fortran
 !
    select type (animal)
-!  ^^^^^^^^^^^ keyword.control.fortran
+!  ^^^^^^ keyword.control.fortran
+!         ^^^^ keyword.control.fortran
 !               ^^^^^^ variable.other.fortran
 !
       type is (cat)
@@ -643,8 +644,12 @@ end program myProgram
 !
    animalCasting: select class (animal)
 !  ^^^^^^^^^^^^^ entity.name.label.conditional.fortran
-!                 ^^^^^^^^^^^^ keyword.control.fortran
+!               ^ punctuation.separator.single-colon.fortran
+!                 ^^^^^^ keyword.control.fortran
+!                        ^^^^^ keyword.control.fortran
+!                              ^ meta.parens.fortran punctuation.section.parens.begin.fortran
 !                               ^^^^^^ variable.other.fortran
+!                                     ^ meta.parens.fortran punctuation.section.parens.end.fortran
 !
       class is (cat)
 !     ^^^^^^^^ keyword.control.fortran

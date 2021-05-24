@@ -204,12 +204,14 @@ contexts:
       scope: keyword.control.fortran
     - match: (?i)\b(class)\s+(?=default)\b
       scope: keyword.control.fortran
-    - match: (?i)\b(select|case|default)\b
+    - match: (?i)\b(case|default)\b
       scope: keyword.control.fortran
     - match: (?i)\b(exit|cycle|return)\b
       scope: keyword.control.fortran
-    - match: (?i)(?<=select)\s*(type|class)
-      scope: keyword.control.fortran
+    - match: (?i)\b(select)\b\s*\b(case|type|class)\b
+      captures:
+        1: keyword.control.fortran
+        2: keyword.control.fortran
     - match: (?i)(class\s+is)\b\s*\(\s*(\w+)\s*\)
       captures:
         1: keyword.control.fortran
