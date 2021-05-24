@@ -579,6 +579,8 @@ end program myProgram
    ENDDO
 !  ^^^^^ keyword.control.fortran
 !
+   type, 
+!
    TYPE simpleStruct
 !  ^^^^ keyword.declaration.class.fortran
 !       ^^^^^^^^^^^^ entity.name.class.fortran
@@ -674,6 +676,14 @@ end program myProgram
 !                  ^^^^^^^ keyword.control.extends.fortran
 !                ^ punctuation.separator.comma.fortran
 !                               ^^ punctuation.separator.double-colon.fortran
+!
+   type, private, extends(cat) :: superCat
+!  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.class.declaration.fortran 
+!      ^ punctuation.separator.comma.fortran
+!        ^^^^^^^ storage.modifier.fortran
+!                 ^^^^^^^ keyword.control.extends.fortran
+!               ^ punctuation.separator.comma.fortran
+!                              ^^ punctuation.separator.double-colon.fortran
 !
    MODULE SUBROUTINE MY_SUBROUTINE(A, B, C)
 !  ^^^^^^ storage.modifier.function.prefix.fortran

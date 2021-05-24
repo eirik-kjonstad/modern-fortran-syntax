@@ -489,20 +489,27 @@ contexts:
   class-name:
     - meta_scope: meta.class.declaration.fortran
     - include: newline-pop
-    - include: separators
     - include: comment-pop
+    - match: \,
+      scope: punctuation.separator.comma.fortran
+      push: seek-class-modifiers
+    - include: separators
+    - match: (?i)(\w+) # simple type definition (type myType)
+      scope: entity.name.class.fortran
+
+  seek-class-modifiers:
+    - include: eol-pop
     - match: (?i)\b(extends)\b\s*{{parenthesisStart}}\s*(\w*)\s*{{parenthesisEnd}}
       captures:
         1: keyword.control.extends.fortran
         2: entity.other.inherited-class.fortran
-    - match: (?i)\b(abstract)\b
+    - match: (?i)\b(abstract|public|private)\b
       scope: storage.modifier.fortran
-    - match: (?<=::)\s*(\w+)
-      captures:
-        1: entity.name.class.fortran
-    - match: (?i)(?<=type)\s+(\w+) # simple type definition (type myType)
-      captures:
-        1: entity.name.class.fortran
+    - match: (::)
+      scope: punctuation.separator.double-colon.fortran
+      pop: true
+    - include: separators
+
 
   numbers:
     - match: (?i)((?:\b\d+(\.)\d*|(\.)\d+)(?:[de][-+]?\d+)?|\b\d+[de][-+]?\d+)(_\w+)?
