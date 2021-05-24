@@ -31,5 +31,5 @@ jobs:
       - uses: actions/checkout@v2
       - uses: SublimeText/syntax-test-action@v2
         with:
-          build: 'latest'
+          build: 4107
           package_name: ModernFortran
