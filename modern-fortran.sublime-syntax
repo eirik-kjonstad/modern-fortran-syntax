@@ -187,30 +187,29 @@ contexts:
     - match: (?i)\b(then|exit|cycle)\b
       scope: keyword.control.fortran
       push: seek-conditional-label
-    - match: (?i)(?<=else)(?!\s*if)
+    - match: (?i)\b(else)\b(?!\s*if)
       scope: keyword.control.fortran
       push: seek-conditional-label
-    - match: (?i)\b(else|elseif)\b
+    - match: (?i)\b(elseif)\b
       scope: keyword.control.fortran
-    - match: (?i)\b(if|do|while)\b
+    - match: (?i)\b(else|if|do|while)\b
       scope: keyword.control.fortran
     - match: (?i)(\w+)\s*(\:)\s*(?=do|if|select)
       captures:
         1: entity.name.label.conditional.fortran
         2: punctuation.separator.single-colon.fortran
-    # do concurrent
-    - match: (?i)(?<=do)\s+(concurrent)\b
-      scope: keyword.control.fortran
     - match: (?i)\b(concurrent|local|shared|local_init|default)\b
       scope: keyword.control.fortran
     - match: (?i)\b(class)\s+(?=default)\b
       scope: keyword.control.fortran
-    - match: (?i)\b(select|case|default)\b
+    - match: (?i)\b(case|default)\b
       scope: keyword.control.fortran
     - match: (?i)\b(exit|cycle|return)\b
       scope: keyword.control.fortran
-    - match: (?i)(?<=select)\s*(type|class)
-      scope: keyword.control.fortran
+    - match: (?i)\b(select)\b\s*(?:(case|type|class)\b)?
+      captures:
+        1: keyword.control.fortran
+        2: keyword.control.fortran
     - match: (?i)(class\s+is)\b\s*\(\s*(\w+)\s*\)
       captures:
         1: keyword.control.fortran
@@ -488,20 +487,27 @@ contexts:
   class-name:
     - meta_scope: meta.class.declaration.fortran
     - include: newline-pop
-    - include: separators
     - include: comment-pop
+    - match: \,
+      scope: punctuation.separator.comma.fortran
+      push: seek-class-modifiers
+    - include: separators
+    - match: (?i)(\w+) # simple type definition (type myType)
+      scope: entity.name.class.fortran
+
+  seek-class-modifiers:
+    - include: eol-pop
     - match: (?i)\b(extends)\b\s*{{parenthesisStart}}\s*(\w*)\s*{{parenthesisEnd}}
       captures:
         1: keyword.control.extends.fortran
         2: entity.other.inherited-class.fortran
-    - match: (?i)\b(abstract)\b
+    - match: (?i)\b(abstract|public|private)\b
       scope: storage.modifier.fortran
-    - match: (?<=::)\s*(\w+)
-      captures:
-        1: entity.name.class.fortran
-    - match: (?i)(?<=type)\s+(\w+) # simple type definition (type myType)
-      captures:
-        1: entity.name.class.fortran
+    - match: (::)
+      scope: punctuation.separator.double-colon.fortran
+      pop: true
+    - include: separators
+
 
   numbers:
     - match: (?i)((?:\b\d+(\.)\d*|(\.)\d+)(?:[de][-+]?\d+)?|\b\d+[de][-+]?\d+)(_\w+)?
@@ -531,13 +537,12 @@ contexts:
         1: variable.function.fortran
 
   interfaces:
-    - match: (?i)(abstract)\s+(?=interface)
+    - match: (?i)(abstract)\b
       scope: storage.modifier.fortran
-    - match: (?i)\b(interface)\b
-      scope: keyword.declaration.interface.interface.fortran
-    - match: '(?i)(?<=interface)\s+(\w*)'
+    - match: (?i)\b(interface)\b\s*(?:(\w+))?
       captures:
-        1: entity.name.interface.interface.fortran
+        1: keyword.declaration.interface.interface.fortran
+        2: entity.name.interface.interface.fortran
     - match: (?i)\b(include)\b
       scope: keyword.control.import.fortran
     - match: (?i)\b(end)\b\s+(?=interface)

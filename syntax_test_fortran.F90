@@ -500,11 +500,13 @@
 !                         ^^^ variable.other.fortran
 !
 #ifdef myVar
-!<-^^^ keyword.control.directive.fortran
+!<- keyword.control.directive.fortran
+!^^^^^ keyword.control.directive.fortran
 !      ^^^^^ variable.other.fortran
    integer, parameter :: p = 1
 #else
-!<-^^ keyword.control.directive.fortran
+!<- keyword.control.directive.fortran
+!^^^^ keyword.control.directive.fortran
    integer, parameter :: p = 2
 #endif
 !<- keyword.control.directive.fortran
@@ -516,7 +518,8 @@
 !                     ^ punctuation.definition.string.end.fortran
 
 !$omp parallel do private(I) schedule(dynamic)
-!<^^^ keyword.control.directive.fortran
+! <- keyword.control.directive.fortran
+!^^^^ keyword.control.directive.fortran
 !                            ^^^^^^^^ keyword.control.directive.fortran
 !     ^^^^^^^^ keyword.control.directive.fortran
 !              ^^ keyword.control.directive.fortran
@@ -534,7 +537,8 @@
 !
    enddo
 !$omp end parallel do
-!<^^^ keyword.control.directive.fortran
+!<- keyword.control.directive.fortran
+!^^^^ keyword.control.directive.fortran
 !                  ^^ keyword.control.directive.fortran
 !     ^^^ keyword.control.directive.fortran
 !         ^^^^^^^^ keyword.control.directive.fortran
@@ -557,9 +561,9 @@
 !                    ^^^^^^^^^^ entity.name.function.fortran
 !
 program myProgram
-!<-^^^^ keyword.declaration.program.fortran
+!<- meta.program.declaration.fortran keyword.declaration.program.fortran
+!^^^^^^ meta.program.declaration.fortran keyword.declaration.program.fortran
 !       ^^^^^^^^^ entity.name.program.fortran
-!<-^^^^^^^^^^^^^^ meta.program.declaration.fortran
 !
 !  Program contents
 !
@@ -574,6 +578,8 @@ end program myProgram
 !
    ENDDO
 !  ^^^^^ keyword.control.fortran
+!
+   type, 
 !
    TYPE simpleStruct
 !  ^^^^ keyword.declaration.class.fortran
@@ -595,6 +601,14 @@ end program myProgram
 !
    DEALLOCATE(array)
 !  ^^^^^^^^^^ support.function.subroutine.fortran
+!
+   select
+!  ^^^^^^ keyword.control.fortran
+!
+   select classoij 
+!  ^^^^^^ keyword.control.fortran
+!         ^^^^^ - keyword.control.fortran
+!              (should not recognize "class" in "classoij")
 !
    select case (myString)
 !  ^^^^^^ keyword.control.fortran
@@ -624,7 +638,8 @@ end program myProgram
 !             ^^^^^^^^^^^ entity.name.label.conditional.fortran
 !
    select type (animal)
-!  ^^^^^^^^^^^ keyword.control.fortran
+!  ^^^^^^ keyword.control.fortran
+!         ^^^^ keyword.control.fortran
 !               ^^^^^^ variable.other.fortran
 !
       type is (cat)
@@ -639,8 +654,12 @@ end program myProgram
 !
    animalCasting: select class (animal)
 !  ^^^^^^^^^^^^^ entity.name.label.conditional.fortran
-!                 ^^^^^^^^^^^^ keyword.control.fortran
+!               ^ punctuation.separator.single-colon.fortran
+!                 ^^^^^^ keyword.control.fortran
+!                        ^^^^^ keyword.control.fortran
+!                              ^ meta.parens.fortran punctuation.section.parens.begin.fortran
 !                               ^^^^^^ variable.other.fortran
+!                                     ^ meta.parens.fortran punctuation.section.parens.end.fortran
 !
       class is (cat)
 !     ^^^^^^^^ keyword.control.fortran
@@ -665,6 +684,14 @@ end program myProgram
 !                  ^^^^^^^ keyword.control.extends.fortran
 !                ^ punctuation.separator.comma.fortran
 !                               ^^ punctuation.separator.double-colon.fortran
+!
+   type, private, extends(cat) :: superCat
+!  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.class.declaration.fortran 
+!      ^ punctuation.separator.comma.fortran
+!        ^^^^^^^ storage.modifier.fortran
+!                 ^^^^^^^ keyword.control.extends.fortran
+!               ^ punctuation.separator.comma.fortran
+!                              ^^ punctuation.separator.double-colon.fortran
 !
    MODULE SUBROUTINE MY_SUBROUTINE(A, B, C)
 !  ^^^^^^ storage.modifier.function.prefix.fortran
