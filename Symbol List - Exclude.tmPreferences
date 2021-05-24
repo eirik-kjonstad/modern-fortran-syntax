@@ -7,8 +7,7 @@
              Excludes "entity.name.function" if it does not have the meta-scope "meta.function.declaration",
              and similarly for other types of declarations that are in the symbol list.
 
-             This makes sure we don't get duplicates in the symbol list that refer to things other than
-             the subroutine definition.
+             This makes sure we don't get duplicates in the symbol list.
          -->
         source.fortran entity.name.function.fortran - meta.function.declaration.fortran,
         source.fortran entity.name.class.fortran - meta.class.declaration.fortran 
