@@ -208,7 +208,7 @@ contexts:
       scope: keyword.control.fortran
     - match: (?i)\b(exit|cycle|return)\b
       scope: keyword.control.fortran
-    - match: (?i)\b(select)\b\s*\b(case|type|class)\b
+    - match: (?i)\b(select)\b\s*(?:(case|type|class)\b)?
       captures:
         1: keyword.control.fortran
         2: keyword.control.fortran

@@ -602,6 +602,14 @@ end program myProgram
    DEALLOCATE(array)
 !  ^^^^^^^^^^ support.function.subroutine.fortran
 !
+   select
+!  ^^^^^^ keyword.control.fortran
+!
+   select classoij 
+!  ^^^^^^ keyword.control.fortran
+!         ^^^^^ - keyword.control.fortran
+!              (should not recognize "class" in "classoij")
+!
    select case (myString)
 !  ^^^^^^ keyword.control.fortran
 !         ^^^^ keyword.control.fortran
