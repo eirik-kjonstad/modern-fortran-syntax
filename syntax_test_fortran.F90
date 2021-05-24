@@ -500,11 +500,13 @@
 !                         ^^^ variable.other.fortran
 !
 #ifdef myVar
-!<-^^^ keyword.control.directive.fortran
+!<- keyword.control.directive.fortran
+!^^^^^ keyword.control.directive.fortran
 !      ^^^^^ variable.other.fortran
    integer, parameter :: p = 1
 #else
-!<-^^ keyword.control.directive.fortran
+!<- keyword.control.directive.fortran
+!^^^^ keyword.control.directive.fortran
    integer, parameter :: p = 2
 #endif
 !<- keyword.control.directive.fortran
@@ -516,7 +518,8 @@
 !                     ^ punctuation.definition.string.end.fortran
 
 !$omp parallel do private(I) schedule(dynamic)
-!<^^^ keyword.control.directive.fortran
+! <- keyword.control.directive.fortran
+!^^^^ keyword.control.directive.fortran
 !                            ^^^^^^^^ keyword.control.directive.fortran
 !     ^^^^^^^^ keyword.control.directive.fortran
 !              ^^ keyword.control.directive.fortran
@@ -534,7 +537,8 @@
 !
    enddo
 !$omp end parallel do
-!<^^^ keyword.control.directive.fortran
+!<- keyword.control.directive.fortran
+!^^^^ keyword.control.directive.fortran
 !                  ^^ keyword.control.directive.fortran
 !     ^^^ keyword.control.directive.fortran
 !         ^^^^^^^^ keyword.control.directive.fortran
@@ -557,9 +561,9 @@
 !                    ^^^^^^^^^^ entity.name.function.fortran
 !
 program myProgram
-!<-^^^^ keyword.declaration.program.fortran
+!<- meta.program.declaration.fortran keyword.declaration.program.fortran
+!^^^^^^ meta.program.declaration.fortran keyword.declaration.program.fortran
 !       ^^^^^^^^^ entity.name.program.fortran
-!<-^^^^^^^^^^^^^^ meta.program.declaration.fortran
 !
 !  Program contents
 !
