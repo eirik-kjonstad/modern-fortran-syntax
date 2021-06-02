@@ -516,7 +516,32 @@
 !        ^^^^^^^^^^^^^^ string.quoted.double.fortran
 !        ^ punctuation.definition.string.begin.fortran
 !                     ^ punctuation.definition.string.end.fortran
-
+!$acc parallel create(I, someThing) default(none)
+! <- keyword.control.directive.fortran
+!^^^^ keyword.control.directive.fortran
+!     ^^^^^^^^ keyword.control.directive.fortran
+!              ^^^^^^ keyword.control.directive.fortran
+!                      ^ variable.other.fortran
+!                        ^^^^^^^^^ variable.other.fortran
+!                                   ^^^^^^^ keyword.control.directive.fortran
+!                                           ^^^^ support.constant.acc
+!$acc loop vector
+! <- keyword.control.directive.fortran
+!^^^^ keyword.control.directive.fortran
+!     ^^^^ keyword.control.directive.fortran
+!          ^^^^^^ keyword.control.directive.fortran
+   do I = 1, 10
+!
+      f(I) = someThing(I)
+!
+   enddo
+!$acc end parallel
+!<- keyword.control.directive.fortran
+!^^^^ keyword.control.directive.fortran
+!                  ^^ keyword.control.directive.fortran
+!     ^^^ keyword.control.directive.fortran
+!         ^^^^^^^^ keyword.control.directive.fortran
+!
 !$omp parallel do private(I) schedule(dynamic)
 ! <- keyword.control.directive.fortran
 !^^^^ keyword.control.directive.fortran
