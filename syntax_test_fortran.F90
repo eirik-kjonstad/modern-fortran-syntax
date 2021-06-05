@@ -541,6 +541,13 @@
 !       ^^^^^^^^^ variable.other.fortran
 !                  ^^^^^^^ keyword.control.directive.fortran
 !                          ^^^^ support.constant.acc
+!$acc parallel create(I, &
+!$acc   someThing) default(none)
+! <- keyword.control.directive.fortran
+! ^^^ keyword.control.directive.fortran
+!       ^^^^^^^^^ variable.other.fortran
+!                  ^^^^^^^ keyword.control.directive.fortran
+!                          ^^^^ support.constant.acc
 !
 !$acc loop vector
 ! <- keyword.control.directive.fortran
@@ -562,6 +569,20 @@
 !$omp & K, L, M, N, O) schedule(dynamic)
 ! ^^^ keyword.control.directive.fortran
 !     ^ punctuation.separator.continuation.fortran
+!       ^ variable.other.fortran
+!        ^ punctuation.separator.comma.fortran
+!          ^ variable.other.fortran
+!           ^ punctuation.separator.comma.fortran
+!             ^ variable.other.fortran
+!              ^ punctuation.separator.comma.fortran
+!                ^ variable.other.fortran
+!                 ^ punctuation.separator.comma.fortran
+!                   ^ variable.other.fortran
+!                      ^^^^^^^^ keyword.control.directive.fortran
+!                               ^^^^^^^ support.constant.omp
+!$omp parallel do private(I, J, &
+!$omp   K, L, M, N, O) schedule(dynamic)
+! ^^^ keyword.control.directive.fortran
 !       ^ variable.other.fortran
 !        ^ punctuation.separator.comma.fortran
 !          ^ variable.other.fortran
