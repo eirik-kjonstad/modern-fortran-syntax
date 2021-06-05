@@ -21,6 +21,8 @@ variables:
   parenthesisStart: '\(\s*'
   parenthesisEnd: '\s*\)'
   variableMatch: '[A-Za-z_][A-Za-z_0-9]*'
+  accDirectives: '(end|parallel|kernels|serial|data|enter|exit|host_data|loop|cache|atomic|update|wait|routine|declare|init|shutdown|set)'
+  accClauses: (if|self|device_type|dtype|async|wait|num_gangs|num_workers|vector_length|reduction|private|firstprivate|copy|copyin|copyout|create|no_create|present|deviceptr|attach|detach|use_device|if_present|collapse|gang|worker|vector|seq|auto|independent|tile|read|write|update|capture|device_resident|link)
   ompDirectives: '(end|parallel|do|simd|single|target|update|workshare|declare|sections|distribute|teams|task|taskyield|master|critical|barrier|taskwait|taskgroup|atomic|flush|ordered|cancel|cancellation point|reduction)'
   ompIntrinsics: (omp_set_num_threads|omp_get_num_threads|omp_get_max_threads|omp_get_thread_num|omp_get_num_procs|omp_in_parallel|omp_set_dynamic|omp_get_dynamic|omp_get_cancellation|omp_set_nested|omp_get_nested|omp_set_schedule|omp_get_schedule|omp_get_thread_limit|omp_set_max_active_levels|omp_get_max_active_levels|omp_get_level|omp_get_ancestor_thread_num|omp_get_team_size|omp_get_active_level|omp_in_final|omp_get_proc_bind|omp_set_default_device|omp_get_default_device|omp_get_num_devices|omp_get_num_teams|omp_get_team_num|omp_is_initial_device|omp_init_lock|omp_init_nest_lock|omp_destroy_lock|omp_destroy_nest_lock|omp_set_lock|omp_set_nest_lock|omp_unset_lock|omp_unset_nest_lock|omp_test_lock|omp_test_nest_lock|omp_get_wtime|omp_get_wtick)
   ompClauses: (default|shared|private|firstprivate|lastprivate|linear|reduction|copyin|copyprivate|map|tofrom|safelen|collapse|simdlen|aligned|uniform|Inbrach|notinbranch)
@@ -35,6 +37,7 @@ contexts:
     - include: coarray
     - include: program
     - include: stop
+    - include: acc
     - include: omp
     - include: expressions
 
@@ -548,6 +551,50 @@ contexts:
     - match: (?i)\b(end)\b\s+(?=interface)
       scope: keyword.declaration.interface.interface.fortran
 
+  acc:
+    - match: '{{firstOnLine}}(?i)(\!\$acc)'
+      scope: keyword.control.directive.fortran
+      push: acc-line
+
+  acc-line:
+    - include: acc-continuation
+    - include: acc-directives
+    - include: acc-clauses
+    - include: separators
+    - include: operators
+    - match: (?i)(default)
+      scope: keyword.control.directive.fortran
+      push: acc-default
+    - include: match-variable
+    - match: '\n'
+      pop: true
+
+  acc-directives:
+    - match: (?i)({{accDirectives}})
+      scope: keyword.control.directive.fortran
+
+  acc-clauses:
+    - include: acc-continuation
+    - match: (?i)({{accClauses}})
+      scope: keyword.control.directive.fortran
+
+  acc-default:
+    - include: acc-continuation
+    - include: eol-pop
+    - match: (?i)(none|present)
+      scope: support.constant.acc
+    - match: '{{parenthesisEnd}}'
+      pop: true
+
+  acc-continuation:
+    - match: "&"
+      push:
+        - match: '{{firstOnLine}}(?i)(\!\$acc)(?:\s*(\&))?'
+          captures:
+            1: keyword.control.directive.fortran
+            2: punctuation.separator.continuation.fortran
+          pop: true
+
   omp:
     - match: '{{firstOnLine}}(?i)(\!\$omp)'
       scope: keyword.control.directive.fortran
@@ -594,8 +641,10 @@ contexts:
   omp-continuation:
     - match: "&"
       push:
-        - match: '{{firstOnLine}}(?i)(\!\$omp)'
-          scope: keyword.control.directive.fortran
+        - match: '{{firstOnLine}}(?i)(\!\$omp)(?:\s*(\&))?'
+          captures:
+            1: keyword.control.directive.fortran
+            2: punctuation.separator.continuation.fortran
           pop: true
 
   match-end:
