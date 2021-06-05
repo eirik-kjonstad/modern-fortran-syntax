@@ -516,6 +516,84 @@
 !        ^^^^^^^^^^^^^^ string.quoted.double.fortran
 !        ^ punctuation.definition.string.begin.fortran
 !                     ^ punctuation.definition.string.end.fortran
+!$acc parallel create(I, someThing) default(none)
+! <- keyword.control.directive.fortran
+!^^^^ keyword.control.directive.fortran
+!     ^^^^^^^^ keyword.control.directive.fortran
+!              ^^^^^^ keyword.control.directive.fortran
+!                     ^ variable.other.fortran
+!                      ^ punctuation.separator.comma.fortran
+!                        ^^^^^^^^^ variable.other.fortran
+!                                   ^^^^^^^ keyword.control.directive.fortran
+!                                           ^^^^ support.constant.acc
+!
+! Here we test unclosed bracket in "default"
+! => incomplete expression should not lead to lines below being incorrectly matched
+!$acc parallel create(I) default(none
+!
+!^ comment.line.fortran
+!
+!$acc parallel create(I, &
+!$acc & someThing) default(none)
+! <- keyword.control.directive.fortran
+! ^^^ keyword.control.directive.fortran
+!     ^ punctuation.separator.continuation.fortran
+!       ^^^^^^^^^ variable.other.fortran
+!                  ^^^^^^^ keyword.control.directive.fortran
+!                          ^^^^ support.constant.acc
+!$acc parallel create(I, &
+!$acc   someThing) default(none)
+! <- keyword.control.directive.fortran
+! ^^^ keyword.control.directive.fortran
+!       ^^^^^^^^^ variable.other.fortran
+!                  ^^^^^^^ keyword.control.directive.fortran
+!                          ^^^^ support.constant.acc
+!
+!$acc loop vector
+! <- keyword.control.directive.fortran
+!^^^^ keyword.control.directive.fortran
+!     ^^^^ keyword.control.directive.fortran
+!          ^^^^^^ keyword.control.directive.fortran
+   do I = 1, 10
+!
+      f(I) = someThing(I)
+!
+   enddo
+!$acc end parallel
+!<- keyword.control.directive.fortran
+!^^^^ keyword.control.directive.fortran
+!     ^^^ keyword.control.directive.fortran
+!         ^^^^^^^^ keyword.control.directive.fortran
+!
+!$omp parallel do private(I, J, &
+!$omp & K, L, M, N, O) schedule(dynamic)
+! ^^^ keyword.control.directive.fortran
+!     ^ punctuation.separator.continuation.fortran
+!       ^ variable.other.fortran
+!        ^ punctuation.separator.comma.fortran
+!          ^ variable.other.fortran
+!           ^ punctuation.separator.comma.fortran
+!             ^ variable.other.fortran
+!              ^ punctuation.separator.comma.fortran
+!                ^ variable.other.fortran
+!                 ^ punctuation.separator.comma.fortran
+!                   ^ variable.other.fortran
+!                      ^^^^^^^^ keyword.control.directive.fortran
+!                               ^^^^^^^ support.constant.omp
+!$omp parallel do private(I, J, &
+!$omp   K, L, M, N, O) schedule(dynamic)
+! ^^^ keyword.control.directive.fortran
+!       ^ variable.other.fortran
+!        ^ punctuation.separator.comma.fortran
+!          ^ variable.other.fortran
+!           ^ punctuation.separator.comma.fortran
+!             ^ variable.other.fortran
+!              ^ punctuation.separator.comma.fortran
+!                ^ variable.other.fortran
+!                 ^ punctuation.separator.comma.fortran
+!                   ^ variable.other.fortran
+!                      ^^^^^^^^ keyword.control.directive.fortran
+!                               ^^^^^^^ support.constant.omp
 
 !$omp parallel do private(I) schedule(dynamic)
 ! <- keyword.control.directive.fortran
