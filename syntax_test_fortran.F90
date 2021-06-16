@@ -565,6 +565,14 @@
 !     ^^^ keyword.control.directive.fortran
 !         ^^^^^^^^ keyword.control.directive.fortran
 !
+! Here we test that the whole terms "copyin" and "if_present" are detected (and not only "copy" and "if")
+!$acc parallel copyin if_present(someThing)
+! <- keyword.control.directive.fortran
+!^^^^ keyword.control.directive.fortran
+!     ^^^^^^^^ keyword.control.directive.fortran
+!              ^^^^^^ keyword.control.directive.fortran
+!                     ^^^^^^^^^^ keyword.control.directive.fortran
+!
 !$omp parallel do private(I, J, &
 !$omp & K, L, M, N, O) schedule(dynamic)
 ! ^^^ keyword.control.directive.fortran
@@ -620,6 +628,12 @@
 !                  ^^ keyword.control.directive.fortran
 !     ^^^ keyword.control.directive.fortran
 !         ^^^^^^^^ keyword.control.directive.fortran
+
+! Here we test that the whole term "taskgroup" is detected (and not only "task")
+!$omp taskgroup
+!<- keyword.control.directive.fortran
+!^^^^ keyword.control.directive.fortran
+!     ^^^^^^^^^ keyword.control.directive.fortran
 
    type1 = "hello!" ! should understand that 'type1' is a variable
 !  ^^^^^ variable.other.fortran
