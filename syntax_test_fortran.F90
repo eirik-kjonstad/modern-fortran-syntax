@@ -808,6 +808,8 @@ end program myProgram
       K(I) = K(I) – M
 !
    END DO
+!  ^^^ keyword.control.fortran
+!      ^^ keyword.control.fortran
 !
    extraordinaryLoop: do i = 1, 5
 !  ^^^^^^^^^^^^^^^^^ entity.name.label.conditional.fortran
@@ -1070,5 +1072,33 @@ end program myProgram
 !
    integer, dimension
 !  ^^^^ storage.type.intrinsic.fortran
-
-
+!
+   associate(tmp_arr => jkl%abc)
+!  ^^^^^^^^^ keyword.control.fortran
+!           ^ meta.parens.fortran punctuation.section.parens.begin.fortran
+!            ^^^^^^^ meta.parens.fortran variable.other.fortran
+!                    ^^ meta.parens.fortran keyword.operator.points-to.fortran
+!                       ^^^ meta.parens.fortran storage.type.class.fortran
+!                          ^ meta.parens.fortran punctuation.accessor.fortran
+!                           ^^^ meta.parens.fortran variable.other.fortran
+!                              ^ meta.parens.fortran punctuation.section.parens.end.fortran
+!              
+   end associate
+!  ^^^ keyword.control.fortran
+!      ^^^^^^^^^ keyword.control.fortran
+!
+   block
+!  ^^^^^ keyword.control.fortran
+!
+      INNER: BLOCK
+!     ^^^^^ entity.name.label.block.fortran
+!          ^ punctuation.separator.single-colon.fortran
+!            ^^^^^ keyword.control.fortran
+        ...
+      END BLOCK INNER ! here is a comment
+!     ^^^ keyword.control.fortran
+!         ^^^^^ keyword.control.fortran
+!               ^^^^^ entity.name.label.block.fortran
+   end block ! also a comment
+!  ^^^ keyword.control.fortran
+!      ^^^^^ keyword.control.fortran
