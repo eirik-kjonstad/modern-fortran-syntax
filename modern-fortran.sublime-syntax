@@ -56,6 +56,7 @@ contexts:
     - include: class-accessing
     - include: io
     - include: associate 
+    - include: block
     - include: function-call
     - include: pointer-symbol
     - include: match-end
@@ -649,7 +650,7 @@ contexts:
           pop: true
 
   match-end:
-    - match: \bend\b
+    - match: (?i)\bend\b
       scope: keyword.control.fortran
 
   match-variable:
@@ -688,3 +689,22 @@ contexts:
   associate:
     - match: (?i)\b(associate)
       scope: keyword.control.fortran
+
+  block:
+    - match: (?i){{firstOnLine}}(\w+)\s*(\:)\s*(block)
+      captures:
+        1: entity.name.label.block.fortran
+        2: punctuation.separator.single-colon.fortran
+        3: keyword.control.fortran
+    - match: (?i){{firstOnLine}}\b(block)
+      scope: keyword.control.fortran
+    - match: (?i){{firstOnLine}}(end)\s+(block)
+      captures:
+        1: keyword.control.fortran
+        2: keyword.control.fortran
+      push:
+        - include: comment-pop
+        - include: newline-pop
+        - match: \b(\w+)
+          scope: entity.name.label.block.fortran
+          pop: true
