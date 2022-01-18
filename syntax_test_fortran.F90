@@ -1070,5 +1070,15 @@ end program myProgram
 !
    integer, dimension
 !  ^^^^ storage.type.intrinsic.fortran
-
-
+!
+   associate (tmp_arr => jkl%abc)
+!  ^^^^^^^^^ keyword.control.fortran
+     !$omp parallel do private(ii) reduction(+: tmp_arr)
+     do i=1, nloop
+       ii = mod(i,n)+1
+       tmp_arr(ii) = tmp_arr(ii) + 1.
+     enddo
+     !$omp end parallel do
+   end associate
+!
+!

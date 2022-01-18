@@ -55,6 +55,7 @@ contexts:
     - include: constants
     - include: class-accessing
     - include: io
+    - include: associate 
     - include: function-call
     - include: pointer-symbol
     - include: match-end
@@ -683,3 +684,7 @@ contexts:
       captures:
         1: keyword.control.fortran
         2: keyword.control.fortran
+
+  associate:
+    - match: (?i)\b(associate)
+      scope: keyword.control.fortran
