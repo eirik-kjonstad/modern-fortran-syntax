@@ -124,6 +124,8 @@ contexts:
   types:
     - match: '(?i)\b{{intrinsicType}}\b(?=.*(function))' # type of return value in function
       scope: storage.type.intrinsic.fortran
+    - match: '(?i)\b{{intrinsicType}}\s+(?=\w+)' # old-style declaration
+      scope: storage.type.intrinsic.fortran
     - match: '(?i){{firstOnLine}}\b{{intrinsicType}}(?=\,)' # type declaration
       scope: storage.type.intrinsic.fortran
     - match: '(?i){{firstOnLine}}\b{{intrinsicType}}(?=\(.*\)\,)' # type declaration

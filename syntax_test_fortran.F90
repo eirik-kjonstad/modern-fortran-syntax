@@ -23,6 +23,7 @@
 !  ^^^ keyword.control.fortran
 !
    read(unit=myUnit, end=200) byte ! Read until end of file, then go to 200
+!  ^^^^ variable.function.subroutine.intrinsic.io.fortran
 !       ^^^^ variable.language.io.fortran
 !                    ^^^ variable.language.io.fortran
 !
@@ -47,6 +48,18 @@
 !               ^^ punctuation.section.parens.end.fortran - keyword
 !
    integer(kind=8), dimension(:,:), allocatable :: myInt
+!  ^^^^^^^ storage.type.intrinsic.fortran
+!         ^ meta.parens.fortran punctuation.section.parens.begin.fortran
+!          ^^^^ meta.parens.fortran variable.other.fortran
+!              ^ meta.parens.fortran keyword.operator.assignment.fortran
+!               ^ meta.parens.fortran meta.number.integer.decimal.fortran constant.numeric.value.fortran
+!                ^ meta.parens.fortran punctuation.section.parens.end.fortran
+!                 ^ punctuation.separator.comma.fortran
+!                   ^^^^^^^^^ storage.modifier.fortran
+!                            ^ meta.parens.fortran punctuation.section.parens.begin.fortran
+!                             ^ meta.parens.fortran punctuation.separator.single-colon.fortran
+!                              ^ meta.parens.fortran punctuation.separator.comma.fortran
+!                               ^ meta.parens.fortran punctuation.separator.single-colon.fortran
 !                                                  ^^^^^ variable.other.fortran
 !                                                 ^ - variable.other.fortran
 !  ^^^^^^^ storage.type.intrinsic.fortran
@@ -57,6 +70,16 @@
 !  ^^^^ storage.type.intrinsic.fortran
 !          ^^ punctuation.separator.double-colon.fortran
 !             ^^^^^^^ variable.other.fortran
+!
+   integer myInteger 
+!  ^^^^^^^ storage.type.intrinsic.fortran
+!          ^^^^^^^^^ variable.other.fortran
+   logical myLogical
+!  ^^^^^^^ storage.type.intrinsic.fortran
+!          ^^^^^^^^^ variable.other.fortran
+   real myReal 
+!  ^^^^ storage.type.intrinsic.fortran
+!       ^^^^^^ variable.other.fortran
 !
    do while (a .ne. b) ! a side-comment
 !  ^^ keyword.control.fortran
@@ -112,7 +135,7 @@
 !                  ^^^^^^^^^^^ storage.modifier.fortran
 !
    type :: myClass1
-!  ^^^^ keyword.declaration.class.fortran
+!  ^^^^ meta.class.declaration.fortran keyword.declaration.class.fortran
 !       ^^ punctuation.separator.double-colon.fortran
 !          ^^^^^^^^ entity.name.class.fortran
 !  ^^^^^^^^^^^^^^^^ meta.class.declaration.fortran
@@ -221,6 +244,8 @@
 !                                        ^ variable.parameter.input.fortran
 !                                         ^ punctuation.section.parens.end.fortran
    function theFunction(a, bee, cesium)
+!  ^^^^^^^^ meta.function.declaration.fortran keyword.declaration.function.fortran
+!           ^^^^^^^^^^^ meta.function.declaration.fortran entity.name.function.fortran
 !                      ^^^^^^^^^^^^^^^^ meta.function.parameters.fortran
 !                      ^ punctuation.section.parens.begin.fortran
 !                       ^ variable.parameter.input.fortran
@@ -242,6 +267,7 @@
 !           ^^^^^^ entity.name.function.fortran - keyword
 !
    pure function getStuff(a) result(theStuff)
+!  ^^^^ storage.modifier.function.prefix.fortran
 !       ^^^^^^^^^^^^^^^^^ meta.function.declaration.fortran - meta.function meta.function
 !                        ^^^ meta.function.parameters.fortran - meta.function meta.function
 !                           ^^^^^^^ meta.function.declaration.fortran - meta.function meta.function
