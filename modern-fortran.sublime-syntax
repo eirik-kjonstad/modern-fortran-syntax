@@ -314,38 +314,38 @@ contexts:
         - match: \(
           scope: punctuation.section.parens.begin.fortran
           push:
-            - clear_scopes: 1
-            - meta_scope: meta.function.parameters.fortran
-            - include: line-continuation
-            - include: eol-pop
-            - match: \w+
-              scope: variable.parameter.input.fortran
-            - match: \,
-              scope: punctuation.separator.comma.fortran
-            - match: \)
-              scope: punctuation.section.parens.end.fortran
-              set:
-                - include: line-continuation
-                - include: eol-pop
-                - match: (?i)\bresult\b
-                  scope: keyword.control.function-result.fortran
-                - match: (?=\()
-                  set:
-                    - clear_scopes: 1
-                    - match: \(
-                      scope: punctuation.section.parens.begin.fortran
-                      set:
-                        - clear_scopes: 1
-                        - meta_scope: meta.function.parameters.fortran
-                        - include: line-continuation
-                        - include: eol-pop
-                        - match: \w+
-                          scope: variable.parameter.output.fortran
-                        - match: \,
-                          scope: punctuation.separator.comma.fortran
-                        - match: \)
-                          scope: punctuation.section.parens.end.fortran
-                          pop: true
+          - clear_scopes: 1
+          - meta_scope: meta.function.parameters.fortran
+          - include: line-continuation
+          - include: eol-pop
+          - match: \w+
+            scope: variable.parameter.input.fortran
+          - match: \,
+            scope: punctuation.separator.comma.fortran
+          - match: \)
+            scope: punctuation.section.parens.end.fortran
+            set:
+              - include: line-continuation
+              - include: eol-pop
+              - match: (?i)\bresult\b
+                scope: keyword.control.function-result.fortran
+              - match: (?=\()
+                set:
+                  - clear_scopes: 1
+                  - match: \(
+                    scope: punctuation.section.parens.begin.fortran
+                    set:
+                      - clear_scopes: 1
+                      - meta_scope: meta.function.parameters.fortran
+                      - include: line-continuation
+                      - include: eol-pop
+                      - match: \w+
+                        scope: variable.parameter.output.fortran
+                      - match: \,
+                        scope: punctuation.separator.comma.fortran
+                      - match: \)
+                        scope: punctuation.section.parens.end.fortran
+                        pop: true
 
     - match: (?i)(?:\b(module)\s+)?\b(subroutine)\b
       captures:
