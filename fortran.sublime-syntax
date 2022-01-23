@@ -13,7 +13,7 @@ extends: Packages/modern-fortran-syntax/modern-fortran.sublime-syntax
 contexts:
   comments:
     - meta_append: true
-    - match: '(?i)(^C|!)(?![$])'
+    - match: '(?i)(^C|^\*|!)(?![$])'
       scope: punctuation.definition.comment.fortran
       push:
       - meta_scope: comment.line.fortran
@@ -21,9 +21,24 @@ contexts:
         pop: true
 
   control:
-    - meta_append: true
-    - match: '(?i)(continue|goto)'
+    - meta_prepend: true
+    - match: '(?i)(continue)'
       scope: keyword.control.fortran
+    - match: '(?i)(goto)'
+      scope: keyword.control.fortran
+      push:
+        - include: eol-pop
+        - include: comments
+        - match: '(\d+)'
+          scope: entity.name.label.statement-number.fortran'
+    - match: '^     (\S)'
+      scope: punctuation.separator.continuation.fortran
+    - match: '(?i){{firstOnLine}}(\d+)'
+      scope: entity.name.label.statement-number.fortran
+    - match: '(?i){{firstOnLine}}(do)\s+(?:(\d+))?'
+      captures:
+        1: keyword.control.fortran
+        2: entity.name.label.statement-number.fortran
 
   types:
     - meta_append: true
@@ -34,12 +49,12 @@ contexts:
 
   line-continuation:
     - meta_prepend: true
-    - match: '{{firstOnLine}}\s*(\*)'
+    - match: '^     (\S)'
       scope: punctuation.separator.continuation.fortran
 
   operators:
     - meta_prepend: true
-    - match: '{{firstOnLine}}\s*(\*)'
+    - match: '^     (\S)'
       scope: punctuation.separator.continuation.fortran
 
   procedures:
