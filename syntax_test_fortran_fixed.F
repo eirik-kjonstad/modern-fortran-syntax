@@ -1,4 +1,4 @@
-c SYNTAX TEST "fortran.sublime-syntax"
+c SYNTAX TEST "fortran-fixed.sublime-syntax"
 
       DO 50 I = 1, 10
 c     ^^ keyword.control.fortran
@@ -8,6 +8,11 @@ c             ^ keyword.operator.assignment.fortran
 c               ^ meta.number.integer.decimal.fortran constant.numeric.value.fortran
 c                ^ punctuation.separator.comma.fortran
 c                  ^^ meta.number.integer.decimal.fortran constant.numeric.value.fortran
+c
+      GOTO 50
+c     ^^^^ keyword.control.fortran
+c          ^^ entity.name.label.statement-number.fortran
+c
    50 CONTINUE
 c  ^^ entity.name.label.statement-number.fortran
 c     ^^^^^^^^ keyword.control.fortran 
@@ -33,4 +38,9 @@ c
      *                            ARGSGH)
 c    ^ meta.function.parameters.fortran punctuation.separator.continuation.fortran
 c                                 ^^^^^^ meta.function.parameters.fortran variable.parameter.input.fortran     
+c
+c
+      DATA MYDATA
+c     ^^^^ storage.type.intrinsic.fortran
+c          ^^^^^^ variable.other.fortran
 c

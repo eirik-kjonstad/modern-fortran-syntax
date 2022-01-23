@@ -1,4 +1,4 @@
-! SYNTAX TEST "modern-fortran.sublime-syntax"
+! SYNTAX TEST "fortran-modern.sublime-syntax"
 !
    if (a == b) then
 !  ^^ keyword.control.fortran

@@ -8,7 +8,7 @@
 name: Fortran (fixed-format)
 file_extensions: [F77,F]
 scope: source.fortran
-extends: modern-fortran.sublime-syntax
+extends: fortran-modern.sublime-syntax
 version: 4
 
 contexts:
@@ -31,7 +31,7 @@ contexts:
         - include: eol-pop
         - include: comments
         - match: '(\d+)'
-          scope: entity.name.label.statement-number.fortran'
+          scope: entity.name.label.statement-number.fortran
     - match: '^     (\S)'
       scope: punctuation.separator.continuation.fortran
     - match: '(?i){{firstOnLine}}(\d+)'
