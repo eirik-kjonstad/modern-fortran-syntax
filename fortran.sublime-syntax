@@ -9,6 +9,7 @@ name: Fortran (fixed-format)
 file_extensions: [F77,F]
 scope: source.fortran
 extends: modern-fortran.sublime-syntax
+version: 4
 
 contexts:
   comments:
