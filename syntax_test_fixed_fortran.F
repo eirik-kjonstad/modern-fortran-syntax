@@ -16,7 +16,7 @@ c
 c    ^^ - entity.name.label.statement-number.fortran
 c       ^^^^^^^^ keyword.control.fortran
 *
-c<- -comment.line.fortran punctuation.definition.comment.fortran
+c<- comment.line.fortran punctuation.definition.comment.fortran
 c
       FUNCTION FNC(ARG, ARGG, ARGGH)
 c     ^^^^^^^^ meta.function.declaration.fortran keyword.declaration.function.fortran
